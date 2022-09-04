@@ -15,6 +15,7 @@ nav {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     
+    
 }
 .items{
     margin-right: 2rem;
@@ -24,13 +25,34 @@ nav {
 .items:hover{
     color:#E56F0E;
 }
+.menuBurger{
+    display: none;
+}
+
 @media screen  and (max-width:768px){
     .liste {
         flex-direction: column;
-        height: auto;
+        height: 200px;
+        width: 100%;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .items { 
+    height: 30px;
+    width: 100%;
+    line-height:30px ;
+    border-bottom: 1px solid white;
     }
 
-
-
+    .menuBurger{
+        display: block;
+        position : absolute;
+        right: 10px;
+        top: 10px;
+        border: none;
+        background-color: white;
+        color: #E56F0E;
+        text-shadow: 2px,2px,1px,black;
+    }
     
 }

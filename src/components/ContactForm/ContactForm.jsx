@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GiCrosshair } from "react-icons/gi";
+import '../ContactForm/ContactForm.css'
 
 const ContactForm =()=>{
 
@@ -33,8 +34,8 @@ const ContactForm =()=>{
 
     return (
         <>
-        <div className="container mt-5 py-5 px-3 bg-dark ">
-            <p className="text-warning">Contactez nous :</p>
+        <div className="container mt-5 py-5 px-3  shadow-lg p-3 mb-5 bg-body rounded">
+            <p className=" text-title">Contactez nous :</p>
             <div className="row">
                 <div className="col-6">
                     <span className="d-flex justify-content-start">
@@ -66,7 +67,7 @@ const ContactForm =()=>{
                 </div>
                 <div className="col-12 mt-4">
                     <span className="d-flex justify-content-center">
-                    <button type="button" class="btn btn-warning" onClick={handleSend}>Envoyer</button> 
+                    <button type="button" class="btn" onClick={handleSend}>Envoyer</button> 
                     </span>
                 </div>
             </div>

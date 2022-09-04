@@ -1,0 +1,11 @@
+.text-title{
+    font-family: fontdot;
+    color:white;
+    background-color:#E56F0E;
+    padding : 5px;
+    padding-left: 20px;
+    border-radius: 12px;
+}
+.btn{
+    background-color :#E56F0E
+}
