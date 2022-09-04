@@ -1,0 +1,36 @@
+nav {
+    height: 50px;
+}
+.liste{
+
+    list-style-type: none;
+    background: #1C1109;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: aliceblue;
+    font-family: fontdot;
+    height: 50px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    
+}
+.items{
+    margin-right: 2rem;
+    cursor: pointer;
+    
+}
+.items:hover{
+    color:#E56F0E;
+}
+@media screen  and (max-width:768px){
+    .liste {
+        flex-direction: column;
+        height: auto;
+    }
+
+
+
+    
+}

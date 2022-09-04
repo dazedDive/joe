@@ -1,1 +1,8 @@
-
+@font-face{
+    font-family:"fontdot";
+    src:local("fontdot"),
+    url("./fonts/fontdot.ttf")
+}
+.font-face{
+    font-family: "fontdot" ;
+}

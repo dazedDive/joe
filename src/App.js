@@ -1,10 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+import NavBar from './components/NavBar/NavBar';
+import ContactForm from './components/ContactForm/ContactForm';
 
 function App() {
   return (
     <div className="App">
-     <h1 className="text-primary">test</h1>
+      <NavBar/>
+      <ContactForm/>
     </div>
   );
 }
