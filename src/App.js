@@ -3,11 +3,17 @@ import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import ContactForm from './components/ContactForm/ContactForm';
 import Footer from './components/Footer/Footer';
+import Error from './pages/Error/Error';
+import ProductCard from './components/ProductCard/ProductCard';
+import Machines from './pages/Machines/Machines';
+
+
+
 function App() {
   return (
     <div className="App">
       <NavBar/>
-      <ContactForm/>
+      <Machines/>
       <Footer/>
     </div>
   );

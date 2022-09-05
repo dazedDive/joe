@@ -4,3 +4,7 @@
     box-shadow: 0px -5px 5px grey;
     
 }
+.item-nav:hover{
+    transform: scale(1.1,1.1);
+    transition: 0.1s;
+}
