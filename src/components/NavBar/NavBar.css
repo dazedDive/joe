@@ -21,6 +21,8 @@ nav {
 
 
 .items{
+    text-decoration: none;
+    color : white;
     margin-right: 2rem;
     cursor: pointer;
     

@@ -1,4 +1,4 @@
-import '../Home/Homme.css'
+import '../Home/Home.css'
 
 const Home =()=>{
 
@@ -12,3 +12,4 @@ const Home =()=>{
         </>
     )
 }
+export default Home

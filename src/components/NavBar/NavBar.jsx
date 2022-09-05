@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import LogoNav from "../../../src/img/NavBarLogo.png"
 import { CgMenuRound } from "react-icons/cg";
-
+import { Link } from "react-router-dom";
 import '../NavBar/NavBar.css'
 
 const NavBar =()=>{
@@ -38,10 +38,10 @@ const NavBar =()=>{
             <nav>
                 {toggleMenu &&(
                 <ul className="liste">
-                    <div className="items">Acceuil</div>
-                    <div className="items">Nos Machines</div>
-                    <div className="items">Reserver</div>
-                    <div className="items">Contact</div>
+                    <Link to="/" className="items">Acceuil</Link>
+                    <Link to="/machines" className="items">Nos Machines</Link>
+                    <Link to="/reservation" className="items">Reserver</Link>
+                    <Link to="/contact" className="items">Contact</Link>
                 </ul>)}
                 <button className="menuBurger" onClick={handleClickMenu}><CgMenuRound className="fs-1"/></button>
             </nav>
