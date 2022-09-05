@@ -1,0 +1,10 @@
+.title-contact{
+    font-family: fontdot;
+    font-size: 40px;
+    transform: rotate(-6deg);
+}
+.title-contact:hover{
+    font-family: fontdot;
+    font-size: 45px;
+    color:chocolate;
+}

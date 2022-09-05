@@ -8,6 +8,8 @@ import ProductCard from './components/ProductCard/ProductCard';
 import Machines from './pages/Machines/Machines';
 import { Routes,Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
+import Contact from './pages/Contact/Contact';
+import Reserver from './pages/Reserver/Reserver';
 
 
 function App() {
@@ -17,8 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/machines" element={<Machines/>}/>
-        <Route path="/reservation" element={<Home/>}/>
-        <Route path="/contact" element={<Home/>}/>
+        <Route path="/reservation" element={<Reserver/>}/>
+        <Route path="/contact" element={<Contact/>}/>
         <Route path="/*" element={<Error/>}/>
 
         
