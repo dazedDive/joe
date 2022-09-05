@@ -33,7 +33,7 @@ const NavBar =()=>{
             
             </div>
             <div className="col-8 d-flex justify-content-center">
-                <span className="">
+                <span className="navigator">
             <img src={LogoNav} className="img-fluid d-none d-md-block"/>
             <nav>
                 {toggleMenu &&(

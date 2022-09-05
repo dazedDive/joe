@@ -1,8 +1,10 @@
+
+
 nav {
     height: 50px;
 }
 .liste{
-
+    
     list-style-type: none;
     background: #1C1109;
     display: flex;
@@ -14,9 +16,10 @@ nav {
     height: 50px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    
-    
+  
 }
+
+
 .items{
     margin-right: 2rem;
     cursor: pointer;
@@ -24,6 +27,8 @@ nav {
 }
 .items:hover{
     color:#E56F0E;
+    transform: scale(1.1 ,1.1);
+    transition: 0.3s;
 }
 .menuBurger{
     display: none;
