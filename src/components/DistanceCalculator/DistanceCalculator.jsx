@@ -13,6 +13,9 @@ const DistanceCalculator = ()=>{
     const [location, setLocation]=useState([])
     const [distance, setDistance]=useState()
 
+    const HandleCLick=()=>{
+        console.log(distance.routes)
+    }
     const HandleChange =(evt)=>{
         setInputCp(evt.target.value)
     }
@@ -37,15 +40,14 @@ const DistanceCalculator = ()=>{
     useEffect(()=>{
         if (cityLivraison){
         const test=coordinates.find(city=>city.nom === cityLivraison )  
-        setLocation (test && test.centre.coordinates)}
-
-        console.log(location);
+        setLocation (test && (test.centre.coordinates).toString())};
+         
         
         if (location){
-        const livraisonLocation =location.toString() ;
-        console.log("test : " + (livraisonLocation));
+        
+        
         const maretzLocation = "3.4079803,50.0523653";
-        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${livraisonLocation}?overview=false`;
+        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${location}?overview=false`;
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
         .then((rep)=>setDistance(rep))}
@@ -120,7 +122,7 @@ const DistanceCalculator = ()=>{
         <div className="col-6">
         <select className="form-select" aria-label="Default select example">
         <option selected>Ville de Facturation</option>
-        {cityListFact.map(({nom}) => <option value="1">{nom}</option>)}
+        {cityListFact.map(({nom,code}) => <option key={code} value="1">{nom}</option>)}
         
         </select>   
         </div>
@@ -152,7 +154,7 @@ const DistanceCalculator = ()=>{
 
         </div>
         <span className="d-flex justify-content-end">
-        <button type="button" className="btn btn-light mt-4 w-25 mb-5">Etape final</button>
+        <button type="button" className="btn btn-light mt-4 w-25 mb-5" onClick={HandleCLick}>Etape final</button>
         </span>
         </div>
         </>
