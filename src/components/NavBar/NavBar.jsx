@@ -27,7 +27,7 @@ const NavBar =()=>{
       },[])
     return (
     <>
-    <div class="container">
+    <div className="container">
         <div className="row mt-3">
             <div className="col-2">
             
