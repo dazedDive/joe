@@ -1,0 +1,18 @@
+
+import { useState } from "react";
+import { GiAbstract013 } from "react-icons/gi";
+const DateCard =({year,month,days,})=>{
+const [available,setAvailable]=useState(true)
+
+    return(
+        <>
+            <div className ="col-6">
+            <span className="d-flex justify-content-start ">
+                <button type="button" className="btn btn-secondary w-75 m-2"><GiAbstract013 className="fs-3"/> {days}</button>
+            </span>
+            </div>
+        </>
+    )
+}
+
+export default DateCard;

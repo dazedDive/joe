@@ -1,6 +1,6 @@
 
 
-const ProductCard = ({id,image,title,description}) =>{
+const ProductCard = ({id,image,title,description,price}) =>{
 
 
     return(

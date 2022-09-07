@@ -23,7 +23,8 @@ function Machines  (){
                 </span>
                 </div>
                 <div className="col-10">
-                <ProductCard image={"./assets/images/twilightzone.jpg"} title={"The TwilightZOne"}/>    
+                <ProductCard image={"./assets/images/twilightzone.jpg"} 
+                title={"The TwilightZOne"}/>    
                 </div>
                 <div className="col-1">
                 <span className="mt-5">

@@ -1,0 +1,11 @@
+.resa-dot{
+    font-family: fontdot;
+    font-size:30px
+}
+.resa-dot-2{
+    font-family: fontdot;
+    font-size:20px;
+    padding: 3px;
+    background-color:#E56F0E;
+    color : white
+}
