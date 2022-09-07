@@ -3,11 +3,12 @@ import '../DateSelector/DateSelector.css'
 import { useState } from 'react';
 import { MdOutlineAvTimer } from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from "react-icons/md";
 
 import 'swiper/css'
 import 'swiper/css/effect-cube'
 import DateCard from '../DateCard/DateCard';
-const DateSelector = ({time}) => {
+const DateSelector = () => {
     
 
 const datePool = [{year:2023,month:9,days:"du 6 au 8"},{year:2023,month:9,days:"du 13 au 15"},
@@ -17,6 +18,7 @@ const datePool = [{year:2023,month:9,days:"du 6 au 8"},{year:2023,month:9,days:"
 {year:2023,month:11,days:"du 17 au 19"},{year:2023,month:11,days:"du 24 au 26"},
 ]    
 
+
 ////////////fonction qui affiche le moi  et l'année en cour///////////
 
 const monthIndex = (new Date().getMonth())
@@ -24,31 +26,29 @@ const monthIndex = (new Date().getMonth())
 const year = (new Date().getFullYear())
 
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
-,"novembre","decembre","janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
 ,"novembre","decembre"]
-    const monthPageUn=monthName[monthIndex]
-    const monthPageDeux=monthName[monthIndex+1]
-    const monthPageTrois=monthName[monthIndex+2]
-    const monthPageQuatre=monthName[monthIndex+3]
-    const monthPageCinq=monthName[monthIndex+4]
-    const monthPageSix=monthName[monthIndex+5]
-    const monthPageSept=monthName[monthIndex+6]
-    const yearPageUn=year
-    const yearPageDeux=(monthIndex>10?year+1:year)
-    const yearPageTrois=(monthIndex+1>10?year+1:year)
-    const yearPageQuatre=(monthIndex+2>10?year+1:year)
-    const yearPageCinq=(monthIndex+3>10?year+1:year)
-    const yearPageSix=(monthIndex+4>10?year+1:year)
-    const yearPageSept=(monthIndex+5>10?year+1:year)
+const [month,setMonth]=useState(monthName[monthIndex])
+const [countMonth,setCountMonth]=useState(monthIndex)
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
 
 const [dateChoosen,setDateChoosen]= useState('selectionnez une date')
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location')
-const HandleTime =()=>{
-    setTimeRent(time)
+const [pageDate, setPageDate]= useState(1)
+const HandleTime =(evt)=>{
+    setTimeRent(evt.target.value)
     alert('click')
 }
-
+////////////////////////navigation du calendrier/////////////////////
+const HandleNext = () =>{
+    setPageDate(pageDate===7?1:pageDate+1)
+    setCountMonth(countMonth===11?0:countMonth+1)
+    setMonth(monthName[countMonth])
+}
+const HandlePrevious = ()=>{
+    setPageDate(pageDate===1?7:pageDate-1)
+    setCountMonth(countMonth===0?11:countMonth-1)
+    setMonth(monthName[countMonth])
+}
 
 
 
@@ -64,87 +64,18 @@ const HandleTime =()=>{
             <div className="col-12 col-md-6">
                 <h1 className="resa-dot">Selectionnez une date  </h1>
                 <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus tard le Dimanche Midi.</p>
-                
+            </div>
+            <div className="col-12 col-md-6">
+            <h1>{month}</h1>
+
+
+            <span className="d-flex justify-content-between mt-4">
+            <MdOutlineKeyboardArrowLeft className="fs-1 navbutton" onClick={HandlePrevious}/>
+            <MdOutlineKeyboardArrowRight className="fs-1 navbutton" onClick={HandleNext}/>
+            </span>
             </div>
         
-            <div className="col-12 col-md-6">
-                <Swiper>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageUn} {yearPageUn}</h6>
-                    <div className="container">
-                        <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 16 au 19"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 22 au 24"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 29 au 30"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageDeux} {yearPageDeux}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageTrois} {yearPageTrois}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageQuatre} {yearPageQuatre}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageCinq} {yearPageCinq}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageSix} {yearPageSix}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            
-                        
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <h6 className="resa-dot-2">{monthPageSept} {yearPageSept}</h6>
-                    <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                            <DateCard days={"du 9 au 11"} setDateChoosen={setDateChoosen} dateChoosen={dateChoosen}/>
-                        
-                        </div>
-                    </SwiperSlide>
-                </Swiper>
             
-            </div>
     
             <div className="container">
         <div className="row mt-5">
@@ -155,10 +86,10 @@ const HandleTime =()=>{
             <div className="col-12 col-md-6">
             <div className="row">
                 <div className="col-6">
-                <button type="button" className="btn btn-secondary w-50 m-2" time={"24H"} onClick={HandleTime}>24H</button>
+                <button type="button" className="btn btn-secondary w-50 m-2" value="24H" onClick={HandleTime}>24H</button>
                 </div>
                 <div className="col-6">
-                <button type="button" className="btn btn-secondary w-50 m-2" time={"48H"} onClick={HandleTime}>48H</button>
+                <button type="button" className="btn btn-secondary w-50 m-2" value="48H" onClick={HandleTime}>48H</button>
                 </div>
             </div>
             </div>
@@ -180,7 +111,8 @@ const HandleTime =()=>{
     <h3> Recapitulatif : </h3>
     <h4> date : {dateChoosen}</h4>
     <h4> durée : {timeRent}</h4>
-    <h4> </h4>
+    <h4> votre Flipper :</h4>
+    <h4> min bite</h4>
 
     </div>
   );

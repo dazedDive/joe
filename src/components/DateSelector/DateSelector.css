@@ -9,3 +9,7 @@
     background-color:#E56F0E;
     color : white
 }
+.navbutton:hover{
+    transform: scale(1.2,1.2);
+    
+}
