@@ -10,11 +10,11 @@ import DateCard from '../DateCard/DateCard';
 const DateSelector = () => {
     
 
-const datePool = [{year:2023,month:1,days:"du 6 au 8"},{year:2023,month:1,days:"du 13 au 15"},
-{year:2023,month:1,days:"du 20 au 22"},{year:2023,month:1,days:"du 27 au 1er Fevrier"},
-{year:2023,month:2,days:"du 17 au 19"},{year:2023,month:2,days:"du 24 au 26"},
-{year:2023,month:3,days:"du 3 au 5"},{year:2023,month:3,days:"du 10 au 12"},
-{year:2023,month:3,days:"du 17 au 19"},{year:2023,month:3,days:"du 24 au 26"},
+const datePool = [{year:2023,month:9,days:"du 6 au 8"},{year:2023,month:9,days:"du 13 au 15"},
+{year:2023,month:9,days:"du 20 au 22"},{year:2023,month:9,days:"du 27 au 1er Fevrier"},
+{year:2023,month:10,days:"du 17 au 19"},{year:2023,month:10,days:"du 24 au 26"},
+{year:2023,month:10,days:"du 3 au 5"},{year:2023,month:10,days:"du 10 au 12"},
+{year:2023,month:11,days:"du 17 au 19"},{year:2023,month:11,days:"du 24 au 26"},
 ]    
 
 ////////////fonction qui affiche le moi  et l'année en cour///////////
@@ -42,7 +42,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
     const yearPageSept=(monthIndex+5>10?year+1:year)
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
 
-
+const [dateChoosen,setDateChoosen]= useState('selectionnez une date')
 
 
   return (
@@ -66,7 +66,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
                     <h6 className="resa-dot-2">{monthPageUn} {yearPageUn}</h6>
                     <div className="container">
                         <div className="row mb-4">
-                            <DateCard days={"du 9 au 11"}/>
+                            <DateCard days={"du 9 au 11"} dateChoosen={dateChoosen} setDateChoosen={setDateChoosen}/>
                             <DateCard days={"du 9 au 11"}/>
                             <DateCard days={"du 9 au 11"}/>
                             <DateCard days={"du 9 au 11"}/>
@@ -140,6 +140,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
             </div>
         
         </div>
+    <h1> date :{dateChoosen}</h1>
     </div>
   );
 };

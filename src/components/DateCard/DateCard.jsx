@@ -1,14 +1,20 @@
 
 import { useState } from "react";
 import { GiAbstract013 } from "react-icons/gi";
-const DateCard =({year,month,days,})=>{
+import DateSelector from "../DateSelector/DateSelector";
+const DateCard =({year,month,days,setDateChoosen,dateChoosen})=>{
 const [available,setAvailable]=useState(true)
+
+    const HandleDate = (evt)=>{
+        setDateChoosen(days)
+    }
+
 
     return(
         <>
             <div className ="col-6">
             <span className="d-flex justify-content-start ">
-                <button type="button" className="btn btn-secondary w-75 m-2"><GiAbstract013 className="fs-3"/> {days}</button>
+                <button type="button" className="btn btn-secondary w-75 m-2"><GiAbstract013 className="fs-3" onClick={HandleDate}/> {days}</button>
             </span>
             </div>
         </>
