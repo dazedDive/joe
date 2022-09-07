@@ -6,6 +6,7 @@ const DateCard =({year,month,days,setDateChoosen,dateChoosen})=>{
 const [available,setAvailable]=useState(true)
 
     const HandleDate = (evt)=>{
+        alert('click')
         setDateChoosen(days)
     }
 
