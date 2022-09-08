@@ -5,6 +5,7 @@ import { MdOutlineAvTimer } from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCube } from 'swiper';
 import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from "react-icons/md";
+import useStateWithCallback from 'use-state-with-callback';
 
 import 'swiper/css'
 import 'swiper/css/effect-cube'
@@ -17,6 +18,7 @@ const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,mont
 {id:5,year:2022,month:10,days:"du 17 au 19"},{id:6,year:2022,month:10,days:"du 24 au 26"},
 {id:7,year:2022,month:10,days:"du 3 au 5"},{id:8,year:2022,month:10,days:"du 10 au 12"},
 {id:9,year:2022,month:11,days:"du 17 au 19"},{id:10,year:2022,month:11,days:"du 24 au 26"},
+{id:11,year:2023,month:1,days:"du 24 au 26"}
 ]    
 
 
@@ -39,7 +41,7 @@ const [dateChoosen,setDateChoosen]= useState('selectionnez une date'); ///ce set
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location');////ce setter enregistre la durée de location
 const [pageDate, setPageDate]= useState(1); ////ce setter limite la navigation a (+7/-0) mois par rapport au moi en cour
 const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
-const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month===countMonth+1)); /////ce setter filtre les seance=moi select
+const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex)); /////ce setter filtre les seance=moi select
 
 ////////////fonction pour le click de la duree de location
 const HandleTime =(evt)=>{
@@ -57,8 +59,8 @@ const HandleNext = () =>{
     setCountMonth(countMonth===11?0:countMonth+1)
     setMonth(monthName[countMonth])
     setYearIndex(countMonth===11?yearIndex+1:yearIndex)
-    setDateFilter(datePool.filter(seance=>seance.month===countMonth+2))
-    console.log(dateFilter)
+    // setDateFilter(datePool.filter(seance=>seance.month===countMonth+2 && seance.year===yearIndex))
+    
 
 }
 const HandlePrevious = ()=>{
@@ -66,11 +68,13 @@ const HandlePrevious = ()=>{
     setCountMonth(countMonth===0?11:countMonth-1)
     setMonth(monthName[countMonth])
     setYearIndex(countMonth===0?yearIndex-1:yearIndex)
-    setDateFilter(datePool.filter(seance=>seance.month===countMonth))
+    // setDateFilter(datePool.filter(seance=>seance.month===countMonth && seance.year===yearIndex))
 
 }
 
-
+useEffect(()=>{
+    setDateFilter(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex))
+})
 
 
   return (

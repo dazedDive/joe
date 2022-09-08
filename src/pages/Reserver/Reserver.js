@@ -7,7 +7,7 @@ const Reserver =()=>{
 
     return(
         <>
-        <DistanceCalculator/>
+        <DateSelector/>
         </>
 
     )
