@@ -9,7 +9,7 @@ const Footer = () =>{
 
     return(
         <>
-        <div className="container-fluid footerstyle py-2 fixed-bottom">
+        <div className="container-fluid footerstyle py-2">
             <span className="d-flex justify-content-end">
                 <p className="m-2 text-white">Mentions Légales</p>
                 <SiFacebook className='item-nav fs-1 me-2 text-white'/>

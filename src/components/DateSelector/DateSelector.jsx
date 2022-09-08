@@ -11,29 +11,32 @@ import DateCard from '../DateCard/DateCard';
 const DateSelector = () => {
     
 
-const datePool = [{year:2023,month:9,days:"du 6 au 8"},{year:2023,month:9,days:"du 13 au 15"},
-{year:2023,month:9,days:"du 20 au 22"},{year:2023,month:9,days:"du 27 au 1er Fevrier"},
-{year:2023,month:10,days:"du 17 au 19"},{year:2023,month:10,days:"du 24 au 26"},
-{year:2023,month:10,days:"du 3 au 5"},{year:2023,month:10,days:"du 10 au 12"},
-{year:2023,month:11,days:"du 17 au 19"},{year:2023,month:11,days:"du 24 au 26"},
+const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,month:9,days:"du 13 au 15"},
+{id:3,year:2022,month:9,days:"du 20 au 22"},{id:4,year:2022,month:9,days:"du 27 au 1er Fevrier"},
+{id:5,year:2022,month:10,days:"du 17 au 19"},{id:6,year:2022,month:10,days:"du 24 au 26"},
+{id:7,year:2022,month:10,days:"du 3 au 5"},{id:8,year:2022,month:10,days:"du 10 au 12"},
+{id:9,year:2022,month:11,days:"du 17 au 19"},{id:10,year:2022,month:11,days:"du 24 au 26"},
 ]    
+
+
 
 
 ////////////fonction qui affiche le moi  et l'année en cour///////////
 
 const monthIndex = (new Date().getMonth())
 
-const year = (new Date().getFullYear())
+
 
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
 ,"novembre","decembre"]
 const [month,setMonth]=useState(monthName[monthIndex])
 const [countMonth,setCountMonth]=useState(monthIndex)
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
-
+const [monthList,setMontList]=useState([])
 const [dateChoosen,setDateChoosen]= useState('selectionnez une date')
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location')
 const [pageDate, setPageDate]= useState(1)
+const [yearIndex,setYearIndex]=useState(new Date().getFullYear())
 const HandleTime =(evt)=>{
     setTimeRent(evt.target.value)
     alert('click')
@@ -43,11 +46,13 @@ const HandleNext = () =>{
     setPageDate(pageDate===7?1:pageDate+1)
     setCountMonth(countMonth===11?0:countMonth+1)
     setMonth(monthName[countMonth])
+    setYearIndex(countMonth===11?yearIndex+1:yearIndex)
 }
 const HandlePrevious = ()=>{
     setPageDate(pageDate===1?7:pageDate-1)
     setCountMonth(countMonth===0?11:countMonth-1)
     setMonth(monthName[countMonth])
+    setYearIndex(countMonth===0?yearIndex-1:yearIndex)
 }
 
 
@@ -66,12 +71,16 @@ const HandlePrevious = ()=>{
                 <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus tard le Dimanche Midi.</p>
             </div>
             <div className="col-12 col-md-6">
-            <h1>{month}</h1>
-
-
+                <div className="row">
+            <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
+           
+           {datePool.map(({id, days,year}) =><DateCard key={id} days={days+" "} year={year} />)}
+                </div>
+            
             <span className="d-flex justify-content-between mt-4">
-            <MdOutlineKeyboardArrowLeft className="fs-1 navbutton" onClick={HandlePrevious}/>
-            <MdOutlineKeyboardArrowRight className="fs-1 navbutton" onClick={HandleNext}/>
+            
+            <MdOutlineKeyboardArrowLeft className={`btn fs-1 navbutton ${pageDate===1&&"disabled"  }`} onClick={HandlePrevious}/>
+            <MdOutlineKeyboardArrowRight className={`btn fs-1 navbutton ${pageDate===7&&"disabled"  }`} onClick={HandleNext}/>
             </span>
             </div>
         
