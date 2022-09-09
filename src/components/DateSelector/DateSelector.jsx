@@ -3,12 +3,13 @@ import '../DateSelector/DateSelector.css'
 import { useEffect, useState } from 'react';
 import { MdOutlineAvTimer } from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCube } from 'swiper';
+
 import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from "react-icons/md";
-import useStateWithCallback from 'use-state-with-callback';
+
 
 import 'swiper/css'
-import 'swiper/css/effect-cube'
+import Machines from '../../pages/Machines/Machines';
+import ProductCard from '../ProductCard/ProductCard';
 import DateCard from '../DateCard/DateCard';
 const DateSelector = () => {
     
@@ -37,7 +38,7 @@ const [countMonth,setCountMonth]=useState(monthIndex);////ce seter sert a navigu
 const [flipper,setFlipper]=useState("The Twilight Zone"); //// ce seter sert a enregistrer le choix de flipper
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
 
-const [dateChoosen,setDateChoosen]= useState('selectionnez une date'); ///ce setter enregistre la date de la carddate
+const [dateChoosen,setDateChoosen]= useState(['selectionnez une date','','']); ///ce setter enregistre la date de la carddate
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location');////ce setter enregistre la durée de location
 const [pageDate, setPageDate]= useState(1); ////ce setter limite la navigation a (+7/-0) mois par rapport au moi en cour
 const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
@@ -94,9 +95,10 @@ useEffect(()=>{
                 <div className="row">
             <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
            
-           {dateFilter.map(({id,days,year}) =>
+           {dateFilter.map(({id,days,year,month}) =>
            <DateCard key={id} 
            days={days+" "} 
+           month={monthName[countMonth]+" "}
            year={year}
            setDateChoosen={setDateChoosen} />)}
                 </div>
@@ -128,46 +130,26 @@ useEffect(()=>{
             </div>
         </div>
     </div>
+    </div>
     
     <div className="container">
         <div className="row mt-5">
-            <div className="col-12 col-md-6">
-            <h1 className="resa-dot">Selectionnez votre flipper :</h1>
-            <p>Chaque flipper sera révisé et nettoyé avant location</p>
-            </div>
-            
-                <Swiper modules={[EffectCube]} effect="cube">
+            <div className="col-6">
+                <h1 className="resa-dot">Selectionnez votre flipper :</h1>
+                <p>Chaque flipper sera révisé et nettoyé avant location</p>
+                <Swiper>
                     <SwiperSlide>
-                    <div className="card bg-dark text-white" >
-                    <img src="./assets/images/twilightzone.jpg" className="card-img w-50" alt="..."/>
-                    <div className="card-img-overlay" onClick={HandleFlipper} value="The Twilight Zone">
-                    <h1 className="card-title text-dark bg-light">Twilight Zone</h1>
-                    <p className="card-text bg-dark">Life is a one way street, expect, in the trwilight zone</p>
-                    <p className="card-text bg-dark">A partie de 119€ TTC</p>
-                    </div>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide >
-                    <div className="card bg-dark text-white" onClick={HandleFlipper} value="Idiana Jones">
-                    <img src="./assets/images/indianajones.jpg" className="card-img w-50" alt="..." />
-                    <div className="card-img-overlay"  >
-                    <h1 className="card-title text-dark bg-light">IndianaJones</h1>
-                    <p className="card-text bg-dark">A ne pas confondre avec Lego India agence</p>
-                    <p className="card-text bg-dark">A partie de 99€ TTC</p>
-                    </div>
-                    </div>
+                          
                     </SwiperSlide>
                 </Swiper>
-            
+            </div>
+            <div className="col-6">
+                <h1 className="resa-dot">recapitulatif: </h1>
+                <p className="orange">Date du {dateChoosen}</p>
+                <p className="orange">Durée de location : {timeRent}</p>
+            </div>
         </div>
     </div>
-    </div >
-    <h3> Recapitulatif : </h3>
-    <h4> date : {dateChoosen}</h4>
-    <h4> durée : {timeRent}</h4>
-    <h4> votre Flipper : {flipper}</h4>
-    <h4> min bite</h4>
-
     </div>
   );
 };

@@ -15,7 +15,7 @@ const listDescprition = desciptionList.map(item=><ul key={Math.random()*1000}><l
                     <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{description}</p>
-                    {listDescprition }
+                     
                     <h4 className="card-text price-text text-center mt-2"> A partir de {price} €</h4>
                     </div>
                 </div>
