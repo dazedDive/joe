@@ -10,11 +10,13 @@ import { Routes,Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
 import Reserver from './pages/Reserver/Reserver';
+import HeaderLogin from './components/HeaderLogin/HeaderLogin';
 
 
 function App() {
   return (
     <div className="App">
+      <HeaderLogin/>
       <NavBar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
