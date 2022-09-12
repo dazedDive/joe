@@ -11,6 +11,7 @@ const Footer = () =>{
         <>
         <div className="container-fluid footerstyle py-2">
             <span className="d-flex justify-content-end">
+                <p className="m-2 text-white">Conditions gérérales de vente</p>
                 <p className="m-2 text-white">Mentions Légales</p>
                 <SiFacebook className='item-nav fs-1 me-2 text-white'/>
                 <SiInstagram className='item-nav fs-1 me-2 text-white'/>

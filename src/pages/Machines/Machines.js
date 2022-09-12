@@ -25,14 +25,11 @@ function Machines  (){
                 <div className="col-10">
                 <ProductCard image={"./assets/images/twilightzone.jpg"} 
                 title={"The TwilightZOne"}
-                description="Twilight Zone de Bally est un flipper mythique, basé sur la célèbre série télévisé 
-                du même nom (en français, la Quatrième Dimension). C'est un flipper large, 
-                conçu par le célèbre Pat Lawlor. Il présente un distributeur de chewing-gums qui stocke les billes,
-                 de nombreuses lampes flash, des rampes sous le plateau.."
+                description="blank"
                  price={119}
-                 desciptionList={[{option1:"numéro 1 au classement IPDB",option2:"Présence d'une bille ceramique",
-                 option3:"ecran DOT avec animation",option4:"Large plateau",
-                 option5:"de nombreuses missions",option6:"un mode ultime avec 6 Billes"}]}/>  
+                 desciptionList={[{option1:"blank",option2:"blank",
+                 option3:"blank",option4:"blank",
+                 option5:"blank",option6:"blank"}]}/>  
                  
                 </div>
                 <div className="col-1">

@@ -13,3 +13,9 @@
     transform: scale(1.2,1.2);
     
 }
+.bgorange{
+    background-color: #E56F0E;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 3px 3px 9px black;
+}
