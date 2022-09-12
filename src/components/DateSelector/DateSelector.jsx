@@ -36,7 +36,11 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
 const [month,setMonth]=useState(monthName[monthIndex]);//////ce seter sert a afficher le moi selon la navigation
 const [countMonth,setCountMonth]=useState(monthIndex);////ce seter sert a naviguer a partir du getMonth
 const [flipper,setFlipper]=useState("The Twilight Zone"); //// ce seter sert a enregistrer le choix de flipper
-const [priceHorsFds, setPriceHorsFdp]=useState(0)
+
+//////////////////Calcul du prix///////////////
+const [priceByTime,setPriceByTime]=useState(1)
+const [priceByFlipper,setPriceByFlipper] = useState(99)
+const [price, setPrice]=useState(priceByFlipper*priceByTime)
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
 
 const [dateChoosen,setDateChoosen]= useState(['selectionnez une date','','']); ///ce setter enregistre la date de la carddate
@@ -47,14 +51,20 @@ const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month=
 
 ////////////fonction pour le click de la duree de location
 const HandleTime =(evt)=>{
-    setTimeRent(evt.target.value)
-    alert('click')
+        setTimeRent(evt.target.value)
+        alert(timeRent)
+}
+const HandlePriceTime =(props)=>{
+    setPriceByTime(props)
+    console.log(props)
 }
 ////////////fonction pour le click du flipper choisie
 const HandleFlipper =(evt)=>{
     setFlipper(evt.target.value)
     alert(evt.target.value)
 }
+
+
 ////////////////////////navigation du calendrier/////////////////////
 const HandleNext = () =>{
     setPageDate(pageDate===7?1:pageDate+1)
@@ -74,9 +84,14 @@ const HandlePrevious = ()=>{
 
 }
 
+const handelClick = (v) => {
+    HandleTime();
+    HandlePriceTime(v);
+}
+
 useEffect(()=>{
     setDateFilter(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex))
-})
+    },[pageDate])
 
 
   return (
@@ -113,11 +128,11 @@ useEffect(()=>{
         
             
     
-            <div className="container bg-light p-5">
+            <div className="container bg-light p-3 mt-2">
         <div className="row mt-5">
             <div className="col-12 col-md-6">
             <h1 className="resa-dot ">Durée de la location  </h1>
-            <p>Choissisez pour 24 ou 48H</p>
+            <p>Choissisez pour 24 ou 48H, ainsi que la journée.</p>
             </div>
             <div className="col-12 col-md-6">
             <div className="row">
@@ -148,50 +163,50 @@ useEffect(()=>{
                 </span>
                 <Swiper className="mb-5">
                     <SwiperSlide>
-                    <div class="card" >
-                    <img src="./assets/images/popo.jpg" class="card-img-top w-50" alt="..."/>
-                    <div class="card-body">
-                    <h4 class="card-text ">the Twilight-Zone</h4>
+                    <div className="card" >
+                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    <div className="card-body">
+                    <h4 className="card-text ">the Twilight-Zone</h4>
                     <button type="button" className="btn btn-secondary  m-2" value="The Twilight Zone" 
                     onClick={HandleFlipper}>Selectionnez</button>
                     </div>
                     </div> 
                     </SwiperSlide>
                     <SwiperSlide>
-                    <div class="card" >
-                    <img src="./assets/images/popo.jpg" class="card-img-top w-50" alt="..."/>
-                    <div class="card-body">
-                    <p class="card-text">Tommy The Who</p>
+                    <div className="card" >
+                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    <div className="card-body">
+                    <p className="card-text">Tommy The Who</p>
                     <button type="button" className="btn btn-secondary  m-2" value="Tommy The Who" 
                     onClick={HandleFlipper}>Selectionnez</button>
                     </div>
                     </div> 
                     </SwiperSlide>
                     <SwiperSlide>
-                    <div class="card" >
-                    <img src="./assets/images/popo.jpg" class="card-img-top w-50" alt="..."/>
-                    <div class="card-body">
-                    <p class="card-text">Guns n' Roses</p>
+                    <div className="card" >
+                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    <div className="card-body">
+                    <p className="card-text">Guns n' Roses</p>
                     <button type="button" className="btn btn-secondary  m-2" value="Guns n Roses" 
                     onClick={HandleFlipper}>Selectionnez</button>
                     </div>
                     </div> 
                     </SwiperSlide>
                     <SwiperSlide>
-                    <div class="card" >
-                    <img src="./assets/images/popo.jpg" class="card-img-top w-50" alt="..."/>
-                    <div class="card-body">
-                    <p class="card-text">Poupoule</p>
+                    <div className="card" >
+                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    <div className="card-body">
+                    <p className="card-text">Poupoule</p>
                     <button type="button" className="btn btn-secondary  m-2" value="Poupoule" 
                     onClick={HandleFlipper}>Selectionnez</button>
                     </div>
                     </div> 
                     </SwiperSlide>
                     <SwiperSlide>
-                    <div class="card" >
-                    <img src="./assets/images/popo.jpg" class="card-img-top w-50" alt="..."/>
-                    <div class="card-body">
-                    <p class="card-text">Aline aux pays des Pines</p>
+                    <div className="card" >
+                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    <div className="card-body">
+                    <p className="card-text">Aline aux pays des Pines</p>
                     <button type="button" className="btn btn-secondary  m-2" value="Guns n Roses" 
                     onClick={HandleFlipper}>Aline aux pays des Pines</button>
                     </div>
@@ -205,7 +220,7 @@ useEffect(()=>{
                 <p className="text-white fw-bold">Date du : {dateChoosen}</p>
                 <p className="text-white fw-bold">Durée de location : {timeRent}</p>
                 <p className="text-white fw-bold">Flipper : {flipper}</p>
-                <p className="text-white fw-bold">Prix TTC hors livraison : {priceHorsFds} €/TTC</p>
+                <p className="text-white fw-bold">Prix TTC hors livraison : {price} €/TTC</p>
                 </div>
                 <button type="button" className="btn btn-secondary w-50 m-2" value="48H" onClick={HandleTime}>Etape suivante</button>
             </div>
