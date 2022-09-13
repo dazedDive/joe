@@ -52,7 +52,9 @@ const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month=
 ////////////fonction pour le click de la duree de location
 const HandleTime =(evt)=>{
         setTimeRent(evt.target.value)
-        
+        if (evt.target.value==="2 jours : Samedi et dimanche"){
+            setPriceByTime(2)
+        }
     
 }
 
