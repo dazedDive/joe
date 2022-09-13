@@ -141,7 +141,7 @@ useEffect(()=>{
             <div className="col-12 col-md-6">
             <div className="row">
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" onClick={()=>{HandleTime();HandlePriceByTime(2)}}>1jour : SAMEDI</button>
+                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" onClick={HandleTime}>1jour : SAMEDI</button>
                 </div>
                 <div className="col-4">
                 <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" onClick={HandleTime}>1jour : DIMANCHE </button>
