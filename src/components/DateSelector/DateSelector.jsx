@@ -52,16 +52,17 @@ const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month=
 ////////////fonction pour le click de la duree de location
 const HandleTime =(evt)=>{
         setTimeRent(evt.target.value)
-        alert(timeRent)
+        
+    
 }
-const HandlePriceTime =(props)=>{
-    setPriceByTime(props)
-    console.log(props)
-}
+
 ////////////fonction pour le click du flipper choisie
 const HandleFlipper =(evt)=>{
     setFlipper(evt.target.value)
     alert(evt.target.value)
+}
+const HandlePriceByTime =(props)=>{
+    setPriceByTime(props)
 }
 
 
@@ -84,14 +85,17 @@ const HandlePrevious = ()=>{
 
 }
 
-const handelClick = (v) => {
-    HandleTime();
-    HandlePriceTime(v);
-}
+
 
 useEffect(()=>{
     setDateFilter(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex))
     },[pageDate])
+
+    useEffect(()=>{
+        setPrice(priceByFlipper*priceByTime)
+    },[priceByTime,priceByFlipper])
+
+
 
 
   return (
@@ -137,7 +141,7 @@ useEffect(()=>{
             <div className="col-12 col-md-6">
             <div className="row">
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" onClick={HandleTime}>1jour : SAMEDI</button>
+                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" onClick={()=>{HandleTime();HandlePriceByTime(2)}}>1jour : SAMEDI</button>
                 </div>
                 <div className="col-4">
                 <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" onClick={HandleTime}>1jour : DIMANCHE </button>
