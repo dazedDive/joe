@@ -2,7 +2,7 @@ import '../Contact/Contact.css'
 import ContactForm from "../../components/ContactForm/ContactForm"
 import {BsFillTelephoneFill} from "react-icons/bs"
 import {MdAlternateEmail} from "react-icons/md"
-
+import carte from '../.././img/carte.png'
 
 const Contact = () =>{
 
@@ -13,8 +13,9 @@ const Contact = () =>{
             <div className="col-6">
             <h5 className="title-contact">Une question? </h5>
             <h5 className="title-contact">Un renseignement?</h5>
+            
             </div>
-            <div className="col-6">
+            <div className="col-6 col-md-2">
             <h5>Joe Arcade</h5>
             <p> 12 rue du Renard, 59878 Maretz</p>
             <span className="d-flex justify-content-start">
@@ -25,6 +26,9 @@ const Contact = () =>{
             <MdAlternateEmail className="fs-4"/>
             <p className="ms-2">joearcade@gmail.com</p>
             </span>
+            </div>
+            <div className="col-6 col-md-4">
+            <img src={carte} alt="carte" className="img-fluid"></img>
             </div>
         </div>
         </div>

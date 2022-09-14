@@ -53,7 +53,11 @@ const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month=
 const HandleTime =(evt)=>{
         setTimeRent(evt.target.value)
         if (evt.target.value==="2 jours : Samedi et dimanche"){
-            setPriceByTime(2)
+            setPriceByTime(1.75);
+        }else if (evt.target.value==="journée du Dimanche"){
+            setPriceByTime(1.35);
+        }else{
+            setPriceByTime(1);
         }
     
 }
@@ -61,11 +65,16 @@ const HandleTime =(evt)=>{
 ////////////fonction pour le click du flipper choisie
 const HandleFlipper =(evt)=>{
     setFlipper(evt.target.value)
-    alert(evt.target.value)
-}
-const HandlePriceByTime =(props)=>{
-    setPriceByTime(props)
-}
+    if (evt.target.value==="The Twilight Zone"){
+        setPriceByFlipper(99) 
+    }else if (evt.target.value==="Tommy The Who"){
+        setPriceByFlipper(79)
+    }else if (evt.target.value==="Guns n Roses"){
+        setPriceByFlipper(89)
+    }else if (evt.target.value==="Poupoule"){
+        setPriceByFlipper(69)}
+    }
+
 
 
 ////////////////////////navigation du calendrier/////////////////////
@@ -111,7 +120,9 @@ useEffect(()=>{
 
             <div className="col-12 col-md-6">
                 <h1 className="resa-dot">Selectionnez une date  </h1>
-                <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus tard le Dimanche Midi.</p>
+                <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus 
+                    tard le Dimanche Midi.</p>
+                <p className="orange">{dateChoosen}</p>
             </div>
             <div className="col-12 col-md-6">
                 <div className="row">
@@ -139,6 +150,7 @@ useEffect(()=>{
             <div className="col-12 col-md-6">
             <h1 className="resa-dot ">Durée de la location  </h1>
             <p>Choissisez pour 24 ou 48H, ainsi que la journée.</p>
+            <p className="orange">{timeRent}</p>
             </div>
             <div className="col-12 col-md-6">
             <div className="row">

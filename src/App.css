@@ -6,3 +6,9 @@
 .font-face{
     font-family: "fontdot" ;
 }
+
+body{
+    background-image: url(.././public/assets/images/fond.jpg);
+    background-position: fixed;
+    background-size:auto;
+}
