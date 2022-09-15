@@ -28,7 +28,7 @@ const Contact = () =>{
             </span>
             </div>
             <div className="col-12 col-md-4">
-            <img src={carte} alt="carte" className="img-fluid"></img>
+            <img src={carte} alt="carte" className="img-fluid w-75"></img>
             </div>
         </div>
         </div>
