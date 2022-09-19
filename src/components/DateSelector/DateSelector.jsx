@@ -8,8 +8,7 @@ import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from "react-ic
 
 
 import 'swiper/css'
-import Machines from '../../pages/Machines/Machines';
-import ProductCard from '../ProductCard/ProductCard';
+
 import DateCard from '../DateCard/DateCard';
 const DateSelector = () => {
     
@@ -35,7 +34,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
 ,"novembre","decembre"]; /////on utilisera le moi en valeur numérique comme indice pour afficher le moi en string
 const [month,setMonth]=useState(monthName[monthIndex]);//////ce seter sert a afficher le moi selon la navigation
 const [countMonth,setCountMonth]=useState(monthIndex);////ce seter sert a naviguer a partir du getMonth
-const [flipper,setFlipper]=useState("The Twilight Zone"); //// ce seter sert a enregistrer le choix de flipper
+const [flipper,setFlipper]=useState("selectionnez un flipper"); //// ce seter sert a enregistrer le choix de flipper
 
 //////////////////Calcul du prix///////////////
 const [priceByTime,setPriceByTime]=useState(1)
@@ -48,10 +47,13 @@ const [timeRent, setTimeRent] = useState('selectionnez une durée de location');
 const [pageDate, setPageDate]= useState(1); ////ce setter limite la navigation a (+7/-0) mois par rapport au moi en cour
 const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
 const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex)); /////ce setter filtre les seance=moi select
-
+const [dateControl, setDateControl]=useState(false);///controller qui verifie que le choix de date est ok
+const [timeControl, setTimeControl]=useState(false);///controller qui verifie que le choix de temp est ok
+const [flipperControl, setFlipperControl]=useState(false);
 ////////////fonction pour le click de la duree de location
 const HandleTime =(evt)=>{
         setTimeRent(evt.target.value)
+        setTimeControl(true)
         if (evt.target.value==="2 jours : Samedi et dimanche"){
             setPriceByTime(1.75);
         }else if (evt.target.value==="journée du Dimanche"){
@@ -64,7 +66,8 @@ const HandleTime =(evt)=>{
 
 ////////////fonction pour le click du flipper choisie
 const HandleFlipper =(evt)=>{
-    setFlipper(evt.target.value)
+    setFlipper(evt.target.value);
+    setFlipperControl(true);
     if (evt.target.value==="The Twilight Zone"){
         setPriceByFlipper(99) 
     }else if (evt.target.value==="Tommy The Who"){
@@ -83,7 +86,7 @@ const HandleNext = () =>{
     setCountMonth(countMonth===11?0:countMonth+1)
     setMonth(monthName[countMonth])
     setYearIndex(countMonth===11?yearIndex+1:yearIndex)
-    // setDateFilter(datePool.filter(seance=>seance.month===countMonth+2 && seance.year===yearIndex))
+    
     
 
 }
@@ -92,13 +95,13 @@ const HandlePrevious = ()=>{
     setCountMonth(countMonth===0?11:countMonth-1)
     setMonth(monthName[countMonth])
     setYearIndex(countMonth===0?yearIndex-1:yearIndex)
-    // setDateFilter(datePool.filter(seance=>seance.month===countMonth && seance.year===yearIndex))
+    
 
 }
 
 
 
-useEffect(()=>{
+    useEffect(()=>{
     setDateFilter(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex))
     },[pageDate])
 
@@ -133,7 +136,9 @@ useEffect(()=>{
            days={days+" "} 
            month={monthName[countMonth]+" "}
            year={year}
-           setDateChoosen={setDateChoosen} />)}
+           setDateChoosen={setDateChoosen}
+           setDateControl={setDateControl} 
+           dateControl={dateControl}/>)}
                 </div>
             
             <span className="d-flex justify-content-between mt-4">
@@ -235,12 +240,14 @@ useEffect(()=>{
             <div className="col-12 col-md-6">
                 <div className="bgorange">
                 <h1 className="resa-dot text-white">recapitulatif: </h1>
-                <p className="text-white fw-bold">Date du : {dateChoosen}</p>
-                <p className="text-white fw-bold">Durée de location : {timeRent}</p>
-                <p className="text-white fw-bold">Flipper : {flipper}</p>
-                <p className="text-white fw-bold">Prix TTC hors livraison : {price} €/TTC</p>
+                <p className={`${dateControl ===true ? "text-black fw-bold" : "text-white "}`} >Date du : {dateChoosen}</p>
+                <p className={`${timeControl ===true ? "text-black fw-bold" : "text-white "}`}>Durée de location : {timeRent}</p>
+                <p className={`${flipperControl ===true ? "text-black fw-bold" : "text-white "}`}>Flipper : {flipper}</p>
+                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "text-black fw-bold d-block" : "d-none "}`}>Prix TTC hors livraison : {price} €/TTC</p>
                 </div>
-                <button type="button" className="btn btn-secondary w-50 m-2" value="48H" onClick={HandleTime}>Etape suivante</button>
+                <button type="button" 
+            className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
+         value={price} onClick={HandleTime}>Etape suivante</button>
             </div>
         </div>
     </div>

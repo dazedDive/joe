@@ -11,11 +11,21 @@ import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
 import Reserver from './pages/Reserver/Reserver';
 import HeaderLogin from './components/HeaderLogin/HeaderLogin';
+import { useEffect,useState } from 'react';
+
 
 
 function App() {
+  const [test,setTest]= useState('')
+  fetch('http://joe.api//')
+    .then(res=>res.text())
+    .then(text=>setTest(text))
+  useEffect(()=>{
+    
+  },[])
   return (
     <div className="App">
+      {test}
       <HeaderLogin/>
       <NavBar/>
       <Routes>

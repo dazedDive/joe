@@ -7,7 +7,8 @@ const Reserver =()=>{
 
     return(
         <>
-        <DateSelector/>
+        <DateSelector />
+       
         </>
 
     )

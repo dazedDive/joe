@@ -2,12 +2,13 @@
 import { useState } from "react";
 import { GiPinballFlipper } from "react-icons/gi";
 import DateSelector from "../DateSelector/DateSelector";
-const DateCard =({year,month,days,setDateChoosen,dateChoosen})=>{
+const DateCard =({year,month,days,setDateChoosen,setDateControl})=>{
 const [available,setAvailable]=useState(true)
 
     const HandleDate = (evt)=>{
         alert(`vous avez choisi la date : ${days} ${month} ${year}`)
         setDateChoosen([days,month,year])
+        setDateControl(true)
     }
 
 
