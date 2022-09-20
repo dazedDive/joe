@@ -1,0 +1,15 @@
+.item{
+    color: black;
+    text-decoration: none;
+    text-decoration: underline;
+}
+.item:hover{
+    text-shadow: 1px 1px 3px rgb(140, 140, 140);
+    transform: scale(1.05, 1.05);
+}
+.menubar{
+    border-radius: 9px;
+    padding: 4px;
+    margin-left: 0;
+    box-shadow: 2px 2px 3px grey;
+}

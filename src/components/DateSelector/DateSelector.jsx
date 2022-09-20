@@ -10,6 +10,8 @@ import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft} from "react-ic
 import 'swiper/css'
 
 import DateCard from '../DateCard/DateCard';
+import { useNavigate } from 'react-router-dom';
+
 const DateSelector = () => {
     
 
@@ -27,7 +29,7 @@ const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,mont
 ////////////fonction qui affiche le moi  et l'année en cour///////////
 
 const monthIndex = (new Date().getMonth()); ///////on recupere le moi de la Date Actuel afin de l'utiliser pour afficher le moi en cour
-
+const navigate=useNavigate();
 
 
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
@@ -247,7 +249,7 @@ const HandlePrevious = ()=>{
                 </div>
                 <button type="button" 
             className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
-         value={price} onClick={HandleTime}>Etape suivante</button>
+         value={price} onClick={()=>{navigate('')}}>Etape suivante</button>
             </div>
         </div>
     </div>

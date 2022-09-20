@@ -12,6 +12,14 @@ import Contact from './pages/Contact/Contact';
 import Reserver from './pages/Reserver/Reserver';
 import HeaderLogin from './components/HeaderLogin/HeaderLogin';
 import { useEffect,useState } from 'react';
+import BaseScreenAdmin from './pages/BaseScreenAdmin';
+import BaseScreen from './pages/BaseScreen';
+import DateAdmin from './pages/DateAdmin/DateAdmin';
+import FlipperAdmin from './pages/FlipperAdmin/FlipperAdmin';
+import CustomerAdmin from './pages/CustomerAdmin/CustomerAdmin';
+import ImageAdmin from './pages/ImageAdmin/ImageAdmin';
+import OrderAdmin from './pages/OrderAdmin/OrderAdmin';
+import StatAdmin from './pages/StatAdmin/StatAdmin';
 
 
 
@@ -26,18 +34,27 @@ function App() {
   return (
     <div className="App">
       {test}
-      <HeaderLogin/>
-      <NavBar/>
+      
+      
       <Routes>
+      <Route path="/" element={<BaseScreen/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/machines" element={<Machines/>}/>
         <Route path="/reservation" element={<Reserver/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/*" element={<Error/>}/>
+      </Route>
+      <Route path="/admninjosh" element={<BaseScreenAdmin/>}>
+      <Route path="/admninjosh/date" element={<DateAdmin/>}/>
+      <Route path="/admninjosh/flipper" element={<FlipperAdmin/>}/>
+      <Route path="/admninjosh/customer" element={<CustomerAdmin/>}/>
+      <Route path="/admninjosh/order" element={<OrderAdmin/>}/>
+      <Route path="/admninjosh/image" element={<ImageAdmin/>}/>
+      <Route path="/admninjosh/stat" element={<StatAdmin/>}/>
 
-        
+      </Route>
       </Routes>
-      <Footer/>
+      
     </div>
   );
 }
