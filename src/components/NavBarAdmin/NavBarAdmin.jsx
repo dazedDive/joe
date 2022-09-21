@@ -7,7 +7,8 @@ import { BsCalendarDateFill,
     BsFileBarGraphFill,
     BsFacebook,
     BsInstagram,
-    BsFillEmojiAngryFill} from "react-icons/bs";
+    BsFillEmojiAngryFill,
+    BsGear} from "react-icons/bs";
 import { GiPinballFlipper} from "react-icons/gi";
 import { RiMoneyPoundCircleFill} from "react-icons/ri";
 import { Link } from 'react-router-dom';
@@ -40,6 +41,15 @@ const NavBarAdmin = () => {
                         <span className="d-flex justify-content-start item">
                         <BsFillPersonFill className="fs-5"></BsFillPersonFill>
                         <p className=" ms-3 item">Gestion Clients</p>
+                        </span>
+                        </Link>
+                    </li>
+
+                    <li className="item mt-2">
+                        <Link  to="/admninjosh/frais"> 
+                        <span className="d-flex justify-content-start item">
+                        <BsGear className="fs-5"></BsGear>
+                        <p className=" ms-3 item">Gestion frais</p>
                         </span>
                         </Link>
                     </li>
