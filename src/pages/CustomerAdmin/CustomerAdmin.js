@@ -2,19 +2,50 @@ import React, { useState, useEffect } from 'react';
 
 
 const CustomerAdmin = () => {
+
     const [customers,setCustomers]=useState([])
+
     useEffect(()=>{
         fetch("http://joe.api/app_user")
         .then(resp=>resp.json())
         .then(json=>{
             setCustomers(json)
         })
-    },[customers])
+    },[])
+
+        const HandleAZ = () =>{
+        customers.sort((a,b) => {return a.last_name > b.last_name ? + 1 : -1;});
+        setCustomers(customers)
+    }
+
+    const HandleZA = () =>{
+        setCustomers(customers.sort((a,b) => {return a.last_name < b.last_name ? + 1 : -1;}));
+        
+        }
+    
+        const ListOfCustomers=customers.map(customer=>{
+
+            return(
+                <tr key={customer.Id_customer}>
+                    <td>{customer.last_name}</td>
+                    <td>{customer.first_name}</td>
+                    <td>{customer.telephone.split(' ').join('')}</td>
+                    <td>{customer.mail}</td>
+                    <td>{customer.adresse_facturation}</td>
+                    
+                </tr>
+            )
+        })
+
     return (
         <div>
+            <span className="d-flex align-items-start">
             <h1>Gestion Clients</h1>
+            <button type="button" class="btn btn-warning mt-2 ms-2" onClick={HandleAZ}>A-Z</button>
+            <button type="button" class="btn btn-warning mt-2 ms-2" onClick={HandleZA}>Z-A</button>
+            </span>
             <div className="container-fluid">
-            <table class="table">
+            <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">nom</th>
@@ -22,22 +53,12 @@ const CustomerAdmin = () => {
       <th scope="col">tel</th>
       <th scope="col">mail</th>
       <th scope="col">adresse</th>
-      <th scope="col">adresse</th>
+      
       
     </tr>
   </thead>
   <tbody>
-    {customers.map(customer=>{
-        return(
-            <tr key={customer.Id_customer}>
-                <td>{customer.first_name}</td>
-                <td>{customer.last_name}</td>
-                <td>{customer.telephone}</td>
-                <td>{customer.mail}</td>
-                <td>{customer.adresse_facturation}</td>
-            </tr>
-        )
-    })}
+    {ListOfCustomers}
   </tbody>
 </table>
             </div>

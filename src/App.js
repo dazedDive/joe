@@ -21,6 +21,7 @@ import ImageAdmin from './pages/ImageAdmin/ImageAdmin';
 import OrderAdmin from './pages/OrderAdmin/OrderAdmin';
 import StatAdmin from './pages/StatAdmin/StatAdmin';
 import FraisAdmin from './pages/FraisAdmin/FraisAdmin';
+import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 
 
 
@@ -48,6 +49,7 @@ function App() {
       <Route path="/admninjosh" element={<BaseScreenAdmin/>}>
       <Route path="/admninjosh/date" element={<DateAdmin/>}/>
       <Route path="/admninjosh/flipper" element={<FlipperAdmin/>}/>
+      <Route path="/admninjosh/flipper/:id" element={<FlipperAdminEdit/>}/>
       <Route path="/admninjosh/customer" element={<CustomerAdmin/>}/>
       <Route path="/admninjosh/order" element={<OrderAdmin/>}/>
       <Route path="/admninjosh/image" element={<ImageAdmin/>}/>
