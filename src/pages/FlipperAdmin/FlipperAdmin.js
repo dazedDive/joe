@@ -21,13 +21,13 @@ const FlipperAdmin = () => {
             <h1>Flippers: </h1>
             {flippers.map(flipper=>{
                 return(
-                <div className="card w-75 mt-2">
-                <div className="card-body" key={flipper.Id_Flipper}>
+                <div className="card w-75 mt-2" key={flipper.Id_Flipper}>
+                <div className="card-body" >
                   <h5 className="card-title">{flipper.name}</h5>
                   <p className="card-text">{flipper.description}</p>
                   <h3 className="card-text">Prix de base : {flipper.price} €</h3>
-                  <a href="#" className="btn btn-primary "
-                  onClick={()=>{naviguate(`/admninjosh/flipper/${flipper.Id_Flipper}`)}}>Editer</a>
+                  <button className="btn btn-primary "
+                  onClick={()=>{naviguate(`/admninjosh/flipper/${flipper.Id_Flipper}`)}}>Editer</button>
                 </div>
               </div>
             )})}

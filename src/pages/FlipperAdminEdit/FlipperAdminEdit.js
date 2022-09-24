@@ -5,40 +5,67 @@ import { useParams } from 'react-router-dom';
 
 const FlipperAdminEdit = () => {
 
-    const [flipper, setFlipper] = useState(null)
     const { id } = useParams();
+    const [flipperDetail, setFlipperDetail] = useState(null)
 
     useEffect(() => {
-        fetch("http://joe.api/flipper"+id)
+        fetch('http://joe.api/flipper/' + id)
             .then(resp => resp.json())
             .then(json => {
-                setFlipper(json)
+                setFlipperDetail(json)
+
             })
-    }, [flipper])
+
+        }, [id])
+        
+        
+        
+        const[title,setTitle]=useState('');
+        const[description,setDescription]=useState('');
+        const[price,setPrice]=useState('');
+    const HandleTitle =(e)=>{
+        setTitle(e.target.value)
+    }
+    const HandleDescription =(e)=>{
+        setDescription(e.target.value)
+    }
+    const HandlePrice =(e)=>{
+        setPrice(e.target.value)
+    }
+
 
     return (
         <div>
             <h1>Flipper Editeur :</h1>
-            <div classNameName='container'>
-                <div classNameName="row">
-                    <div classNameName="row">
-                        {flipper.map(flip => {
-                            return (
-                                <>
-                                    <div class="card">
-                                        
-                                            <div class="card-body">
-                                                <h5 class="card-title">titre : {flip?.name}</h5>
-                                                <p class="card-text">desciption : {flip?.description}</p>
-                                                <p class="card-text">desciption : {flip?.price}</p>
-                                            </div>
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </div>
-                    <div classNameName="row">
-
+            <div className="container">
+                <div className="row">
+                    
+                    <div className="col-10">
+                        <p>Editer : </p>
+                        <span className="d-flex justify-content-start mb-5">
+                            <h5 className="bg-warning p-3  me-2">TITRE:</h5>
+                            <input className="form-control form-control-lg mb-1" type="text"
+                                placeholder={flipperDetail?.name} 
+                                value={title}aria-label=".form-control-lg example"
+                                onChange={HandleTitle}></input>
+                        </span>
+                        
+                            
+                            <div className="bg-info">
+                                <label htmlFor="descriptionFlipper" className="form-label">DESCRIPTION</label>
+                                <textarea className="form-control" id="descriptionFlipper" 
+                                value={description} rows="5"
+                                placeholder={flipperDetail?.description} 
+                                onChange={HandleDescription}></textarea>
+                            </div>
+                        <span className="d-flex justify-content-start mt-5">
+                            <h3 className="bg-success p-3  me-2">PRIX:</h3>
+                            <input className="form-control form-control-lg mb-1" type="text"
+                            value={price} 
+                            placeholder={flipperDetail?.price} 
+                            aria-label=".form-control-lg example"
+                            onChange={HandlePrice}></input>
+                        </span>
                     </div>
                 </div>
             </div>

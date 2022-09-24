@@ -8,17 +8,17 @@ const FraisAdmin = () => {
                 <div className="row">
                     <h5>text de la home page : </h5>
                     <div className="col-6">
-                        <div class="mb-3">
+                        <div className="mb-3">
                             <p>Text actuel :</p>
                             <p> </p>
 
                         </div>
                     </div>
                     <div className="col-6">
-                        <div class="mb-3">
-                            <label for="textHomePage" class="form-label">nouveau text</label>
-                            <textarea class="form-control" id="extHomePage" rows="3"></textarea>
-                            <button type="button" class="btn btn-warning mt-2">Modifier</button>
+                        <div className="mb-3">
+                            <label htmlFor="textHomePage" className="form-label">nouveau text</label>
+                            <textarea className="form-control" id="extHomePage" rows="3"></textarea>
+                            <button type="button" className="btn btn-warning mt-2">Modifier</button>
                         </div>
                     </div>
                 </div>
@@ -33,8 +33,8 @@ const FraisAdmin = () => {
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
                             
-                            <input class="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" class="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
                         </span>
                     </div>
                 </div>
@@ -53,18 +53,18 @@ const FraisAdmin = () => {
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
                             <p className="me-3 mt-1">Samedi</p>
-                            <input class="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" class="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
                         </span>
                         <span className="d-flex justify-content-start mt-3">
                         <p className="me-3 mt-1">Dimanche</p>
-                            <input class="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" class="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
                         </span>
                         <span className="d-flex justify-content-start mt-3">
                         <p className="me-3 mt-1">2jours</p>
-                            <input class="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" class="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
                         </span>
                     </div>
                 </div>
