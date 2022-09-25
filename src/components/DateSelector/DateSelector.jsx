@@ -249,7 +249,7 @@ const HandlePrevious = ()=>{
                 </div>
                 <button type="button" 
             className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
-         value={price} onClick={()=>{navigate('')}}>Etape suivante</button>
+         value={price} onClick={()=>{navigate('/reservation/second')}}>Etape suivante</button>
             </div>
         </div>
     </div>

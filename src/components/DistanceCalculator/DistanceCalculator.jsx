@@ -1,6 +1,7 @@
 import '../DistanceCalculator/DistanceCalculator.css'
 import { useState, useEffect } from "react"
 import { MdLocationOn } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const DistanceCalculator = ()=>{
 
@@ -12,6 +13,8 @@ const DistanceCalculator = ()=>{
     const [coordinates, Setcoordinates]=useState([])
     const [location, setLocation]=useState([])
     const [distance, setDistance]=useState()
+
+    const navigate = useNavigate();
 
     const HandleCLick=()=>{
         console.log(distance.routes)
@@ -44,8 +47,7 @@ const DistanceCalculator = ()=>{
          
         
         if (location){
-        
-        
+                
         const maretzLocation = "3.4079803,50.0523653";
         const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${location}?overview=false`;
         fetch(apiDriveDistance)
@@ -154,7 +156,7 @@ const DistanceCalculator = ()=>{
 
         </div>
         <span className="d-flex justify-content-end">
-        <button type="button" className="btn btn-light mt-4 w-25 mb-5" onClick={HandleCLick}>Etape final</button>
+        <button type="button" className="btn btn-light mt-4 w-25 mb-5" onClick={()=>{navigate('/reservation/final')}}>Etape final</button>
         </span>
         </div>
         </>

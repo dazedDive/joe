@@ -22,27 +22,25 @@ import OrderAdmin from './pages/OrderAdmin/OrderAdmin';
 import StatAdmin from './pages/StatAdmin/StatAdmin';
 import FraisAdmin from './pages/FraisAdmin/FraisAdmin';
 import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
-
+import DateSelector from './components/DateSelector/DateSelector';
+import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
+import Payement from './components/Payement/Payement';
 
 
 function App() {
-  const [test,setTest]= useState('')
-  fetch('http://joe.api//')
-    .then(res=>res.text())
-    .then(text=>setTest(text))
-  useEffect(()=>{
-    
-  },[])
+ 
   return (
     <div className="App">
-      {test}
+      
       
       
       <Routes>
       <Route path="/" element={<BaseScreen/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/machines" element={<Machines/>}/>
-        <Route path="/reservation" element={<Reserver/>}/>
+        <Route path="/reservation" element={<DateSelector/>}/>
+        <Route path="/reservation/second" element={<DistanceCalculator/>}/>
+        <Route path="/reservation/final" element={<Payement/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/*" element={<Error/>}/>
       </Route>
