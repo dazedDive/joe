@@ -1,7 +1,7 @@
 import { BsFillCreditCard2BackFill } from "react-icons/bs";
 import { GiPinballFlipper } from "react-icons/gi";
 import { FaTruck } from "react-icons/fa";
-import ReactCardPayment from 'react-card-payment';
+
 import { useCookies } from 'react-cookie';
 const Payement = () =>{
 
@@ -52,8 +52,7 @@ const Payement = () =>{
             </div>
         </div>
         <div className="container p-5">
-        <ReactCardPayment
-        />
+        
         </div>
         </>
     )

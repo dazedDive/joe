@@ -1,6 +1,6 @@
 import { BsPersonFill,BsShieldFill } from "react-icons/bs"
 import '../Home/Home.css'
-import ReactPlayer from 'react-player'
+
 import { useState,useEffect } from "react"
 
 const Home =()=>{
@@ -26,7 +26,7 @@ const Home =()=>{
         <p className="orange">{homeText?.textHome}</p>
         </div>
         <div className="container-fluid mt-2 d-flex justify-content-center">
-        <ReactPlayer src='../../src/img/video.mp4'/>
+        
         </div>
         <p></p>
         <div className="container mt-5">

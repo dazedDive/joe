@@ -24,7 +24,7 @@ import FraisAdmin from './pages/FraisAdmin/FraisAdmin';
 import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 import DateSelector from './components/DateSelector/DateSelector';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
-import Payement from './components/Payement/Payement';
+import Payement from './components/payement/Payement';
 ///
 
 function App() {
