@@ -2,7 +2,16 @@ import { BsFillCreditCard2BackFill } from "react-icons/bs";
 import { GiPinballFlipper } from "react-icons/gi";
 import { FaTruck } from "react-icons/fa";
 import ReactCardPayment from 'react-card-payment';
+import { useCookies } from 'react-cookie';
 const Payement = () =>{
+
+
+
+    /////recupération des infos Cookies /////
+    const [cookies, setCookie] = useCookies(['dateEtFlipper']);
+    
+
+
 
     return (
         <>
@@ -28,9 +37,9 @@ const Payement = () =>{
             <div className="row">
                 <p>adresse de facturation :</p>
                 <p className="fw-bold">adresse de livraison :</p>
-                <p className="fw-bold"> Flipper : </p>
-                <p className="fw-bold"> Week End du : : </p>
-                <p className="fw-bold"> durée : : </p>
+                <p className="fw-bold"> Flipper : {cookies.dateEtFlipper.flipper} </p>
+                <p className="fw-bold"> Week End du : {cookies.dateEtFlipper.dateChoosen}</p>
+                <p className="fw-bold"> durée :  </p>
                 <span className ="d-flex justify-content-start">
                     <GiPinballFlipper className="fs-4 mx-1"/>
                 <h5 className="fw-bold"> Prix TTC de la Location  €</h5>

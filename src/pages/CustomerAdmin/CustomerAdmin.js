@@ -14,14 +14,15 @@ const CustomerAdmin = () => {
     }, [])
 
     const HandleAZ = () => {
-    setCustomers(customers.sort((a, b) => { 
-        return a.last_name > b.last_name ? + 1 : -1 }));
+    setCustomers([...customers.sort((a, b) => { 
+        return a.last_name > b.last_name ? + 1 : -1 })]);
+        
         
     }
 
     const HandleZA = () => {
-    setCustomers(customers.sort((a, b) => { 
-        return a.last_name < b.last_name ? + 1 : -1 }));
+    setCustomers([...customers.sort((a, b) => { 
+        return a.last_name < b.last_name ? + 1 : -1 })]);
         
     }
 

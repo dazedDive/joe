@@ -12,8 +12,26 @@ import { BsCalendarDateFill,
 import { GiPinballFlipper} from "react-icons/gi";
 import { RiMoneyPoundCircleFill} from "react-icons/ri";
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+
 
 const NavBarAdmin = () => {
+    
+    
+    const [dataAdmin, setDataAdmnin]=useState(null);
+    console.log(dataAdmin)
+    useEffect(()=>{
+        fetch('http://joe.api/statistique/2')
+        .then(rep=>rep.json())
+        .then(json=>{
+            setDataAdmnin(json)
+        })
+    },[])
+
+
+
+
     return (
         <div>
             <nav>
@@ -119,8 +137,14 @@ const NavBarAdmin = () => {
                     </li>
 
                     <li className=" mt-2">
+                    <span className="d-flex justifify-content-start">
                         <p className=" ms-3">Nb resa : </p>
-                        <p className=" ms-3">C.A total : €</p>
+                        <h5 className="orange"> {dataAdmin?.nbResaTotal} </h5>
+                    </span>
+                        <span className="d-flex justifify-content-start">
+                        <p className=" ms-3">C.A total : </p>
+                        <h5 className="orange"> {dataAdmin?.Chiffre_Affaire} €</h5>
+                        </span>
                     </li>
                 
 

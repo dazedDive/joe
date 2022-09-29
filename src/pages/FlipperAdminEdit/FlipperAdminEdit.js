@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { MdOutlinePublishedWithChanges } from "react-icons/md";
 const FlipperAdminEdit = () => {
 
     const { id } = useParams();
@@ -58,6 +58,39 @@ const FlipperAdminEdit = () => {
                                 placeholder={flipperDetail?.description} 
                                 onChange={HandleDescription}></textarea>
                             </div>
+                            
+                        <span className="d-flex justify-content-start mt-2">
+                            <p className="bg-warning p-1  me-2 ">option1</p>
+                            <input className="form-control form-control-sm" type="text"
+                                placeholder={flipperDetail?.pointfort1} 
+                                value={title}aria-label=".form-control-lg example"
+                                onChange={HandleTitle}></input>
+                        </span>
+
+                        <span className="d-flex justify-content-start mt-2">
+                            <p className="bg-warning p-1  me-2 ">option2</p>
+                            <input className="form-control form-control-sm" type="text"
+                                placeholder={flipperDetail?.pointfort2} 
+                                value={title}aria-label=".form-control-lg example"
+                                onChange={HandleTitle}></input>
+                        </span>
+
+                        <span className="d-flex justify-content-start mt-2">
+                            <p className="bg-warning p-1  me-2 ">option3</p>
+                            <input className="form-control form-control-sm" type="text"
+                                placeholder={flipperDetail?.pointfort3} 
+                                value={title}aria-label=".form-control-lg example"
+                                onChange={HandleTitle}></input>
+                        </span>
+
+                        <span className="d-flex justify-content-start mt-2">
+                            <p className="bg-warning p-1  me-2 ">option4</p>
+                            <input className="form-control form-control-sm" type="text"
+                                placeholder={flipperDetail?.pointfort4} 
+                                value={title}aria-label=".form-control-lg example"
+                                onChange={HandleTitle}></input>
+                        </span>
+                            
                         <span className="d-flex justify-content-start mt-5">
                             <h3 className="bg-success p-3  me-2">PRIX:</h3>
                             <input className="form-control form-control-lg mb-1" type="text"
@@ -68,6 +101,24 @@ const FlipperAdminEdit = () => {
                         </span>
                     </div>
                 </div>
+            </div>
+            <div className="container mt-2 bg-light p-2">
+                <span className="d-flex justify-content-start">
+                <h3>Status du flipper : </h3>
+                <h5 className="text-success mt-2 ms-2">
+                {(flipperDetail?.is_available==1?" EN LOCATION" : " INDISPONIBLE a la location" )}
+                </h5>
+                <button type="button" class="btn bg-danger text-white ms-2">
+                {(flipperDetail?.is_available==1?" RETIRER DE LA LACOATION" : " REMETTRE EN LOCATION" )}
+                </button>
+                </span>
+            </div>
+            <div className="container">
+            <button type="button" class="btn bg-danger text-white m-5 w-100">
+            <MdOutlinePublishedWithChanges className="fs-4 m-1"/>
+            VALIDER LES MISES A JOUR DU FLIPPER
+            <MdOutlinePublishedWithChanges className="fs-4 m-1"/>
+            </button>
             </div>
         </div>
     );

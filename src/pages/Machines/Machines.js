@@ -14,34 +14,11 @@ function Machines  (){
         <h3 className="title-dot"> Nos Machines :</h3>
         <p>Tout nos flippers sont révisés et nettoyés par nos mécaniciens avant de vous être livrés .</p>
         </div>
+
         <div className="container">
-            <div className="row">
-                <div className="col-1">
-                <span className="mt-5">
-                <GrCaretPrevious className='fs-1'/>  
-                <p>Précedent</p>
-                </span>
-                </div>
-                <div className="col-10">
-                <ProductCard image={"./assets/images/twilightzone.jpg"} 
-                title={"The TwilightZOne"}
-                description="blank"
-                 price={119}
-                 desciptionList={[{option1:"blank",option2:"blank",
-                 option3:"blank",option4:"blank",
-                 option5:"blank",option6:"blank"}]}/>  
-                 
-                </div>
-                <div className="col-1">
-                <span className="mt-5">
-                <GrCaretNext className='fs-1'/>
-                <p>Suivant</p>
-                </span>
-                </div>
-    
-            
-            </div>
+            <ProductCard image={"./assets/images/twilightzone.jpg"}/>  
         </div>
+                       
         </>
     )
 }

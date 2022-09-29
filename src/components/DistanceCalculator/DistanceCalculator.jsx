@@ -5,6 +5,23 @@ import { useNavigate } from 'react-router-dom';
 
 const DistanceCalculator = ()=>{
 
+    ////////////setter des controles de champs et regex ///////////
+    ///NoM///
+    const [name,setName]=useState("")
+    const [checkName, setCheckName]=useState(false)
+    const HandleName=(evt)=>{
+        setName(evt.target.value)
+        const regexName =/^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/
+        setCheckName(regexName.test(name)) 
+        if(checkName){
+            setCheckName(true)
+        }
+        else{
+            setCheckName(false)
+        }
+    }
+
+    //////////////setter pour la requetes des API GEOGRAPHIQUE///////
     const [inputCp, setInputCp]=useState('')
     const [inputCpFact, setInputCpFact]=useState('')
     const [cityList, setCityList]=useState([])
@@ -88,8 +105,9 @@ const DistanceCalculator = ()=>{
         <div className="row mt-5">
         <h1 className="text-resa ">Identité : </h1>
         <div className="col-6">
-        <input className="form-control" type="text" placeholder="Nom" 
-        aria-label="default input example"></input>
+        <input className={`"form-control"${checkName==true ?"orange" : "bg-danger"}`} type="text" 
+        value={name} placeholder="Nom" aria-label="default input example" onChange={HandleName}>
+        </input>
         </div>
         <div className="col-6">
         <input className="form-control" type="text" placeholder="Prenom" 

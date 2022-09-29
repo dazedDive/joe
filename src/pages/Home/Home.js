@@ -1,7 +1,19 @@
 import { BsPersonFill,BsShieldFill } from "react-icons/bs"
 import '../Home/Home.css'
+import ReactPlayer from 'react-player'
+import { useState,useEffect } from "react"
 
 const Home =()=>{
+
+    const [homeText, setHomeText]=useState(null);
+    
+    useEffect(()=>{
+    fetch('http://joe.api/statistique/2')
+    .then(rep=>rep.json())
+    .then(json=>{
+        setHomeText(json)
+    })
+},[])
 
     const HandleConnexion =() =>{
         alert('site pas fini connard')
@@ -9,6 +21,14 @@ const Home =()=>{
 
     return(
         <>
+        <div className="container mt-5">
+        <h3 className='title-anim'>What's up?</h3>
+        <p className="orange">{homeText?.textHome}</p>
+        </div>
+        <div className="container-fluid mt-2 d-flex justify-content-center">
+        <ReactPlayer src='../../src/img/video.mp4'/>
+        </div>
+        <p></p>
         <div className="container mt-5">
             <div className="row">
                 <div className="col-12 col-md-4">

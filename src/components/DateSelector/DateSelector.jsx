@@ -11,6 +11,7 @@ import 'swiper/css'
 
 import DateCard from '../DateCard/DateCard';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const DateSelector = () => {
     
@@ -25,7 +26,7 @@ const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,mont
 
 
 
-
+const [cookies, setCookie] = useCookies(['dateEtFlipper']);
 ////////////fonction qui affiche le moi  et l'année en cour///////////
 
 const monthIndex = (new Date().getMonth()); ///////on recupere le moi de la Date Actuel afin de l'utiliser pour afficher le moi en cour
@@ -101,6 +102,9 @@ const HandlePrevious = ()=>{
 
 }
 
+const HandleCookie = () =>{
+    setCookie("dateEtFlipper",{price,flipper,dateChoosen})
+}
 
 
     useEffect(()=>{
@@ -249,7 +253,8 @@ const HandlePrevious = ()=>{
                 </div>
                 <button type="button" 
             className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
-         value={price} onClick={()=>{navigate('/reservation/second')}}>Etape suivante</button>
+         value={price} onClick={()=>{navigate('/reservation/second');HandleCookie()}}
+         >Etape suivante</button>
             </div>
         </div>
     </div>
