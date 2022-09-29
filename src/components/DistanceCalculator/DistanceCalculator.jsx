@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { MdLocationOn } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
+
 const DistanceCalculator = ()=>{
 
     ////////////setter des controles de champs et regex ///////////
@@ -11,14 +12,50 @@ const DistanceCalculator = ()=>{
     const [checkName, setCheckName]=useState(false)
     const HandleName=(evt)=>{
         setName(evt.target.value)
-        const regexName =/^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/
-        setCheckName(regexName.test(name)) 
-        if(checkName){
-            setCheckName(true)
-        }
-        else{
-            setCheckName(false)
-        }
+        const regexName =/^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/
+        setCheckName(regexName.test(evt.target.value)) 
+    }
+    /////prenom/////////
+    const [firstName,setFirstName]=useState("")
+    const [checkFirstName, setCheckFirstName]=useState(false)
+    const HandleFirstName=(evt)=>{
+        setFirstName(evt.target.value)
+        const regexFirstName =/^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/
+        setCheckFirstName(regexFirstName.test(evt.target.value))
+    }
+
+    /////////TELEPHONE/////////
+    const [tel,setTel]=useState("")
+    const [checkTel, setCheckTel]=useState(false)
+    const HandleTel=(evt)=>{
+        setTel(evt.target.value)
+        const telRegex =/^(?:0|\+33 ?|0?0?33 ?|)([1-9] ?(?:[0-9] ?){8})$/
+        setCheckTel(telRegex.test(evt.target.value))
+    }
+    /////////mail//////////////
+    const [mail,setMail]=useState("")
+    const [checkMail, setCheckMail]=useState(false)
+    const HandleMail=(evt)=>{
+        setMail(evt.target.value)
+        const mailRegex =/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/
+        setCheckMail(mailRegex.test(evt.target.value))
+    }
+    //////////adresse//////////////////
+    const [adress,setAdress]=useState("")
+    const [checkAdress, setCheckAdress]=useState(false)
+    const HandleAdress=(evt)=>{
+        setAdress(evt.target.value)
+        const adressRegex = /[0-9]+\s*([a-zA-Z]+\s*[a-zA-Z]+\s)*[0-9]*/
+        setCheckAdress(adressRegex.test(evt.target.value))
+    }
+
+    /////////////AdresseLivraison/////////////
+    const [adressL,setAdressL]=useState("")
+    const [checkAdressL, setCheckAdressL]=useState(false)
+    const HandleAdressL=(evt)=>{
+        setAdressL(evt.target.value)
+        const adressRegexL = /[0-9]+\s*([a-zA-Z]+\s*[a-zA-Z]+\s)*[0-9]*/
+        setCheckAdressL(adressRegexL.test(evt.target.value))
     }
 
     //////////////setter pour la requetes des API GEOGRAPHIQUE///////
@@ -29,7 +66,7 @@ const DistanceCalculator = ()=>{
     const [cityLivraison, setCityLivraison]=useState([])
     const [coordinates, Setcoordinates]=useState([])
     const [location, setLocation]=useState([])
-    const [distance, setDistance]=useState()
+    const [distance, setDistance]=useState(0)
 
     const navigate = useNavigate();
 
@@ -45,8 +82,24 @@ const DistanceCalculator = ()=>{
     }
 
     const HandleSelected = (evt)=>{
+        const apiLocalisation = `https://geo.api.gouv.fr/communes?nom=${cityLivraison}&fields=centre`
+            fetch(apiLocalisation)
+            .then((rep)=>rep.json())
+            .then((rep)=>rep.find(city=>city.nom === evt.target.value))
         setCityLivraison(evt.target.value)
         console.log(evt.target.value)
+        const rightCity=coordinates.find(city=>city.nom === cityLivraison )
+        const rightCityonApi = (rightCity.centre.coordinates).toString()
+        setLocation (rightCityonApi);
+        
+    }
+    const HandleSubmit = ()=>{
+        const maretzLocation = "3.4079803,50.0523653";
+        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${(location).toString()}?overview=false`;
+        fetch(apiDriveDistance)
+        .then((rep)=>rep.json())
+        .then((rep)=>console.log(rep.routes[0].distance))
+        
     }
 
     useEffect(()=>{
@@ -57,24 +110,7 @@ const DistanceCalculator = ()=>{
             
         },[cityLivraison])
 
-    useEffect(()=>{
-        if (cityLivraison){
-        const test=coordinates.find(city=>city.nom === cityLivraison )  
-        setLocation (test && (test.centre.coordinates).toString())};
-         
-        
-        if (location){
-                
-        const maretzLocation = "3.4079803,50.0523653";
-        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${location}?overview=false`;
-        fetch(apiDriveDistance)
-        .then((rep)=>rep.json())
-        .then((rep)=>setDistance(rep))}
-            },[coordinates])
     
-
-
-
         useEffect(()=>{
         const apiCpUrl = `https://geo.api.gouv.fr/communes?codePostal=${inputCp}`
             fetch(apiCpUrl)
@@ -87,7 +123,8 @@ const DistanceCalculator = ()=>{
                 fetch(apiCpUrl)
                 .then((rep)=>rep.json())
                 .then((rep)=>setCityListFact(rep))
-            },[inputCpFact])
+                
+        },[inputCpFact])
 
 
 
@@ -105,32 +142,38 @@ const DistanceCalculator = ()=>{
         <div className="row mt-5">
         <h1 className="text-resa ">Identité : </h1>
         <div className="col-6">
-        <input className={`"form-control"${checkName==true ?"orange" : "bg-danger"}`} type="text" 
+        <input className={`form-control ${!checkName  &&"text-danger"}`} 
+        type="text" 
         value={name} placeholder="Nom" aria-label="default input example" onChange={HandleName}>
         </input>
+
         </div>
         <div className="col-6">
-        <input className="form-control" type="text" placeholder="Prenom" 
-        aria-label="default input example"></input>    
+        <input className={`form-control ${!checkFirstName  &&"text-danger"}`} 
+        type="text" value={firstName} placeholder="Prenom" 
+        aria-label="default input example" onChange={HandleFirstName}></input>    
         </div>   
         </div>
         
         <div className="row mt-3">
         <div className="col-6">
-        <input className="form-control" type="text" placeholder="Telephone" 
-        aria-label="default input example"></input>
+        <input className={`form-control ${!checkTel  &&"text-danger"}`} 
+        type="text" value={tel} placeholder="Telephone" 
+        aria-label="default input example" onChange={HandleTel}></input>
         </div>
         <div className="col-6">
-        <input className="form-control" type="text" placeholder="Adresse Email" 
-        aria-label="default input example"></input>    
+        <input className={`form-control ${!checkMail  &&"text-danger"}`} 
+        type="text" value={mail}placeholder="Adresse Email" 
+        aria-label="default input example" onChange={HandleMail}></input>    
         </div>   
         </div>
 
         <h1 className="text-resa mt-3">Adresse de Facturation :</h1>
         <div className="row mt-3">
         <div className="col-12">
-        <input className="form-control" type="text" placeholder="Adresse de Facturation" 
-        aria-label="default input example"></input>
+        <input className={`form-control ${!checkAdress  &&"text-danger"}`}  type="text" 
+        value={adress} placeholder="Adresse de Facturation" 
+        aria-label="default input example" onChange={HandleAdress}></input>
         </div>
         </div>
 
@@ -142,7 +185,7 @@ const DistanceCalculator = ()=>{
         <div className="col-6">
         <select className="form-select" aria-label="Default select example">
         <option selected>Ville de Facturation</option>
-        {cityListFact.map(({nom,code}) => <option key={code} value="1">{nom}</option>)}
+        {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
         
         </select>   
         </div>
@@ -153,8 +196,9 @@ const DistanceCalculator = ()=>{
         <h1 className="text-resa mt-3">Adresse de Livraison :</h1>
         <div className="row mt-3">
         <div className="col-12">
-        <input className="form-control" type="text" placeholder="Adresse de Livraison" 
-        aria-label="default input example"></input>
+        <input className={`form-control ${!checkAdressL  &&"text-danger"}`}
+        value={adressL} type="text" placeholder="Adresse de Livraison" 
+        aria-label="default input example" onChange={HandleAdressL}></input>
         </div>
         </div>
 
@@ -174,9 +218,10 @@ const DistanceCalculator = ()=>{
 
         </div>
         <span className="d-flex justify-content-end">
-        <button type="button" className="btn btn-light mt-4 w-25 mb-5" onClick={()=>{navigate('/reservation/final')}}>Etape final</button>
+        <button type="button" className="btn btn-light mt-4 w-25 mb-5"onClick={HandleSubmit}>Etape final</button>
         </span>
         </div>
+        
         </>
     )
 }
