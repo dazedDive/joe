@@ -2,7 +2,7 @@ import '../DistanceCalculator/DistanceCalculator.css'
 import { useState, useEffect } from "react"
 import { MdLocationOn } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-
+import { useCookies } from 'react-cookie';
 
 const DistanceCalculator = ()=>{
 
@@ -67,6 +67,7 @@ const DistanceCalculator = ()=>{
     const [coordinates, Setcoordinates]=useState([])
     const [location, setLocation]=useState([])
     const [distance, setDistance]=useState(0)
+    
 
     const navigate = useNavigate();
 
@@ -77,28 +78,46 @@ const DistanceCalculator = ()=>{
         setInputCp(evt.target.value)
     }
 
+
+    const [checkFactCity, setCheckFactCity]= useState(false)
     const HandleChangeFact =(evt)=>{
         setInputCpFact(evt.target.value)
+        setCheckFactCity(true)
     }
 
+    const [checkCity, setCheckCity] =useState(false)
     const HandleSelected = (evt)=>{
-        const apiLocalisation = `https://geo.api.gouv.fr/communes?nom=${cityLivraison}&fields=centre`
-            fetch(apiLocalisation)
-            .then((rep)=>rep.json())
-            .then((rep)=>rep.find(city=>city.nom === evt.target.value))
         setCityLivraison(evt.target.value)
         console.log(evt.target.value)
-        const rightCity=coordinates.find(city=>city.nom === cityLivraison )
-        const rightCityonApi = (rightCity.centre.coordinates).toString()
-        setLocation (rightCityonApi);
+        setCheckCity(true)
         
     }
+    
+    useEffect(()=>{
+        if (cityLivraison){
+        const test=coordinates.find(city=>city.nom === cityLivraison )  
+        setLocation (test && (test.centre.coordinates).toString())};
+         
+        
+        if (location){
+                
+        const maretzLocation = "3.4079803,50.0523653";
+        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${location}?overview=false`;
+        fetch(apiDriveDistance)
+        .then((rep)=>rep.json())
+        .then((rep)=>setDistance(rep))}
+            },[coordinates])
+
+
+/////////////////bouton FINAL pour ETAPE 3 ///////////////
     const HandleSubmit = ()=>{
         const maretzLocation = "3.4079803,50.0523653";
         const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${(location).toString()}?overview=false`;
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
-        .then((rep)=>console.log(rep.routes[0].distance))
+        .then((rep)=>setDistance(rep.routes[0].distance))
+        .then(setCookie("coordonees",{name,firstName,adress,adressL,tel,mail,cityLivraison,
+            cityList,inputCp,inputCpFact,distance}))
         
     }
 
@@ -110,14 +129,15 @@ const DistanceCalculator = ()=>{
             
         },[cityLivraison])
 
-    
+    //////////////////////////////////RECUPERATION DES VILLES AVEC LE CP///////////
+    /////////////////////CILLE DE LIVRAISON/////////////////////
         useEffect(()=>{
         const apiCpUrl = `https://geo.api.gouv.fr/communes?codePostal=${inputCp}`
             fetch(apiCpUrl)
             .then((rep)=>rep.json())
             .then((rep)=>setCityList(rep))
         },[inputCp])
-        
+    /////////////////////////////VILLE DE FACTURATION//////////////
         useEffect(()=>{
             const apiCpUrl = `https://geo.api.gouv.fr/communes?codePostal=${inputCpFact}`
                 fetch(apiCpUrl)
@@ -126,9 +146,12 @@ const DistanceCalculator = ()=>{
                 
         },[inputCpFact])
 
-
-
-
+    //////////////////////declaration du Cookies qui recupére les infos////////
+    const [cookies, setCookie] = useCookies(['coordonees']);
+    
+        
+    
+    
     return(
         <>
         <div className="container mt-5">
@@ -218,7 +241,10 @@ const DistanceCalculator = ()=>{
 
         </div>
         <span className="d-flex justify-content-end">
-        <button type="button" className="btn btn-light mt-4 w-25 mb-5"onClick={HandleSubmit}>Etape final</button>
+        <button type="button" className="btn btn-light mt-4 w-25 mb-5" 
+        disabled={!(checkName && checkFirstName && checkAdress && checkAdressL && checkTel 
+            && checkMail && checkFactCity && checkCity)}
+        onClick={()=>{navigate('/reservation/final');HandleSubmit()}}>Etape final</button>
         </span>
         </div>
         
