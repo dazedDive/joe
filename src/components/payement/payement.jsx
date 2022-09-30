@@ -8,10 +8,10 @@ const Payement = () =>{
 
 
     /////recupération des infos Cookies /////
-    const [cookies, setCookie] = useCookies(['dateEtFlipper']);
+    const [cookies, setCookie] = useCookies(['dateEtFlipper','coordonees','fraislivraison']);
     
 
-
+    console.log(cookies.coordonees.distanceLivraison)
 
     return (
         <>
@@ -26,17 +26,19 @@ const Payement = () =>{
             <h3 className="title-dot"> Resumé de votre reservation</h3>
             <div className="row">
                 <div className="col-6">
-                <p> nom :</p>
-                <p> telephone :</p>
+                <p> nom : {cookies.coordonees.name}</p>
+                <p> telephone : {cookies.coordonees.tel}</p>
                 </div>
                 <div className="col-6">
-                <p> prenom :</p>
-                <p> mail :</p>  
+                <p> prenom : {cookies.coordonees.firstName}</p>
+                <p> mail : {cookies.coordonees.mail}</p>  
                 </div>
             </div>
             <div className="row">
-                <p>adresse de facturation :</p>
-                <p className="fw-bold">adresse de livraison :</p>
+                <p>adresse de facturation : {cookies.coordonees.adress} , {cookies.coordonees.inputCp}-
+                {cookies.coordonees.cityLivraison}</p>
+                <p className="fw-bold">adresse de livraison : 
+                {cookies.coordonees.adressL}, {cookies.coordonees.inputCp} - {cookies.coordonees.cityLivraison}</p>
                 <p className="fw-bold"> Flipper : {cookies.dateEtFlipper.flipper} </p>
                 <p className="fw-bold"> Week End du : {cookies.dateEtFlipper.dateChoosen}</p>
                 <p className="fw-bold"> durée :  </p>
@@ -46,7 +48,8 @@ const Payement = () =>{
                 </span>
                 <span className ="d-flex justify-content-start">
                     <FaTruck className="fs-4 mx-1"/>
-                <h5 className="fw-bold"> Prix TTC de la Livraison  €</h5>
+                <h5 className="fw-bold"> Prix TTC de la Livraison : {cookies.fraislivraison.distanceLivraison} €</h5>
+                <h5> </h5>
                 </span>
                 <h3 className="fw-bold orange">PRIX TOTAL : € TTC, SOIT € de TVA</h3>
             </div>

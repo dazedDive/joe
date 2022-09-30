@@ -66,14 +66,12 @@ const DistanceCalculator = ()=>{
     const [cityLivraison, setCityLivraison]=useState([])
     const [coordinates, Setcoordinates]=useState([])
     const [location, setLocation]=useState([])
-    const [distance, setDistance]=useState(0)
+    const [distanceLivraison, setDistanceLivraison]=useState('0')
     
 
     const navigate = useNavigate();
 
-    const HandleCLick=()=>{
-        console.log(distance.routes)
-    }
+    
     const HandleChange =(evt)=>{
         setInputCp(evt.target.value)
     }
@@ -83,13 +81,16 @@ const DistanceCalculator = ()=>{
     const HandleChangeFact =(evt)=>{
         setInputCpFact(evt.target.value)
         setCheckFactCity(true)
+        
     }
 
     const [checkCity, setCheckCity] =useState(false)
     const HandleSelected = (evt)=>{
         setCityLivraison(evt.target.value)
         console.log(evt.target.value)
-        setCheckCity(true)
+        setCheckCity(true);
+        setCheckFinal(true)
+        
         
     }
     
@@ -97,29 +98,30 @@ const DistanceCalculator = ()=>{
         if (cityLivraison){
         const test=coordinates.find(city=>city.nom === cityLivraison )  
         setLocation (test && (test.centre.coordinates).toString())};
-         
-        
-        if (location){
-                
-        const maretzLocation = "3.4079803,50.0523653";
-        const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${location}?overview=false`;
-        fetch(apiDriveDistance)
-        .then((rep)=>rep.json())
-        .then((rep)=>setDistance(rep))}
-            },[coordinates])
+        },[coordinates])
 
 
 /////////////////bouton FINAL pour ETAPE 3 ///////////////
-    const HandleSubmit = ()=>{
+    const HandlePrice = ()=>{
         const maretzLocation = "3.4079803,50.0523653";
         const apiDriveDistance =`http://router.project-osrm.org/route/v1/driving/${maretzLocation};${(location).toString()}?overview=false`;
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
-        .then((rep)=>setDistance(rep.routes[0].distance))
+        .then((rep)=>setDistanceLivraison(rep.routes[0].distance))
         .then(setCookie("coordonees",{name,firstName,adress,adressL,tel,mail,cityLivraison,
-            cityList,inputCp,inputCpFact,distance}))
-        
+            cityList,inputCp,inputCpFact}))        
     }
+
+   
+
+    const [checkFinal,setCheckFinal]=useState(false)
+    useEffect(()=>{
+        setCookie("fraislivraison",{distanceLivraison})
+        console.log(distanceLivraison)
+       
+    },[distanceLivraison])
+
+  
 
     useEffect(()=>{
         const apiLocalisation = `https://geo.api.gouv.fr/communes?nom=${cityLivraison}&fields=centre`
@@ -146,8 +148,12 @@ const DistanceCalculator = ()=>{
                 
         },[inputCpFact])
 
+        useEffect(()=>{
+            setCheckFinal(true)
+        },[cityLivraison,inputCp])
+
     //////////////////////declaration du Cookies qui recupére les infos////////
-    const [cookies, setCookie] = useCookies(['coordonees']);
+    const [cookies, setCookie] = useCookies(['coordonees','fraislivraison']);
     
         
     
@@ -231,7 +237,8 @@ const DistanceCalculator = ()=>{
         aria-label="default input example" onChange={HandleChange}></input>
         </div>
         <div className="col-6">
-        <select className="form-select" aria-label="Default select example" onChange={HandleSelected}>
+        <select className="form-select" aria-label="Default select example" 
+        onChange={HandleSelected}>
         <option selected >Ville de Livraison</option>
         {cityList.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
 
@@ -240,14 +247,22 @@ const DistanceCalculator = ()=>{
         </div>
 
         </div>
-        <span className="d-flex justify-content-end">
+        <span className="d-flex justify-content-start ">
+        
         <button type="button" className="btn btn-light mt-4 w-25 mb-5" 
+        
         disabled={!(checkName && checkFirstName && checkAdress && checkAdressL && checkTel 
             && checkMail && checkFactCity && checkCity)}
-        onClick={()=>{navigate('/reservation/final');HandleSubmit()}}>Etape final</button>
+            onClick={()=>{HandlePrice();setCheckFinal(false)}}>Estimation du prix de Transport</button>
+        <h4 className="mx-2 mt-4 orange  ">Frais de Livraison : {(distanceLivraison/1000).toFixed()} €</h4>
+        <button type="button" className="btn btn-light mt-4 w-25 mb-5"
+        disabled={checkFinal} >
+            Paiement
+        </button>
+        
         </span>
         </div>
-        
+               
         </>
     )
 }
