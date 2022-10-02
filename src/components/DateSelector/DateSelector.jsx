@@ -103,7 +103,7 @@ const HandlePrevious = ()=>{
 }
 
 const HandleCookie = () =>{
-    setCookie("dateEtFlipper",{price,flipper,dateChoosen})
+    setCookie("dateEtFlipper",{price,flipper,dateChoosen,timeRent})
 }
 
 

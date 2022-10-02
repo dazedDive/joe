@@ -10,7 +10,7 @@ const Payement = () =>{
     /////recupération des infos Cookies /////
     const [cookies, setCookie] = useCookies(['dateEtFlipper','coordonees','fraislivraison']);
     
-
+   
     console.log(cookies.coordonees.distanceLivraison)
 
     return (
@@ -41,17 +41,19 @@ const Payement = () =>{
                 {cookies.coordonees.adressL}, {cookies.coordonees.inputCp} - {cookies.coordonees.cityLivraison}</p>
                 <p className="fw-bold"> Flipper : {cookies.dateEtFlipper.flipper} </p>
                 <p className="fw-bold"> Week End du : {cookies.dateEtFlipper.dateChoosen}</p>
-                <p className="fw-bold"> durée :  </p>
+                <p className="fw-bold"> durée : {cookies.dateEtFlipper.timeRent} </p>
                 <span className ="d-flex justify-content-start">
                     <GiPinballFlipper className="fs-4 mx-1"/>
-                <h5 className="fw-bold"> Prix TTC de la Location  €</h5>
+                <h5 className="fw-bold"> Prix TTC de la Location {cookies.dateEtFlipper.price}  €</h5>
                 </span>
                 <span className ="d-flex justify-content-start">
                     <FaTruck className="fs-4 mx-1"/>
-                <h5 className="fw-bold"> Prix TTC de la Livraison : {cookies.fraislivraison.distanceLivraison} €</h5>
+                <h5 className="fw-bold"> Prix TTC de la Livraison : 
+                {((cookies.fraislivraison.distanceLivraison)/1000).toFixed()} €</h5>
                 <h5> </h5>
                 </span>
-                <h3 className="fw-bold orange">PRIX TOTAL : € TTC, SOIT € de TVA</h3>
+                <h3 className="fw-bold orange">PRIX TOTAL : 
+                 {(((cookies.fraislivraison.distanceLivraison)/1000)+cookies.dateEtFlipper.price).toFixed()} € TTC, SOIT € de TVA</h3>
             </div>
         </div>
         <div className="container p-5">

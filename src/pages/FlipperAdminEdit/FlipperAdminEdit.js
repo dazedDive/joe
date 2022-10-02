@@ -3,10 +3,21 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import { useRef } from 'react';
 const FlipperAdminEdit = () => {
 
     const { id } = useParams();
     const [flipperDetail, setFlipperDetail] = useState(null)
+
+    const TitleRef = useRef(null);
+    const DescriptionRef = useRef(null);
+    const PriceRef = useRef(null);
+    const option1Ref = useRef(null);
+    const option2Ref = useRef(null);
+    const option3Ref = useRef(null);
+    const option4Ref = useRef(null);
+    
+
 
     useEffect(() => {
         fetch('http://joe.api/flipper/' + id)
@@ -18,20 +29,12 @@ const FlipperAdminEdit = () => {
 
         }, [id])
         
-        
-        
-        const[title,setTitle]=useState('');
-        const[description,setDescription]=useState('');
-        const[price,setPrice]=useState('');
-    const HandleTitle =(e)=>{
-        setTitle(e.target.value)
-    }
-    const HandleDescription =(e)=>{
-        setDescription(e.target.value)
-    }
-    const HandlePrice =(e)=>{
-        setPrice(e.target.value)
-    }
+    const HandleStatus =()=>{
+            flipperDetail.is_available==1? 
+            setFlipperDetail(flipperDetail.is_available=0):
+            setFlipperDetail(flipperDetail.is_available=1)
+    }  
+       
 
 
     return (
@@ -45,59 +48,60 @@ const FlipperAdminEdit = () => {
                         <span className="d-flex justify-content-start mb-5">
                             <h5 className="bg-warning p-3  me-2">TITRE:</h5>
                             <input className="form-control form-control-lg mb-1" type="text"
-                                placeholder={flipperDetail?.name} 
-                                value={title}aria-label=".form-control-lg example"
-                                onChange={HandleTitle}></input>
+                                ref={TitleRef}
+                                value={flipperDetail?.name} aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, name : TitleRef?.current.value})}}></input>
                         </span>
                         
                             
                             <div className="bg-info">
                                 <label htmlFor="descriptionFlipper" className="form-label">DESCRIPTION</label>
-                                <textarea className="form-control" id="descriptionFlipper" 
-                                value={description} rows="5"
-                                placeholder={flipperDetail?.description} 
-                                onChange={HandleDescription}></textarea>
+                                <textarea className="form-control" id="flipperDescription" 
+                                ref={DescriptionRef}
+                                value={flipperDetail?.description} rows="5"
+                                
+                                onChange={()=>{setFlipperDetail({...flipperDetail, description : DescriptionRef?.current.value})}}></textarea>
                             </div>
                             
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option1</p>
                             <input className="form-control form-control-sm" type="text"
-                                placeholder={flipperDetail?.pointfort1} 
-                                value={title}aria-label=".form-control-lg example"
-                                onChange={HandleTitle}></input>
+                                ref={option1Ref}
+                                value={flipperDetail?.pointfort1}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort1 : option1Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option2</p>
                             <input className="form-control form-control-sm" type="text"
-                                placeholder={flipperDetail?.pointfort2} 
-                                value={title}aria-label=".form-control-lg example"
-                                onChange={HandleTitle}></input>
+                                ref={option2Ref}
+                                value={flipperDetail?.pointfort2}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort2 : option2Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option3</p>
                             <input className="form-control form-control-sm" type="text"
-                                placeholder={flipperDetail?.pointfort3} 
-                                value={title}aria-label=".form-control-lg example"
-                                onChange={HandleTitle}></input>
+                                 ref={option3Ref}
+                                value={flipperDetail?.pointfort3}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort3 : option3Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option4</p>
                             <input className="form-control form-control-sm" type="text"
-                                placeholder={flipperDetail?.pointfort4} 
-                                value={title}aria-label=".form-control-lg example"
-                                onChange={HandleTitle}></input>
+                                ref={option4Ref}
+                                value={flipperDetail?.pointfort4}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort4 : option4Ref?.current.value})}}></input>
                         </span>
                             
                         <span className="d-flex justify-content-start mt-5">
                             <h3 className="bg-success p-3  me-2">PRIX:</h3>
                             <input className="form-control form-control-lg mb-1" type="text"
-                            value={price} 
-                            placeholder={flipperDetail?.price} 
+                            value={flipperDetail?.price} 
+                            ref={PriceRef}
                             aria-label=".form-control-lg example"
-                            onChange={HandlePrice}></input>
+                            onChange={()=>{setFlipperDetail({...flipperDetail, price : PriceRef?.current.value})}}></input>
                         </span>
                     </div>
                 </div>
@@ -105,16 +109,17 @@ const FlipperAdminEdit = () => {
             <div className="container mt-2 bg-light p-2">
                 <span className="d-flex justify-content-start">
                 <h3>Status du flipper : </h3>
-                <h5 className="text-success mt-2 ms-2">
+                <h5 className={`mt-2 ms-2 ${flipperDetail?.is_available==1?"text-success":"text-danger"}`}>
                 {(flipperDetail?.is_available==1?" EN LOCATION" : " INDISPONIBLE a la location" )}
                 </h5>
-                <button type="button" class="btn bg-danger text-white ms-2">
-                {(flipperDetail?.is_available==1?" RETIRER DE LA LACOATION" : " REMETTRE EN LOCATION" )}
+                <button type="button" className={(flipperDetail?.is_available==1?" mx-2 bg-danger" : "mx-2 bg-success text-white" )}
+                onClick={HandleStatus}>
+                {(flipperDetail?.is_available==1?" RETIRER DE LA LOCATION" : " REMETTRE EN LOCATION" )}
                 </button>
                 </span>
             </div>
             <div className="container">
-            <button type="button" class="btn bg-danger text-white m-5 w-100">
+            <button type="button" className="btn bg-success text-white m-5 w-75">
             <MdOutlinePublishedWithChanges className="fs-4 m-1"/>
             VALIDER LES MISES A JOUR DU FLIPPER
             <MdOutlinePublishedWithChanges className="fs-4 m-1"/>

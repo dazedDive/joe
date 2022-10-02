@@ -256,7 +256,8 @@ const DistanceCalculator = ()=>{
             onClick={()=>{HandlePrice();setCheckFinal(false)}}>Estimation du prix de Transport</button>
         <h4 className="mx-2 mt-4 orange  ">Frais de Livraison : {(distanceLivraison/1000).toFixed()} €</h4>
         <button type="button" className="btn btn-light mt-4 w-25 mb-5"
-        disabled={checkFinal} >
+        disabled={checkFinal} 
+        onClick={()=>{navigate('/reservation/final')}}>
             Paiement
         </button>
         
