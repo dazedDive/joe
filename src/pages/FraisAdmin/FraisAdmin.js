@@ -5,7 +5,8 @@ import { useState } from 'react';
 const FraisAdmin = () => {
 ///////////////////////////////////////////////REQUETE API///////////
 const [dataAdmin, setDataAdmnin]=useState(null);
-console.log(dataAdmin)
+
+
 useEffect(()=>{
     fetch('http://joe.api/statistique/2')
     .then(rep=>rep.json())
@@ -13,6 +14,8 @@ useEffect(()=>{
         setDataAdmnin(json)
     })
 },[])
+
+     
 
 
 

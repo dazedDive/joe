@@ -18,12 +18,13 @@ const FlipperAdmin = () => {
 
     return (
         <div>
-            <h3>Flippers: </h3>
-            
-            <h5>Ma collection : </h5>
+            <h3 className="bg-dark text-white p-1">Flippers: </h3>
+            <button className="btn btn-primary mt-2"
+             onClick={()=>{naviguate(`/admninjosh/flipperAdd`)}}>Ajoutez un Flipper au Catalogue</button>
+            <h3>Editer Ma collection : </h3>
             {flippers.map(flipper=>{
                 return(
-                <div className="card w-75 mt-2" key={flipper.Id_Flipper}>
+                <div className="card w-75 mt-2" key={flipper.Id_flipper}>
                 <div className="card-body" >
                   <h5 className="card-title">{flipper.name}</h5>
                   <p className="card-text">{flipper.description}</p>
@@ -35,7 +36,7 @@ const FlipperAdmin = () => {
                     </ul>
                   <h3 className="card-text">Prix de base : {flipper.price} €</h3>
                   <button className="btn btn-primary "
-                  onClick={()=>{naviguate(`/admninjosh/flipper/${flipper.Id_Flipper}`)}}>Editer</button>
+                  onClick={()=>{naviguate(`/admninjosh/flipper/${flipper.Id_flipper}`)}}>Editer</button>
                 </div>
               </div>
             )})}

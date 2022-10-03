@@ -25,6 +25,7 @@ import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 import DateSelector from './components/DateSelector/DateSelector';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
 import Payement from './components/payement/Payement';
+import FlipperAdminAdd from './pages/FlipperAdminAdd/FlipperAdminAdd';
 ///
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
       <Route path="/admninjosh" element={<BaseScreenAdmin/>}>
       <Route path="/admninjosh/date" element={<DateAdmin/>}/>
       <Route path="/admninjosh/flipper" element={<FlipperAdmin/>}/>
+      <Route path="/admninjosh/flipperAdd" element={<FlipperAdminAdd/>}/>
       <Route path="/admninjosh/flipper/:id" element={<FlipperAdminEdit/>}/>
       <Route path="/admninjosh/customer" element={<CustomerAdmin/>}/>
       <Route path="/admninjosh/order" element={<OrderAdmin/>}/>
