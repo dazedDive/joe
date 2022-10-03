@@ -7,6 +7,10 @@ const FraisAdmin = () => {
 const [dataAdmin, setDataAdmnin]=useState(null);
 const inputTextHomePage = useRef(null);
 const inputPricePort = useRef(null);
+const inputPriceSamedi = useRef(null);
+const inputPriceDimanche = useRef(null);
+const inputPriceDeuxJours = useRef(null);
+const [alertChange, setAlertChange] = useState(false)
 
 useEffect(()=>{
     fetch('http://joe.api/statistique/2')
@@ -17,7 +21,15 @@ useEffect(()=>{
 },[])
 
 //////////////////////////////////////////////////////
-
+const HandleChangeCosts = () =>{
+    fetch('http://joe.api/statistique/2',{
+        method : "PUT",
+        body : JSON.stringify(dataAdmin)
+    })
+    .then(rep=>rep.json())
+    .then(json=>setDataAdmnin(json))
+    .then(setAlertChange(true))
+}
      
 
 
@@ -42,8 +54,12 @@ useEffect(()=>{
                     <div className="col-6">
                         <div className="mb-3">
                             <label htmlFor="textHomePage" className="form-label">nouveau text</label>
-                            <textarea className="form-control" id="extHomePage" rows="5"></textarea>
-                            <button type="button" className="btn btn-warning mt-2">Modifier</button>
+                            <textarea className="form-control" id="extHomePage" rows="5"
+                            placeholder="Ce text apparaitra en en-tête de la page d'aceuille"
+                            ref={inputTextHomePage}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,textHome : inputTextHomePage.current.value})}}></textarea>
+                            <button type="button" className="btn btn-warning mt-2"
+                            onClick={HandleChangeCosts}>Modifier</button>
                         </div>
                     </div>
                 </div>
@@ -58,8 +74,13 @@ useEffect(()=>{
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
                             
-                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control mt-4" type="text" 
+                            placeholder="Prix au kilomètre en euro" aria-label="nouveau"
+                            ref={inputPricePort}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,Prix_kilometre : inputPricePort.current.value})}}
+                            ></input>
+                            <button type="button" className="btn btn-warning ms-2 mt-4"
+                            onClick={HandleChangeCosts}>Modifier</button>
                         </span>
                     </div>
                 </div>
@@ -78,21 +99,37 @@ useEffect(()=>{
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
                             <p className="me-3 mt-1">Samedi</p>
-                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Prix pour 1j, n'a pas de raison d'être modifié" 
+                            aria-label="nouveau"
+                            ref={inputPriceSamedi}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateursamedi : inputPriceSamedi.current.value})}}
+                            ></input>
+                            <button type="button" className="btn btn-warning ms-2"
+                            onClick={HandleChangeCosts}>Modifier</button>
                         </span>
-                        <span className="d-flex justify-content-start mt-3">
+                        <span className="d-flex justify-content-start mt-2">
                         <p className="me-3 mt-1">Dimanche</p>
-                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Majoration Dimanche (multiplicateur)"
+                            ref={inputPriceDimanche}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateurdimanche : inputPriceDimanche.current.value})}}
+                            aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2"
+                            onClick={HandleChangeCosts}>Modifier</button>
                         </span>
-                        <span className="d-flex justify-content-start mt-3">
+                        <span className="d-flex justify-content-start mt-1">
                         <p className="me-3 mt-1">2jours</p>
-                            <input className="form-control" type="text" placeholder="Default input" aria-label="nouveau"></input>
-                            <button type="button" className="btn btn-warning ms-2">Modifier</button>
+                            <input className="form-control" type="text" placeholder="Majoration 2j (multiplicateur)"
+                             ref={inputPriceDeuxJours}
+                             onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateur2j : inputPriceDeuxJours.current.value})}}
+                            aria-label="nouveau"></input>
+                            <button type="button" className="btn btn-warning ms-2"
+                            onClick={HandleChangeCosts}>Modifier</button>
                         </span>
                     </div>
                 </div>
+            </div>
+            <div className={`alert alert-success fade ${alertChange?"show":""}`} role="alert">
+            Changement Enregistré
             </div>
         </div>
     );
