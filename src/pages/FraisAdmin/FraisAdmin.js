@@ -1,11 +1,12 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const FraisAdmin = () => {
 ///////////////////////////////////////////////REQUETE API///////////
 const [dataAdmin, setDataAdmnin]=useState(null);
-
+const inputTextHomePage = useRef(null);
+const inputPricePort = useRef(null);
 
 useEffect(()=>{
     fetch('http://joe.api/statistique/2')
@@ -14,6 +15,8 @@ useEffect(()=>{
         setDataAdmnin(json)
     })
 },[])
+
+//////////////////////////////////////////////////////
 
      
 
