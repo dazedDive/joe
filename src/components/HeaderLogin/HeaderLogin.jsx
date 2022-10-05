@@ -6,10 +6,10 @@ const HeaderLogin = ()=>{
 
     return(
         <>
-        <div className="container-fluid bg-white">
+        <div className="container-fluid bg-dark">
             <span className="d-flex justify-content-end me-5">
              <BsPersonXFill className="mt-1 me-2 orange"/>
-             <p> : non connecté</p>   
+             <p className="text-white"> : non connecté</p>   
             </span>
         </div>
         </>

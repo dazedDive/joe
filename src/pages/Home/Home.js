@@ -1,6 +1,7 @@
 import { BsPersonFill,BsShieldFill } from "react-icons/bs"
 import '../Home/Home.css'
-
+import Bandeau from "../../../src/img/bandeHomePage.jpg"
+import Kangoo from "../../../src/img/kangoo.png"
 import { useState,useEffect } from "react"
 
 const Home =()=>{
@@ -21,6 +22,12 @@ const Home =()=>{
 
     return(
         <>
+        <div className="container-fluid mt-5">
+            <span className="d-flex justify-content-start cadre">
+            <img src={Bandeau} className="bandeau" height={"300px"}></img>
+            <img src={Bandeau} className="bandeau" height={"300px"}></img>
+            </span>
+        </div>
         <div className="container mt-5">
         <h3 className='title-anim'>What's up?</h3>
         <h5 className="orange">{homeText?.textHome}</h5>
@@ -31,7 +38,7 @@ const Home =()=>{
         <p></p>
         <div className="container mt-5">
             <div className="row">
-                <div className="col-12 col-md-4">
+                <div className="col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded">
                     <p className="orange">Connexion : </p>
                 <span className="d-flex justify-content-start">
                 <BsPersonFill className="fs-3 mt-1 orange"/>
@@ -42,6 +49,7 @@ const Home =()=>{
                 <input class="form-control" type="text" placeholder="mot de passe" aria-label="default input example"></input>
                 <button type="button" class="btn  ms-1" onClick={HandleConnexion}>Connexion</button>
                 </span>
+                <p className="orange">Pas encore de compte? cliquez ici ! </p>
                 </div>
                 <div className="col-12 col-md-8">
         <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
@@ -65,7 +73,7 @@ const Home =()=>{
 
                 </div>
                 <div className="col-12 col-md-4">
-                
+                <img className="img-fluid" src={Kangoo} alt="kangoo"></img>
                 </div>
             </div>
         </div>

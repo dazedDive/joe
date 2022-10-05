@@ -24,3 +24,11 @@
 .text-list{
     color:#E56F0E
 }
+
+.fakeButton  :hover{
+    background-color : #090909 !important;
+    color : #E56F0E;
+    animation: 300ms;
+    transform : scale(1.2,1.2);
+    cursor: pointer;
+}
