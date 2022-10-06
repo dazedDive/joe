@@ -16,7 +16,7 @@ function Machines  (){
         </div>
 
         <div className="container">
-            <ProductCard image={"./assets/images/twilightzone.jpg"}/>  
+            <ProductCard />  
         </div>
                        
         </>
