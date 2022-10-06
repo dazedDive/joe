@@ -84,6 +84,13 @@ const HandlePrevious = () =>{
                     alt="..."
                   />
                 </SwiperSlide>
+                <SwiperSlide>
+                  <img
+                    src="./assets/images/wc04.jpg"
+                    className="img-fluid rounded-start h-100"
+                    alt="..."
+                  />
+                </SwiperSlide>
                 </Swiper>
               </div>
               <div className="col-md-7">
