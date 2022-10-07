@@ -2,12 +2,26 @@ import { BsPersonFill,BsShieldFill } from "react-icons/bs"
 import '../Home/Home.css'
 import Bandeau from "../../../src/img/bandeHomePage.jpg"
 import Kangoo from "../../../src/img/kangoo.png"
-import { useState,useEffect } from "react"
-
+import { useState,useEffect,useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../../contexts/AuthContext"
 const Home =()=>{
-
+    const navigate = useNavigate();
+    const [alertForm, setAlertForm] = useState('Deja client ? connectez vous')
     const [homeText, setHomeText]=useState(null);
-    
+    const [checkMail,setCheckMail] = useState();
+    const [checkPass,setCheckPass] = useState();  
+    const {setAuth,auth} = useContext (AuthContext);
+    const HandleMail = (e) => {
+        const regexMail = /^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,})$/
+        setCheckMail(regexMail.test(e.target.value))
+      }
+      
+      const HandlePass = (e) => {
+        const regexPass = /^((?=\S*?[A-Z])(?=\S*?[a-z]).{6,})\S$/
+        setCheckPass(regexPass.test(e.target.value))
+      }
+
     useEffect(()=>{
     fetch('http://joe.api/statistique/2')
     .then(rep=>rep.json())
@@ -16,8 +30,24 @@ const Home =()=>{
     })
 },[])
 
-    const HandleConnexion =() =>{
-        alert('site pas fini connard')
+    const HandleConnexion =(e) =>{
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const jsonData = Object.fromEntries(formData.entries()); 
+        console.log(jsonData);
+        fetch('http://joe.api/auth/login',{
+        method : "post", body : JSON.stringify(jsonData)})
+        .then(resp => resp.json())
+      .then(json => {
+          console.log(json);
+          if (json.result) {
+            setAuth({admin:+json.is_admin})
+            console.log(auth)
+            auth==1 && navigate('/admninjosh')
+          }   else {
+            setAlertForm('compte innexistant, ou erreur de saisie')
+          }
+      })
     }
 
     return(
@@ -39,17 +69,24 @@ const Home =()=>{
         <div className="container mt-5">
             <div className="row">
                 <div className="col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded">
-                    <p className="orange">Connexion : </p>
+                <form onSubmit={HandleConnexion} noValidate>
+                <p className="orange">Connexion : </p>
                 <span className="d-flex justify-content-start">
                 <BsPersonFill className="fs-3 mt-1 orange"/>
-                <input class="form-control" type="text" placeholder="email" aria-label="default input example"></input>
+                <input className="form-control" type="text" placeholder="email"
+                name ="login" 
+                onChange={HandleMail}></input>
                 </span>
                 <span className="d-flex justify-content-start mt-2">
                 <BsShieldFill className="fs-3 mt-1 orange"/>
-                <input class="form-control" type="text" placeholder="mot de passe" aria-label="default input example"></input>
-                <button type="button" class="btn  ms-1" onClick={HandleConnexion}>Connexion</button>
+                <input className="form-control" type="password" placeholder="mot de passe" 
+                name ="password" 
+                onChange={HandlePass}></input>
+                <button type="submit" className="btn  ms-1"
+                disabled={!(checkMail&&checkPass)}>Connexion</button>
                 </span>
-                <p className="orange">Pas encore de compte? cliquez ici ! </p>
+                </form>
+                <p className="orange">{alertForm}</p>
                 </div>
                 <div className="col-12 col-md-8">
         <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>

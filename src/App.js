@@ -1,17 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
-import NavBar from './components/NavBar/NavBar';
-import ContactForm from './components/ContactForm/ContactForm';
-import Footer from './components/Footer/Footer';
+
 import Error from './pages/Error/Error';
-import ProductCard from './components/ProductCard/ProductCard';
+
 import Machines from './pages/Machines/Machines';
 import { Routes,Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
-import Reserver from './pages/Reserver/Reserver';
-import HeaderLogin from './components/HeaderLogin/HeaderLogin';
-import { useEffect,useState } from 'react';
+
+
 import BaseScreenAdmin from './pages/BaseScreenAdmin';
 import BaseScreen from './pages/BaseScreen';
 import DateAdmin from './pages/DateAdmin/DateAdmin';
@@ -26,10 +23,12 @@ import DateSelector from './components/DateSelector/DateSelector';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
 import Payement from './components/payement/Payement';
 import FlipperAdminAdd from './pages/FlipperAdminAdd/FlipperAdminAdd';
+import { AuthContext} from '../src/contexts/AuthContext'
+import { useContext } from 'react';
 ///
 
 function App() {
- 
+  const {auth} = useContext(AuthContext)
   return (
     <div className="App">
       
@@ -45,6 +44,8 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/*" element={<Error/>}/>
       </Route>
+      
+      {auth.admin===1 &&
       <Route path="/admninjosh" element={<BaseScreenAdmin/>}>
       <Route path="/admninjosh/date" element={<DateAdmin/>}/>
       <Route path="/admninjosh/flipper" element={<FlipperAdmin/>}/>
@@ -55,8 +56,7 @@ function App() {
       <Route path="/admninjosh/image" element={<ImageAdmin/>}/>
       <Route path="/admninjosh/frais" element={<FraisAdmin/>}/>
       <Route path="/admninjosh/stat" element={<StatAdmin/>}/>
-
-      </Route>
+      </Route>}
       </Routes>
       
     </div>
