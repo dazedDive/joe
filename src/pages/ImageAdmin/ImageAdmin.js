@@ -21,20 +21,15 @@ const ImageAdmin = () => {
     const [imagesList,setImagesList] = useState()
 
     const HandleShow = (id) =>{
-        console.log(id)
+        
         fetch('http://joe.api/flipper/'+id,{
             method : "post" ,
             body : JSON.stringify({with:['image']})})
         .then(rep=>rep.json())
-        .then(rep=>console.log(rep.image_list))
         .then(json=>setImagesList(json.image_list))
         }
     
-    const imagesToShow = imagesList?.map(img=>{        
-            <DiapoImage 
-            key={img?.Id_image}
-            source={img?.img_src}/>        
-       })
+    
 
     return (
         <div>
@@ -66,8 +61,15 @@ const ImageAdmin = () => {
                         <h4>Visionneuse</h4>
                     </span>
                     <div className="row">
-                       
-                     {imagesToShow }
+                    
+                       {imagesList?.map(img=>     
+                        <DiapoImage 
+                         key={img?.Id_image}
+                         source={img?.img_src}
+                         name={img?.alt}/> 
+                                
+                         )}
+                     
                     </div>
                     </div>
                     

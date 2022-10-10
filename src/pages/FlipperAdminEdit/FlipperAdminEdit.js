@@ -31,8 +31,8 @@ const FlipperAdminEdit = () => {
         
     const HandleStatus =()=>{
             flipperDetail.is_available==1? 
-            setFlipperDetail({...flipperDetail.is_available=0}):
-            setFlipperDetail({...flipperDetail.is_available=1});
+            setFlipperDetail(false):
+            setFlipperDetail(flipperDetail.is_available=1);
     }  
       
     const [alertUpdate, setAlertUpdate] = useState(false)

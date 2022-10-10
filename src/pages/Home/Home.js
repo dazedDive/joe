@@ -30,6 +30,8 @@ const Home =()=>{
     })
 },[])
 
+   
+
     const HandleConnexion =(e) =>{
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -43,12 +45,14 @@ const Home =()=>{
           if (json.result) {
             setAuth({admin:+json.is_admin})
             console.log(auth)
-            auth==1 && navigate('/admninjosh')
+            auth.admin=="1" && navigate('/admninjosh');
           }   else {
             setAlertForm('compte innexistant, ou erreur de saisie')
           }
       })
     }
+
+
 
     return(
         <>
