@@ -24,6 +24,20 @@ const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,mont
 {id:11,year:2023,month:1,days:"du 24 au 26"}
 ]    
 
+/////////////////////////////////Recuperation des Data Flipper//////////////
+const [flippers, setFlippers] = useState([]);
+  ///////recuperation api flipper//////////:
+  useEffect(() => {
+    fetch("http://joe.api/flipper/0",{
+    method : "post" , body : JSON.stringify({with:['image']})})
+      .then((resp) => resp.json())
+      .then((json) => {
+        setFlippers(json)
+          });
+      
+  }, []);
+
+
 
 
 const [cookies, setCookie] = useCookies(['dateEtFlipper']);

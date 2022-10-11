@@ -21,7 +21,8 @@ const ProductCard = ({
   const [flippers, setFlippers] = useState([]);
   ///////recuperation api flipper//////////:
   useEffect(() => {
-    fetch("http://joe.api/flipper")
+    fetch("http://joe.api/flipper/0",{
+    method : "post" , body : JSON.stringify({with:['image']})})
       .then((resp) => resp.json())
       .then((json) => {
         setFlippers(json)
@@ -40,7 +41,7 @@ const HandleNext = () =>{
 }
 const HandlePrevious = () =>{
   setPage(page==0?pageMax:page-1)
-  
+  console.log(flippers[page])
 }
 
 
@@ -60,37 +61,18 @@ const HandlePrevious = () =>{
           >
             <div className="row g-0">
               <div className="col-md-5">
-                <Swiper 
+                <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+                  {flippers[page]?.image_list?.map(img=>{
+                    return(
+                <SwiperSlide key={img?.Id_image}>
+                  <img
+                    src={img?.img_src}
+                    className="img-fluid rounded-start h-100"
+                    alt={img?.alt}
+                  />
+                  </SwiperSlide>)})}
+                  
                 
-                pagination={true} modules={[Pagination]} className="mySwiper">
-                <SwiperSlide>
-                  <img
-                    src="./assets/images/wc01.jpg"
-                    className="img-fluid rounded-start h-100"
-                    alt="..."
-                  />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                  <img
-                    src="./assets/images/wc02.jpg"
-                    className="img-fluid rounded-start h-100"
-                    alt="..."
-                  />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                  <img
-                    src="./assets/images/wc03.jpg"
-                    className="img-fluid rounded-start h-100"
-                    alt="..."
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="./assets/images/wc04.jpg"
-                    className="img-fluid rounded-start h-100"
-                    alt="..."
-                  />
-                </SwiperSlide>
                 </Swiper>
               </div>
               <div className="col-md-7">

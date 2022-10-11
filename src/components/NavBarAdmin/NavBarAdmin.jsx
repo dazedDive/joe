@@ -1,6 +1,7 @@
 import React from 'react';
 import '../NavBarAdmin/NavBarAdmin.css'
 import { MdAlternateEmail} from "react-icons/md";
+import { FaChrome} from "react-icons/fa";
 import { BsCalendarDateFill,
     BsFillPersonFill,
     BsCameraFill,
@@ -132,6 +133,15 @@ const NavBarAdmin = () => {
                         <span className="d-flex justify-content-start item">
                         <BsFillEmojiAngryFill className="fs-5"></BsFillEmojiAngryFill>
                         <p className=" ms-3 item">Help David !</p>
+                        </span>
+                        </Link>
+                    </li>
+
+                    <li className="item mt-2">
+                        <Link  to="/"> 
+                        <span className="d-flex justify-content-start item">
+                        <FaChrome className="fs-5"></FaChrome>
+                        <p className=" ms-3 item">Retour sur le Site</p>
                         </span>
                         </Link>
                     </li>
