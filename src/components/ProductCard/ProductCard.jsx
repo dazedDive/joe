@@ -27,7 +27,6 @@ const ProductCard = ({
       .then((json) => {
         setFlippers(json)
           });
-      
   }, []);
 
 ////////////navigation du catlagogue////////////
@@ -60,8 +59,10 @@ const HandlePrevious = () =>{
           <div className="card mb-3 shadow p-3 mb-5 bg-body rounded"
           >
             <div className="row g-0">
-              <div className="col-md-5">
-                <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+              <div className="col-md-7">
+                <Swiper pagination={true}
+                modules={[Pagination]}
+                className="mySwiper">
                   {flippers[page]?.image_list?.map(img=>{
                     return(
                 <SwiperSlide key={img?.Id_image}>
@@ -69,13 +70,14 @@ const HandlePrevious = () =>{
                     src={img?.img_src}
                     className="img-fluid rounded-start h-100"
                     alt={img?.alt}
+                    
                   />
                   </SwiperSlide>)})}
                   
                 
                 </Swiper>
               </div>
-              <div className="col-md-7">
+              <div className="col-md-5">
                 <div className="card-body">
                   <h5 className="card-title">{flippers[page]?.name}</h5>
                   <p className="card-text">{flippers[page]?.description}</p>

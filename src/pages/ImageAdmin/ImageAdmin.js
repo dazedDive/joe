@@ -17,7 +17,7 @@ const ImageAdmin = () => {
     },[])
     
 
-    
+    const [loading,setLoading] = useState(true);
     const [imagesList,setImagesList] = useState()
 
     const HandleShow = (id) =>{
@@ -27,6 +27,7 @@ const ImageAdmin = () => {
             body : JSON.stringify({with:['image']})})
         .then(rep=>rep.json())
         .then(json=>setImagesList(json.image_list))
+        .then(setLoading(false))
         }
     
     
@@ -61,6 +62,14 @@ const ImageAdmin = () => {
                         <h4>Visionneuse</h4>
                     </span>
                     <div className="row">
+                        {loading && 
+                        (   <div className="d-flex justify-content-center mt-5 bg-light">
+                            <h4>Selectionnez un flipper
+                            dans le Browser
+                            pour afficher ces Images</h4>
+                            </div>
+                            
+                        )}
                     
                        {imagesList?.map(img=>     
                         <DiapoImage 

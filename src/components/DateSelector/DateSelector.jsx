@@ -34,10 +34,19 @@ const [flippers, setFlippers] = useState([]);
       .then((json) => {
         setFlippers(json)
           });
-      
+           
   }, []);
 
-
+///////////////////////////////Recuperation des DataFrais ///////////////
+    const [dataAdmin, setDataAdmnin]=useState(null);
+    console.log(dataAdmin) 
+    useEffect(()=>{
+        fetch('http://joe.api/statistique/2')
+        .then(rep=>rep.json())
+        .then(json=>{
+            setDataAdmnin(json)
+        })
+    },[])
 
 
 const [cookies, setCookie] = useCookies(['dateEtFlipper']);
@@ -51,12 +60,11 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
 ,"novembre","decembre"]; /////on utilisera le moi en valeur numérique comme indice pour afficher le moi en string
 const [month,setMonth]=useState(monthName[monthIndex]);//////ce seter sert a afficher le moi selon la navigation
 const [countMonth,setCountMonth]=useState(monthIndex);////ce seter sert a naviguer a partir du getMonth
-const [flipper,setFlipper]=useState("selectionnez un flipper"); //// ce seter sert a enregistrer le choix de flipper
+//// ce seter sert a enregistrer le choix de flipper
 
 //////////////////Calcul du prix///////////////
 const [priceByTime,setPriceByTime]=useState(1)
-const [priceByFlipper,setPriceByFlipper] = useState(99)
-const [price, setPrice]=useState(priceByFlipper*priceByTime)
+
 ////////////////////////////////////////////////////fonction qui map les dates a redristribuer dans les pages
 
 const [dateChoosen,setDateChoosen]= useState(['selectionnez une date','','']); ///ce setter enregistre la date de la carddate
@@ -66,36 +74,15 @@ const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce sette
 const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex)); /////ce setter filtre les seance=moi select
 const [dateControl, setDateControl]=useState(false);///controller qui verifie que le choix de date est ok
 const [timeControl, setTimeControl]=useState(false);///controller qui verifie que le choix de temp est ok
-const [flipperControl, setFlipperControl]=useState(false);
+
 ////////////fonction pour le click de la duree de location
-const HandleTime =(evt)=>{
-        setTimeRent(evt.target.value)
-        setTimeControl(true)
-        if (evt.target.value==="2 jours : Samedi et dimanche"){
-            setPriceByTime(1.75);
-        }else if (evt.target.value==="journée du Dimanche"){
-            setPriceByTime(1.35);
-        }else{
-            setPriceByTime(1);
-        }
+
     
-}
-
-////////////fonction pour le click du flipper choisie
-const HandleFlipper =(evt)=>{
-    setFlipper(evt.target.value);
-    setFlipperControl(true);
-    if (evt.target.value==="The Twilight Zone"){
-        setPriceByFlipper(99) 
-    }else if (evt.target.value==="Tommy The Who"){
-        setPriceByFlipper(79)
-    }else if (evt.target.value==="Guns n Roses"){
-        setPriceByFlipper(89)
-    }else if (evt.target.value==="Poupoule"){
-        setPriceByFlipper(69)}
-    }
-
-
+    ////////////setter du flipper pour la selection
+    const [priceByFlipper,setPriceByFlipper] = useState(0)
+    const [flipper,setFlipper]=useState("selectionnez un flipper"); 
+    const [flipperControl, setFlipperControl]=useState(false);
+    const [price, setPrice]=useState(priceByFlipper*priceByTime)
 
 ////////////////////////navigation du calendrier/////////////////////
 const HandleNext = () =>{
@@ -145,7 +132,7 @@ const HandleCookie = () =>{
                 <h1 className="resa-dot">Selectionnez une date  </h1>
                 <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus 
                     tard le Dimanche Midi.</p>
-                <p className="orange">{dateChoosen}</p>
+                <p className="orange"><strong>{dateChoosen}</strong></p>
             </div>
             <div className="col-12 col-md-6">
                 <div className="row">
@@ -175,18 +162,21 @@ const HandleCookie = () =>{
             <div className="col-12 col-md-6">
             <h1 className="resa-dot ">Durée de la location  </h1>
             <p>Choissisez pour 24 ou 48H, ainsi que la journée.</p>
-            <p className="orange">{timeRent}</p>
+            <p className="orange"><strong>{timeRent}</strong></p>
             </div>
             <div className="col-12 col-md-6">
             <div className="row">
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" onClick={HandleTime}>1jour : SAMEDI</button>
+                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" 
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateursamedi);setTimeControl(true);setTimeRent("journée du Samedi")}}>1jour : SAMEDI</button>
                 </div>
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" onClick={HandleTime}>1jour : DIMANCHE </button>
+                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" 
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateurdimanche);setTimeControl(true);setTimeRent("journée du Dimanche")}}>1jour : DIMANCHE </button>
                 </div>
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="2 jours : Samedi et dimanche" onClick={HandleTime}>2 jours :  SAMEDI et DIMANCHE</button>
+                <button type="button" className="btn btn-secondary w-100 m-2" value="2 jours : Samedi et dimanche" 
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateur2j);setTimeControl(true);setTimeRent("2 jours : Samedi et dimanche")}}>2 jours :  SAMEDI et DIMANCHE</button>
                 </div>
             </div>
             </div>
@@ -205,65 +195,30 @@ const HandleCookie = () =>{
                 
                 </span>
                 <Swiper className="mb-5">
-                    <SwiperSlide>
-                    <div className="card" >
-                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
+                    {flippers.map(flip=>{
+                        return(
+                    <SwiperSlide key={flip?.flipper_Id}>
+                    <div className="card">
+                    <img src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
                     <div className="card-body">
-                    <h4 className="card-text ">the Twilight-Zone</h4>
-                    <button type="button" className="btn btn-secondary  m-2" value="The Twilight Zone" 
-                    onClick={HandleFlipper}>Selectionnez</button>
+                    <h4 className="card-text title-dot">{flip?.name}</h4>
+                    <button type="button" className="btn btn-secondary " value={flip?.price} 
+                    onClick={()=>{setFlipperControl(true);setFlipper(flip?.name);setPriceByFlipper(flip?.price) }}>A partir de <strong>{flip?.price}€/TTC</strong>  (Journée du Samedi)</button>
                     </div>
                     </div> 
                     </SwiperSlide>
-                    <SwiperSlide>
-                    <div className="card" >
-                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
-                    <div className="card-body">
-                    <p className="card-text">Tommy The Who</p>
-                    <button type="button" className="btn btn-secondary  m-2" value="Tommy The Who" 
-                    onClick={HandleFlipper}>Selectionnez</button>
-                    </div>
-                    </div> 
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div className="card" >
-                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
-                    <div className="card-body">
-                    <p className="card-text">Guns n' Roses</p>
-                    <button type="button" className="btn btn-secondary  m-2" value="Guns n Roses" 
-                    onClick={HandleFlipper}>Selectionnez</button>
-                    </div>
-                    </div> 
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div className="card" >
-                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
-                    <div className="card-body">
-                    <p className="card-text">Poupoule</p>
-                    <button type="button" className="btn btn-secondary  m-2" value="Poupoule" 
-                    onClick={HandleFlipper}>Selectionnez</button>
-                    </div>
-                    </div> 
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div className="card" >
-                    <img src="./assets/images/popo.jpg" className="card-img-top w-50" alt="..."/>
-                    <div className="card-body">
-                    <p className="card-text">Aline aux pays des Pines</p>
-                    <button type="button" className="btn btn-secondary  m-2" value="Guns n Roses" 
-                    onClick={HandleFlipper}>Aline aux pays des Pines</button>
-                    </div>
-                    </div> 
-                    </SwiperSlide>
+                        )
+                    })}
+                    
                 </Swiper>
             </div>
-            <div className="col-12 col-md-6">
+            <div className="col-12 col-md-6 mt-5">
                 <div className="bgorange">
                 <h1 className="resa-dot text-white">recapitulatif: </h1>
                 <p className={`${dateControl ===true ? "text-black fw-bold" : "text-white "}`} >Date du : {dateChoosen}</p>
                 <p className={`${timeControl ===true ? "text-black fw-bold" : "text-white "}`}>Durée de location : {timeRent}</p>
                 <p className={`${flipperControl ===true ? "text-black fw-bold" : "text-white "}`}>Flipper : {flipper}</p>
-                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "text-black fw-bold d-block" : "d-none "}`}>Prix TTC hors livraison : {price} €/TTC</p>
+                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "orange fw-bold d-block bg-light p-1" : "d-none "}`}>Prix TTC hors livraison : <h3>{price} €/TTC</h3></p>
                 </div>
                 <button type="button" 
             className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
