@@ -6,7 +6,7 @@ const CustomerAdmin = () => {
     const [customers, setCustomers] = useState([])
 
     useEffect(() => {
-        fetch("http://joe.api/app_user")
+        fetch("http://joe.api/customer")
             .then(resp => resp.json())
             .then(json => {
                 setCustomers(json)

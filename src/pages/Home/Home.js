@@ -43,11 +43,13 @@ const Home =()=>{
       .then(json => {
           console.log(json);
           if (json.result) {
-            setAuth({admin:+json.is_admin})
+            setAuth({admin:+json.is_admin,result:+json.result,id:json.id});
+            document.cookie = `pinball=${json.token};max-age=${60*60*24};`
             console.log(auth)
-            auth.admin=="1" && navigate('/admninjosh');
+            json.is_admin==true && navigate('/admninjosh');
           }   else {
             setAlertForm('compte innexistant, ou erreur de saisie')
+            document.cookie = `pinball=null;max-age=0;`
           }
       })
     }
@@ -74,15 +76,18 @@ const Home =()=>{
             <div className="row">
                 <div className="col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded">
                 <form onSubmit={HandleConnexion} noValidate>
-                <p className="orange">Connexion : </p>
                 <span className="d-flex justify-content-start">
-                <BsPersonFill className="fs-3 mt-1 orange"/>
+                <p className="orange"><strong className="me-3 ms-1">Connexion </strong> </p>
+                <p className="orange"> {alertForm} :</p>
+                </span>
+                <span className="d-flex justify-content-start">
+                <BsPersonFill className="fs-3 mt-1 mx-1 orange"/>
                 <input className="form-control" type="text" placeholder="email"
                 name ="login" 
                 onChange={HandleMail}></input>
                 </span>
                 <span className="d-flex justify-content-start mt-2">
-                <BsShieldFill className="fs-3 mt-1 orange"/>
+                <BsShieldFill className="fs-3 mt-1 mx-1 orange"/>
                 <input className="form-control" type="password" placeholder="mot de passe" 
                 name ="password" 
                 onChange={HandlePass}></input>
@@ -90,7 +95,9 @@ const Home =()=>{
                 disabled={!(checkMail&&checkPass)}>Connexion</button>
                 </span>
                 </form>
-                <p className="orange">{alertForm}</p>
+                <span className="bg-light item ">
+                <p className="ms-2 mt-1"> Pas de compte? cliquez ICI</p>
+                </span>
                 </div>
                 <div className="col-12 col-md-8">
         <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
