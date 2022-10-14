@@ -5,6 +5,7 @@ import Kangoo from "../../../src/img/kangoo.png"
 import { useState,useEffect,useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../contexts/AuthContext"
+import { Link } from "react-router-dom"
 const Home =()=>{
     const navigate = useNavigate();
     const [alertForm, setAlertForm] = useState('Deja client ? connectez vous')
@@ -96,7 +97,7 @@ const Home =()=>{
                 </span>
                 </form>
                 <span className="bg-light item ">
-                <p className="ms-2 mt-1"> Pas de compte? cliquez ICI</p>
+                <Link to="/creation" className="text-black items">Pas de compte? cliquez ici</Link>
                 </span>
                 </div>
                 <div className="col-12 col-md-8">

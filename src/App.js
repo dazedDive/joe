@@ -20,6 +20,7 @@ import StatAdmin from './pages/StatAdmin/StatAdmin';
 import FraisAdmin from './pages/FraisAdmin/FraisAdmin';
 import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 import DateSelector from './components/DateSelector/DateSelector';
+import CreationPage from './pages/CreationPage/CreationPage';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
 import Payement from './components/payement/Payement';
 import FlipperAdminAdd from './pages/FlipperAdminAdd/FlipperAdminAdd';
@@ -38,6 +39,7 @@ function App() {
       <Route path="/" element={<BaseScreen/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/machines" element={<Machines/>}/>
+        <Route path="/creation" element={<CreationPage/>}/>
         <Route path="/reservation" element={<DateSelector/>}/>
         <Route path="/reservation/second" element={<DistanceCalculator/>}/>
         <Route path="/reservation/final" element={<Payement/>}/>

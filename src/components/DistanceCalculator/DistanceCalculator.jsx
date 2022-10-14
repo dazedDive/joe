@@ -190,6 +190,7 @@ const DistanceCalculator = ()=>{
         type="text" value={tel} placeholder="Telephone" 
         aria-label="default input example" onChange={HandleTel}></input>
         </div>
+
         <div className="col-6">
         <input className={`form-control ${!checkMail  &&"text-danger"}`} 
         type="text" value={mail}placeholder="Adresse Email" 
@@ -215,7 +216,6 @@ const DistanceCalculator = ()=>{
         <select className="form-select" aria-label="Default select example">
         <option selected>Ville de Facturation</option>
         {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
-        
         </select>   
         </div>
 
