@@ -2,6 +2,9 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 
 const CreationPage = () => {
+
+    const [messageInfo,setMessageInfo] = useState('Veuillez remplir tout les champs !')
+    
     ////////////setter des controles de champs et regex ///////////
     ///NoM///
     const [name,setName]=useState("")
@@ -45,15 +48,16 @@ const CreationPage = () => {
          const adressRegex = /[0-9]+\s*([a-zA-Z]+\s*[a-zA-Z]+\s)*[0-9]*/
          setCheckAdress(adressRegex.test(evt.target.value))
      }
-     const [checkFactCity, setCheckFactCity]= useState(false)
+     const [checkFactCp, setCheckFactCp]= useState(false)
      const HandleChangeFact =(evt)=>{
          setInputCpFact(evt.target.value)
-         setCheckFactCity(true)
+         setCheckFactCp(true)
          
      }
      //////////////////////////////////////////////
      const [cityListFact, setCityListFact]=useState([]);
      const [inputCpFact, setInputCpFact]=useState('');
+     const [checkCity, setCheckCity] = useState(false)
      useEffect(()=>{
         const apiCpUrl = `https://geo.api.gouv.fr/communes?codePostal=${inputCpFact}`
             fetch(apiCpUrl)
@@ -61,8 +65,17 @@ const CreationPage = () => {
             .then((rep)=>setCityListFact(rep))
             
     },[inputCpFact]) 
-
- 
+   
+    const HandleRegister =()=>{
+        fetch('http://joe.api/auth/register',
+        {
+          method:"POST",
+          body : JSON.stringify(mail)
+        })
+        .then(rep=> rep.json())
+        .then(json=>setMessageInfo(json))
+        
+    }    
     return (
          <>
         <div className="container">
@@ -112,16 +125,18 @@ const CreationPage = () => {
         aria-label="default input example" onChange={HandleChangeFact}></input>
         </div>
         <div className="col-6">
-        <select className="form-select" aria-label="Default select example">
+        <select className="form-select" aria-label="Default select example"
+        onChange={()=>{setCheckCity(true)}}>
         <option selected>Ville de Facturation</option>
         {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
         </select>   
         </div>
 
         </div>
-        <button type="button" class="btn  w-100 my-3"
-        disabled={!(checkFactCity&&checkName&&checkFirstName&&checkFactCity&&checkMail&&checkTel)}>Je crée mon compte</button>
-        <i className="text-warning"> A coder</i>
+        <i className="text-warning pb-3">Info : {messageInfo}</i>
+        <button type="button" className="btn  w-100 my-3"
+        disabled={!(checkCity&&checkName&&checkFirstName&&checkFactCp&&checkMail&&checkTel&&checkAdress)}
+        onClick={HandleRegister}>Je crée mon compte</button>
         </div>
 
        </>
