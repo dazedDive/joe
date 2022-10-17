@@ -65,14 +65,19 @@ const CreationPage = () => {
             .then((rep)=>setCityListFact(rep))
             
     },[inputCpFact]) 
-   
+    const [city,setCity]=useState();
+    const selectCity =(e)=>{
+        setCity(e.target.value)
+    }
     const HandleRegister =()=>{
+        const data = {name:name,firstname:firstName,telephone:tel,email:mail,
+            adresse:adress,codepostal:inputCpFact,ville:city}
         fetch('http://joe.api/auth/register',
         {
           method:"POST",
-          body : JSON.stringify(mail)
+          body : JSON.stringify(data)
         })
-        .then(rep=> rep.json())
+        // .then(rep=> rep.json())
         .then(json=>setMessageInfo(json))
         
     }    
@@ -83,6 +88,7 @@ const CreationPage = () => {
         <div className="row mt-5">
         <h1 className="text-resa ">Identité : </h1>
         <div className="col-6">
+        
         <input className={`form-control ${!checkName  &&"text-danger"}`} 
         type="text" 
         value={name} placeholder="Nom" aria-label="default input example" onChange={HandleName}>
@@ -126,7 +132,7 @@ const CreationPage = () => {
         </div>
         <div className="col-6">
         <select className="form-select" aria-label="Default select example"
-        onChange={()=>{setCheckCity(true)}}>
+        onChange={()=>{setCheckCity(true);selectCity()}}>
         <option selected>Ville de Facturation</option>
         {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
         </select>   
@@ -138,6 +144,7 @@ const CreationPage = () => {
         disabled={!(checkCity&&checkName&&checkFirstName&&checkFactCp&&checkMail&&checkTel&&checkAdress)}
         onClick={HandleRegister}>Je crée mon compte</button>
         </div>
+       
 
        </>
     );

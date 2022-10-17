@@ -15,7 +15,7 @@
 
 @keyframes bandeauAnim{
     0% {transform : translate(-5%);}
-    50%{transform : translate(-33%) scale(1.08,1.08)}
+    50%{transform : translate(-33%);}
     100%{transform : translate(-5%);}
 
 }
