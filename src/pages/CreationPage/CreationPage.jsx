@@ -66,8 +66,8 @@ const CreationPage = () => {
             
     },[inputCpFact]) 
     const [city,setCity]=useState();
-    const selectCity =(e)=>{
-        setCity(e.target.value)
+    const selectCity =()=>{
+        setCity(document.getElementById('cityselect').value)
     }
     const HandleRegister =()=>{
         const data = {name:name,firstname:firstName,telephone:tel,email:mail,
@@ -77,9 +77,9 @@ const CreationPage = () => {
           method:"POST",
           body : JSON.stringify(data)
         })
-        // .then(rep=> rep.json())
-        .then(json=>setMessageInfo(json))
-        
+        .then(rep=> rep.json())
+        .then(rep=>setMessageInfo(rep))
+        .then(setCheckMail(false))
     }    
     return (
          <>
@@ -131,7 +131,7 @@ const CreationPage = () => {
         aria-label="default input example" onChange={HandleChangeFact}></input>
         </div>
         <div className="col-6">
-        <select className="form-select" aria-label="Default select example"
+        <select className="form-select" aria-label="Default select example" id="cityselect"
         onChange={()=>{setCheckCity(true);selectCity()}}>
         <option selected>Ville de Facturation</option>
         {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
