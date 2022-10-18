@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 
-const CreationPage = () => {
+const RegisterPage = () => {
 
     const [messageInfo,setMessageInfo] = useState('Veuillez remplir tout les champs !')
     
@@ -150,4 +150,4 @@ const CreationPage = () => {
     );
 };
 
-export default CreationPage;
+export default RegisterPage;

@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import './App.css';
 
 import Error from './pages/Error/Error';
@@ -20,7 +21,8 @@ import StatAdmin from './pages/StatAdmin/StatAdmin';
 import FraisAdmin from './pages/FraisAdmin/FraisAdmin';
 import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 import DateSelector from './components/DateSelector/DateSelector';
-import CreationPage from './pages/CreationPage/CreationPage';
+import RegisterPage from './pages/CreationPage/RegisterPage';
+import RegisterPassPage from './pages/RegisterPass/RegisterPassPage';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
 import Payement from './components/payement/Payement';
 import FlipperAdminAdd from './pages/FlipperAdminAdd/FlipperAdminAdd';
@@ -39,8 +41,13 @@ function App() {
       <Route path="/" element={<BaseScreen/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/machines" element={<Machines/>}/>
-        <Route path="/creation" element={<CreationPage/>}/>
-        <Route path="/reservation" element={<DateSelector/>}/>
+        <Route path="/creation" element={<RegisterPage/>}/>
+        {auth.result==0 &&
+        <Route path="/creation/password/:token" element={<RegisterPassPage/>}/>}
+         {auth.result==0 &&
+        <Route path="/reservation" element={<RegisterPage/>}/>}
+        {auth.result==1 &&
+        <Route path="/reservation" element={<DateSelector/>}/>}
         <Route path="/reservation/second" element={<DistanceCalculator/>}/>
         <Route path="/reservation/final" element={<Payement/>}/>
         <Route path="/contact" element={<Contact/>}/>

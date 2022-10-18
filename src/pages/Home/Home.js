@@ -19,7 +19,7 @@ const Home =()=>{
       }
       
       const HandlePass = (e) => {
-        const regexPass = /^((?=\S*?[A-Z])(?=\S*?[a-z]).{6,})\S$/
+        const regexPass = /^[a-zA-Z0-9]{5,20}$/
         setCheckPass(regexPass.test(e.target.value))
       }
 
@@ -75,7 +75,7 @@ const Home =()=>{
         <p></p>
         <div className="container mt-5">
             <div className="row">
-                <div className="col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded">
+            <div className={`col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded ${auth?.result==true && "d-none"}`}>
                 <form onSubmit={HandleConnexion} noValidate>
                 <span className="d-flex justify-content-start">
                 <p className="orange"><strong className="me-3 ms-1">Connexion </strong> </p>
@@ -99,7 +99,7 @@ const Home =()=>{
                 <span className="bg-light item ">
                 <Link to="/creation" className="text-black items">Pas de compte? cliquez ici</Link>
                 </span>
-                </div>
+            </div>
                 <div className="col-12 col-md-8">
         <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
         <h5>Louez facilement votre flipper pour un évenement ! </h5>
