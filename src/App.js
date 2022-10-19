@@ -23,6 +23,7 @@ import FlipperAdminEdit from './pages/FlipperAdminEdit/FlipperAdminEdit';
 import DateSelector from './components/DateSelector/DateSelector';
 import RegisterPage from './pages/CreationPage/RegisterPage';
 import RegisterPassPage from './pages/RegisterPass/RegisterPassPage';
+import ResetPassPage from './pages/ResetPassPage/ResetPassPage';
 import DistanceCalculator from './components/DistanceCalculator/DistanceCalculator';
 import Payement from './components/payement/Payement';
 import FlipperAdminAdd from './pages/FlipperAdminAdd/FlipperAdminAdd';
@@ -44,6 +45,8 @@ function App() {
         <Route path="/creation" element={<RegisterPage/>}/>
         {auth.result==0 &&
         <Route path="/creation/password/:token" element={<RegisterPassPage/>}/>}
+        {auth.result==0 &&
+        <Route path="/reset/password/:token" element={<ResetPassPage/>}/>}
          {auth.result==0 &&
         <Route path="/reservation" element={<RegisterPage/>}/>}
         {auth.result==1 &&

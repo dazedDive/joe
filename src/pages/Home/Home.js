@@ -41,7 +41,7 @@ const Home =()=>{
         fetch('http://joe.api/auth/login',{
         method : "post", body : JSON.stringify(jsonData)})
         .then(resp => resp.json())
-      .then(json => {
+        .then(json => {
           console.log(json);
           if (json.result) {
             setAuth({admin:+json.is_admin,result:+json.result,id:json.id});
@@ -54,7 +54,19 @@ const Home =()=>{
           }
       })
     }
-
+    const [resetPassForm, setResetPassForm]=useState('');
+    const ResetPassForm =(e)=>{
+        setResetPassForm(e.target.value);
+    }
+    const [resetPassInfoText,setResetPassInfoText]=useState('')
+    const SendMailResetPass =()=>{
+        setResetPassInfoText('*Un Email pour réenitialiser votre mot de passe à été envoyé')
+        fetch('http://joe.api/auth/reset',{
+        method : "post", body : JSON.stringify(resetPassForm)})
+        .then(rep=>rep.json())
+        .then(json=>setResetPassInfoText(json));
+        ;
+    }
 
 
     return(
@@ -96,8 +108,11 @@ const Home =()=>{
                 disabled={!(checkMail&&checkPass)}>Connexion</button>
                 </span>
                 </form>
-                <span className="bg-light item ">
-                <Link to="/creation" className="text-black items">Pas de compte? cliquez ici</Link>
+                <span className="bg-light ">
+                <Link to="/creation" className="text-black item">Pas de compte? cliquez ici</Link>
+                </span>
+                <span className="bg-light ">
+                <p data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="text-black item">Mot de passe oublié..</p>
                 </span>
             </div>
                 <div className="col-12 col-md-8">
@@ -111,6 +126,29 @@ const Home =()=>{
                 </div>
             </div>
         </div>
+        
+        
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+         <div class="modal-dialog">
+         <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Nouveau mot de passe</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Veuillez renseigner votre Email de login</p>
+         <input class="form-control" type="text" placeholder="Default input"
+         aria-label="default input example" onChange={ResetPassForm}></input>
+        </div>
+        <div class="modal-footer">
+         <i className="orange">{resetPassInfoText}</i>
+         <button type="button" class="btn btn" onClick={SendMailResetPass}>M'envoyer un Lien</button>
+        </div>
+        </div>
+        </div>
+        </div>
+
+
         <div className="container">
             <div className="row">
                 <div className="col-12 col-md-8">
