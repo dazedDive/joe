@@ -55,9 +55,9 @@ const RegisterPassPage = () => {
         const dataToWriteInDataBase = {...decryptedToken, password:passOne};
         await fetch ('http://joe.api/auth/create',{
             method:"POST",
-            body:JSON.stringify(dataToWriteInDataBase)})
-            .then (()=>navigate('/'));
-
+            body:JSON.stringify(dataToWriteInDataBase)});
+            // .then (()=>navigate('/'));
+        /////debuger ici///
         
     }
     const [visible,setVisible]=useState(false)

@@ -59,7 +59,9 @@ const Home =()=>{
         setResetPassForm(e.target.value);
     }
     const [resetPassInfoText,setResetPassInfoText]=useState('')
+    const [resetPassSubmitButtonActivated, setResetPassSubmitButtonActivated]=useState(false)
     const SendMailResetPass =()=>{
+        setResetPassSubmitButtonActivated(!resetPassSubmitButtonActivated);
         setResetPassInfoText('*Un Email pour réenitialiser votre mot de passe à été envoyé')
         fetch('http://joe.api/auth/reset',{
         method : "post", body : JSON.stringify(resetPassForm)})
@@ -128,21 +130,22 @@ const Home =()=>{
         </div>
         
         
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-         <div class="modal-dialog">
-         <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Nouveau mot de passe</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+         <div className="modal-dialog">
+         <div className="modal-content">
+         <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">Nouveau mot de passe</h5>
+         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div className="modal-body">
             <p>Veuillez renseigner votre Email de login</p>
-         <input class="form-control" type="text" placeholder="Default input"
+         <input className="form-control" type="text" placeholder="Default input"
          aria-label="default input example" onChange={ResetPassForm}></input>
         </div>
-        <div class="modal-footer">
+        <div className="modal-footer">
          <i className="orange">{resetPassInfoText}</i>
-         <button type="button" class="btn btn" onClick={SendMailResetPass}>M'envoyer un Lien</button>
+         <button type="button" className="btn btn" onClick={SendMailResetPass}
+         disabled={resetPassSubmitButtonActivated}>M'envoyer un Lien</button>
         </div>
         </div>
         </div>

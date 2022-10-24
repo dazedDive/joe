@@ -11,7 +11,7 @@ const ResetPassPage = () => {
     ///////////recuperation des Datas du Token//////////////////////
     const [decryptedToken,setDecryptedToken]=useState(null)
     useEffect(()=>{
-        fetch('http://joe.api/auth/validate',{
+        fetch('http://joe.api/auth/validatePass',{
             method:"POST",
             body:JSON.stringify(token)})
         .then(rep=>rep.json())
@@ -49,14 +49,18 @@ const ResetPassPage = () => {
 
         
     }
-
+    
     const HandleSubmit = async (e) =>{
         e.preventDefault();
         const dataToWriteInDataBase = {...decryptedToken, password:passOne};
-        await fetch ('http://joe.api/auth/create',{
+        await fetch ('http://joe.api/auth/uppdatePass',{
             method:"POST",
             body:JSON.stringify(dataToWriteInDataBase)})
-            .then (()=>navigate('/'));
+            .then (rep=>rep.json())
+            .then (json=>json.result==true && navigate('/'));
+            ////a deboguer///
+            
+       
 
         
     }

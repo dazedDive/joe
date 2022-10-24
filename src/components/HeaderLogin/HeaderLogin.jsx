@@ -51,7 +51,7 @@ const HeaderLogin = ({log})=>{
             </span>
 
             
-            <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div className="offcanvas-header">
                 <h5 id="offcanvasRightLabel" className="bg-dark text-white px-5 py-1">Mon compte : </h5>
                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
