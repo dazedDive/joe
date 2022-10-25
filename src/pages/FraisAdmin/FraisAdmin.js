@@ -46,7 +46,7 @@ const HandleChangeCosts = () =>{
                     <div className="col-6">
                         <div className="mb-3">
                             <p className="orange">Text actuel :</p>
-                            <p className="bg-info">{dataAdmin?.textHome}</p>
+                            <p className="bg-info">{dataAdmin?.homepage_text}</p>
                             
 
                         </div>
@@ -57,7 +57,7 @@ const HandleChangeCosts = () =>{
                             <textarea className="form-control" id="extHomePage" rows="5"
                             placeholder="Ce text apparaitra en en-tête de la page d'aceuille"
                             ref={inputTextHomePage}
-                            onChange={()=>{setDataAdmnin({...dataAdmin,textHome : inputTextHomePage.current.value})}}></textarea>
+                            onChange={()=>{setDataAdmnin({...dataAdmin,homepage_text : inputTextHomePage.current.value})}}></textarea>
                             <button type="button" className="btn btn-warning mt-2"
                             onClick={HandleChangeCosts}>Modifier</button>
                         </div>
@@ -69,7 +69,7 @@ const HandleChangeCosts = () =>{
                 <div className="row">
                     <div className="col-6">
                         <p>Prix Actuel du Kilomètre :</p>
-                        <h6 className="bg-info">{dataAdmin?.Prix_kilometre}€ / par Kilomètre</h6>
+                        <h6 className="bg-info">{dataAdmin?.price_by_kilometer}€ / par Kilomètre</h6>
                     </div>
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
@@ -77,7 +77,7 @@ const HandleChangeCosts = () =>{
                             <input className="form-control mt-4" type="text" 
                             placeholder="Prix au kilomètre en euro" aria-label="nouveau"
                             ref={inputPricePort}
-                            onChange={()=>{setDataAdmnin({...dataAdmin,Prix_kilometre : inputPricePort.current.value})}}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,price_by_kilometer : inputPricePort.current.value})}}
                             ></input>
                             <button type="button" className="btn btn-warning ms-2 mt-4"
                             onClick={HandleChangeCosts}>Modifier</button>
@@ -90,11 +90,11 @@ const HandleChangeCosts = () =>{
                 <div className="row">
                     <div className="col-6">
                         <p>Multiplicateur Actuel Samedi :</p>
-                        <h6 className="bg-info">X par {dataAdmin?.multiplicateursamedi}</h6>
+                        <h6 className="bg-info">X par {dataAdmin?.multiplier_saturday}</h6>
                         <p>Multiplicateur Actuel Dimanche :</p>
-                        <h6 className="bg-info">X par {dataAdmin?.multiplicateurdimanche}</h6>
+                        <h6 className="bg-info">X par {dataAdmin?.multiplier_sunday}</h6>
                         <p>Multiplicateur Actuel 2 jours :</p>
-                        <h6 className="bg-info">X par {dataAdmin?.multiplicateur2j}</h6>
+                        <h6 className="bg-info">X par {dataAdmin?.multiplier_both}</h6>
                     </div>
                     <div className="col-6">
                         <span className="d-flex justify-content-start">
@@ -102,7 +102,7 @@ const HandleChangeCosts = () =>{
                             <input className="form-control" type="text" placeholder="Prix pour 1j, n'a pas de raison d'être modifié" 
                             aria-label="nouveau"
                             ref={inputPriceSamedi}
-                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateursamedi : inputPriceSamedi.current.value})}}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplier_saturday : inputPriceSamedi.current.value})}}
                             ></input>
                             <button type="button" className="btn btn-warning ms-2"
                             onClick={HandleChangeCosts}>Modifier</button>
@@ -111,7 +111,7 @@ const HandleChangeCosts = () =>{
                         <p className="me-3 mt-1">Dimanche</p>
                             <input className="form-control" type="text" placeholder="Majoration Dimanche (multiplicateur)"
                             ref={inputPriceDimanche}
-                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateurdimanche : inputPriceDimanche.current.value})}}
+                            onChange={()=>{setDataAdmnin({...dataAdmin,multiplier_sunday : inputPriceDimanche.current.value})}}
                             aria-label="nouveau"></input>
                             <button type="button" className="btn btn-warning ms-2"
                             onClick={HandleChangeCosts}>Modifier</button>
@@ -120,7 +120,7 @@ const HandleChangeCosts = () =>{
                         <p className="me-3 mt-1">2jours</p>
                             <input className="form-control" type="text" placeholder="Majoration 2j (multiplicateur)"
                              ref={inputPriceDeuxJours}
-                             onChange={()=>{setDataAdmnin({...dataAdmin,multiplicateur2j : inputPriceDeuxJours.current.value})}}
+                             onChange={()=>{setDataAdmnin({...dataAdmin,multiplier_both : inputPriceDeuxJours.current.value})}}
                             aria-label="nouveau"></input>
                             <button type="button" className="btn btn-warning ms-2"
                             onClick={HandleChangeCosts}>Modifier</button>

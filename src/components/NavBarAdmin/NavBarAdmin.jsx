@@ -149,11 +149,11 @@ const NavBarAdmin = () => {
                     <li className=" mt-2">
                     <span className="d-flex justifify-content-start">
                         <p className=" ms-3">Nb resa : </p>
-                        <h5 className="orange"> {dataAdmin?.nbResaTotal} </h5>
+                        <h5 className="orange"> {dataAdmin?.order_count} </h5>
                     </span>
                         <span className="d-flex justifify-content-start">
                         <p className=" ms-3">C.A total : </p>
-                        <h5 className="orange"> {dataAdmin?.Chiffre_Affaire} €</h5>
+                        <h5 className="orange"> {dataAdmin?.sales_revenue} €</h5>
                         </span>
                     </li>
                 

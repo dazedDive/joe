@@ -81,32 +81,32 @@ const FlipperAdminEdit = () => {
                             <p className="bg-warning p-1  me-2 ">option1</p>
                             <input className="form-control form-control-sm" type="text"
                                 ref={option1Ref}
-                                value={flipperDetail?.pointfort1}aria-label=".form-control-lg example"
-                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort1 : option1Ref?.current.value})}}></input>
+                                value={flipperDetail?.first_argument}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, first_argument : option1Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option2</p>
                             <input className="form-control form-control-sm" type="text"
                                 ref={option2Ref}
-                                value={flipperDetail?.pointfort2}aria-label=".form-control-lg example"
-                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort2 : option2Ref?.current.value})}}></input>
+                                value={flipperDetail?.second_argument}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, second_argument : option2Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option3</p>
                             <input className="form-control form-control-sm" type="text"
                                  ref={option3Ref}
-                                value={flipperDetail?.pointfort3}aria-label=".form-control-lg example"
-                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort3 : option3Ref?.current.value})}}></input>
+                                value={flipperDetail?.third_argument}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, third_argument : option3Ref?.current.value})}}></input>
                         </span>
 
                         <span className="d-flex justify-content-start mt-2">
                             <p className="bg-warning p-1  me-2 ">option4</p>
                             <input className="form-control form-control-sm" type="text"
                                 ref={option4Ref}
-                                value={flipperDetail?.pointfort4}aria-label=".form-control-lg example"
-                                onChange={()=>{setFlipperDetail({...flipperDetail, pointfort4 : option4Ref?.current.value})}}></input>
+                                value={flipperDetail?.fourth_argument}aria-label=".form-control-lg example"
+                                onChange={()=>{setFlipperDetail({...flipperDetail, fourth_argument : option4Ref?.current.value})}}></input>
                         </span>
                             
                         <span className="d-flex justify-content-start mt-5">

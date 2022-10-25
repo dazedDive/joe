@@ -82,10 +82,10 @@ const HandlePrevious = () =>{
                   <h5 className="card-title">{flippers[page]?.name}</h5>
                   <p className="card-text">{flippers[page]?.description}</p>
                     <ul>
-                        <li>{flippers[page]?.pointfort1}</li>
-                        <li>{flippers[page]?.pointfort2}</li>
-                        <li>{flippers[page]?.pointfort3}</li>
-                        <li>{flippers[page]?.pointfort4}</li>
+                        <li>{flippers[page]?.first_argument}</li>
+                        <li>{flippers[page]?.second_argument}</li>
+                        <li>{flippers[page]?.third_argument}</li>
+                        <li>{flippers[page]?.fourth_argument}</li>
                     </ul>
                   <h4 className="card-text price-text text-center mt-2">
                     A partir de {flippers[page]?.price} €

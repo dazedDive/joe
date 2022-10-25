@@ -82,7 +82,7 @@ const [timeControl, setTimeControl]=useState(false);///controller qui verifie qu
     const [priceByFlipper,setPriceByFlipper] = useState(0)
     const [flipper,setFlipper]=useState("selectionnez un flipper"); 
     const [flipperControl, setFlipperControl]=useState(false);
-    const [price, setPrice]=useState(priceByFlipper*priceByTime)
+    const [price, setPrice]=useState((priceByFlipper*priceByTime))
 
 ////////////////////////navigation du calendrier/////////////////////
 const HandleNext = () =>{
@@ -113,7 +113,7 @@ const HandleCookie = () =>{
     },[pageDate])
 
     useEffect(()=>{
-        setPrice(priceByFlipper*priceByTime)
+        setPrice((priceByFlipper*priceByTime).toFixed(2))
     },[priceByTime,priceByFlipper])
 
 
@@ -168,15 +168,15 @@ const HandleCookie = () =>{
             <div className="row">
                 <div className="col-4">
                 <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateursamedi);setTimeControl(true);setTimeRent("journée du Samedi")}}>1jour : SAMEDI</button>
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_saturday);setTimeControl(true);setTimeRent("journée du Samedi")}}>1jour : SAMEDI</button>
                 </div>
                 <div className="col-4">
                 <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateurdimanche);setTimeControl(true);setTimeRent("journée du Dimanche")}}>1jour : DIMANCHE </button>
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_sunday);setTimeControl(true);setTimeRent("journée du Dimanche")}}>1jour : DIMANCHE </button>
                 </div>
                 <div className="col-4">
                 <button type="button" className="btn btn-secondary w-100 m-2" value="2 jours : Samedi et dimanche" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplicateur2j);setTimeControl(true);setTimeRent("2 jours : Samedi et dimanche")}}>2 jours :  SAMEDI et DIMANCHE</button>
+                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_both);setTimeControl(true);setTimeRent("2 jours : Samedi et dimanche")}}>2 jours :  SAMEDI et DIMANCHE</button>
                 </div>
             </div>
             </div>

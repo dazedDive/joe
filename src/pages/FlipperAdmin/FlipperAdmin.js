@@ -29,10 +29,10 @@ const FlipperAdmin = () => {
                   <h5 className="card-title">{flipper.name}</h5>
                   <p className="card-text">{flipper.description}</p>
                   <ul>
-                        <li>{flipper?.pointfort1}</li>
-                        <li>{flipper?.pointfort2}</li>
-                        <li>{flipper?.pointfort3}</li>
-                        <li>{flipper?.pointfort4}</li>
+                        <li>{flipper?.first_argument}</li>
+                        <li>{flipper?.second_argument}</li>
+                        <li>{flipper?.third_argument}</li>
+                        <li>{flipper?.fourth_argument}</li>
                     </ul>
                   <h3 className="card-text">Prix de base : {flipper.price} €</h3>
                   <button className="btn btn-primary "
