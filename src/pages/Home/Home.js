@@ -81,7 +81,7 @@ const Home =()=>{
         </div>
         <div className="container mt-5">
         <h3 className='title-anim'>What's up?</h3>
-        <h5 className="orange">{homeText?.textHome}</h5>
+        <h5 className="orange">{homeText?.homepage_text}</h5>
         </div>
         <div className="container-fluid mt-2 d-flex justify-content-center">
         
