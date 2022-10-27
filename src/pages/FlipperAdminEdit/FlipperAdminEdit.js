@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import { useRef } from 'react';
+import { getCookie } from '../../helpers/CookieHelper';
 const FlipperAdminEdit = () => {
 
     const { id } = useParams();
@@ -38,12 +39,14 @@ const FlipperAdminEdit = () => {
     const [alertUpdate, setAlertUpdate] = useState(false)
     
 
-    const HandleAddChange=()=>{
+    const HandleAddChange=  () =>{
         console.log(flipperDetail)
-        fetch('http://joe.api/flipper/'+id,
-        {
-          method:"PUT",
-          body : JSON.stringify(flipperDetail)
+        fetch('http://joe.api/flipper/'+id,{
+        method : "PUT",
+        credentials: "include",
+        headers: {
+        Authorization : getCookie("pinball")},
+        body : JSON.stringify(flipperDetail)
         })
         .then(rep=> rep.json())
         .then(json=>setFlipperDetail(json))
@@ -133,7 +136,7 @@ const FlipperAdminEdit = () => {
                 </span>
             </div>
             <div className="container">
-            <div class={`alert alert-success fade ${alertUpdate?"show":""}`} role="alert">
+            <div className={`alert alert-success fade ${alertUpdate?"show":""}`} role="alert">
             Mise à jour OK
             </div>
             <button type="button" className="btn bg-success text-white m-1 w-75"

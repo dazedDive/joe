@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState, useRef } from 'react';
-
+import { getCookie } from '../../helpers/CookieHelper';
 const FraisAdmin = () => {
 ///////////////////////////////////////////////REQUETE API///////////
 const [dataAdmin, setDataAdmnin]=useState(null);
@@ -24,7 +24,11 @@ useEffect(()=>{
 const HandleChangeCosts = () =>{
     fetch('http://joe.api/statistique/2',{
         method : "PUT",
+        credentials: "include",
+        headers: {
+        Authorization : getCookie("pinball")},
         body : JSON.stringify(dataAdmin)
+        
     })
     .then(rep=>rep.json())
     .then(json=>setDataAdmnin(json))

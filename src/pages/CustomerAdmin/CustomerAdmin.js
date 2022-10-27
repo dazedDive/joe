@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-
+import { getCookie } from '../../helpers/CookieHelper';
 
 const CustomerAdmin = () => {
 
     const [customers, setCustomers] = useState([])
 
     useEffect(() => {
-        fetch("http://joe.api/customer")
+        fetch("http://joe.api/customer",{
+            credentials: "include",
+            headers: {
+                Authorization : getCookie("pinball"),
+            },
+        })
             .then(resp => resp.json())
             .then(json => {
                 setCustomers(json)

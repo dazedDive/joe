@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { MdAddTask } from "react-icons/md";
+import { getCookie } from '../../helpers/CookieHelper';
 
 const FlipperAdminAdd = () => {
 const flipperNaked = {
@@ -29,6 +30,9 @@ const [flipperDetail,setFlipperDetail] = useState(flipperNaked)
 const [alertAdd,setAlertAdd]= useState(false)
 const HandleAdd = () =>{
     fetch('http://joe.api/flipper/',{
+        credentials: "include",
+        headers: {
+        Authorization : getCookie("pinball")},
         method : "POST",
         body : JSON.stringify(flipperDetail)})
         .then(rep=>rep.json())
