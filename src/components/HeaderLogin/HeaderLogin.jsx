@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { MdPersonOff,MdPerson,MdAlternateEmail } from "react-icons/md";
 import { ImCross,ImHome3,ImUser } from "react-icons/im";
 import { BsFillTelephoneFill } from "react-icons/bs";
-
+import { getCookie } from '../../helpers/CookieHelper';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { setCookie,deleteCookie } from '../../helpers/CookieHelper';
@@ -20,6 +20,9 @@ const HeaderLogin = ({log})=>{
     useEffect(()=>{
         fetch('http://joe.api/account/'+auth.id,{
             method : "post" ,
+            credentials: "include",
+            headers: {
+            Authorization : getCookie("pinball")},
             body : JSON.stringify({with:['customer']})})
         .then(rep=>rep.json())
         .then(json=>{
@@ -41,9 +44,9 @@ const HeaderLogin = ({log})=>{
              {auth?.result==true?<MdPerson className="text-dark fs-4"/> :
               <MdPersonOff className="text-dark fs-4"/>} 
              <p className="text-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" >
-                {auth.result? "Bienvenue : " : ""}
+                {auth?.result? "Bienvenue : " : ""}
                 <strong>{nameAccount?.login}</strong>
-                {auth.result? <ImCross className="orange fs-6 ms-2 item"
+                {auth?.result? <ImCross className="orange fs-6 ms-2 item"
                 onClick={()=>{
                     deleteCookie("pinball");
                     setAuth({admin:0,result:false,id:0});
