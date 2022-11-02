@@ -14,7 +14,7 @@ import { setCookie,deleteCookie } from '../../helpers/CookieHelper';
 
 
 
-const HeaderLogin = ({log})=>{
+const HeaderLogin = ()=>{
     const {setAuth,auth} = useContext (AuthContext);
     const [nameAccount,setNameAccount] = useState('');
     useEffect(()=>{
@@ -27,7 +27,7 @@ const HeaderLogin = ({log})=>{
         .then(rep=>rep.json())
         .then(json=>{
             setNameAccount(json)
-    })},[auth])
+    })},[auth,nameAccount]);
 
    
 

@@ -3,51 +3,35 @@ import { useState, useEffect } from "react"
 import { MdLocationOn } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { getCookie } from '../../helpers/CookieHelper';
+import { MdAlternateEmail } from "react-icons/md";
+import { ImHome3,ImUser } from "react-icons/im";
+import { BsFillTelephoneFill } from "react-icons/bs";
 
 const DistanceCalculator = ()=>{
 
-    ////////////setter des controles de champs et regex ///////////
-    ///NoM///
-    const [name,setName]=useState("")
-    const [checkName, setCheckName]=useState(false)
-    const HandleName=(evt)=>{
-        setName(evt.target.value)
-        const regexName =/^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/
-        setCheckName(regexName.test(evt.target.value)) 
-    }
-    /////prenom/////////
-    const [firstName,setFirstName]=useState("")
-    const [checkFirstName, setCheckFirstName]=useState(false)
-    const HandleFirstName=(evt)=>{
-        setFirstName(evt.target.value)
-        const regexFirstName =/^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/
-        setCheckFirstName(regexFirstName.test(evt.target.value))
-    }
+    ////////////importation des information Customer ///////////
+    const {setAuth,auth} = useContext (AuthContext);
+    const [nameAccount,setNameAccount] = useState('');
+    useEffect(()=>{
+        console.log(auth.id);
+        fetch('http://joe.api/account/'+auth?.id,{
+            method : "post" ,
+            credentials: "include",
+            headers: {
+            Authorization : getCookie("pinball")},
+            body : JSON.stringify({with:['customer']})})
+        .then(rep=>rep.json())
+        .then(json=>{
+            setNameAccount(json)
+        
+    })},[]);
+    
 
-    /////////TELEPHONE/////////
-    const [tel,setTel]=useState("")
-    const [checkTel, setCheckTel]=useState(false)
-    const HandleTel=(evt)=>{
-        setTel(evt.target.value)
-        const telRegex =/^(?:0|\+33 ?|0?0?33 ?|)([1-9] ?(?:[0-9] ?){8})$/
-        setCheckTel(telRegex.test(evt.target.value))
-    }
-    /////////mail//////////////
-    const [mail,setMail]=useState("")
-    const [checkMail, setCheckMail]=useState(false)
-    const HandleMail=(evt)=>{
-        setMail(evt.target.value)
-        const mailRegex =/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/
-        setCheckMail(mailRegex.test(evt.target.value))
-    }
-    //////////adresse//////////////////
-    const [adress,setAdress]=useState("")
-    const [checkAdress, setCheckAdress]=useState(false)
-    const HandleAdress=(evt)=>{
-        setAdress(evt.target.value)
-        const adressRegex = /[0-9]+\s*([a-zA-Z]+\s*[a-zA-Z]+\s)*[0-9]*/
-        setCheckAdress(adressRegex.test(evt.target.value))
-    }
+    
+    
 
     /////////////AdresseLivraison/////////////
     const [adressL,setAdressL]=useState("")
@@ -76,13 +60,16 @@ const DistanceCalculator = ()=>{
         setInputCp(evt.target.value)
     }
 
-
-    const [checkFactCity, setCheckFactCity]= useState(false)
-    const HandleChangeFact =(evt)=>{
-        setInputCpFact(evt.target.value)
-        setCheckFactCity(true)
-        
-    }
+    /////recupération de la table statistique////
+    const [dataAdmin, setDataAdmnin]=useState(null);
+    
+    useEffect(()=>{
+        fetch('http://joe.api/statistique/2')
+        .then(rep=>rep.json())
+        .then(json=>{
+            setDataAdmnin(json)
+        })
+    },[])
 
     const [checkCity, setCheckCity] =useState(false)
     const HandleSelected = (evt)=>{
@@ -108,7 +95,7 @@ const DistanceCalculator = ()=>{
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
         .then((rep)=>setDistanceLivraison(rep.routes[0].distance))
-        .then(setCookie("coordonees",{name,firstName,adress,adressL,tel,mail,cityLivraison,
+        .then(setCookie("coordonees",{adressL,cityLivraison,
             cityList,inputCp,inputCpFact}))        
     }
 
@@ -139,14 +126,7 @@ const DistanceCalculator = ()=>{
             .then((rep)=>rep.json())
             .then((rep)=>setCityList(rep))
         },[inputCp])
-    /////////////////////////////VILLE DE FACTURATION//////////////
-        useEffect(()=>{
-            const apiCpUrl = `https://geo.api.gouv.fr/communes?codePostal=${inputCpFact}`
-                fetch(apiCpUrl)
-                .then((rep)=>rep.json())
-                .then((rep)=>setCityListFact(rep))
-                
-        },[inputCpFact])
+    
 
         useEffect(()=>{
             setCheckFinal(true)
@@ -164,64 +144,28 @@ const DistanceCalculator = ()=>{
         <span className="d-flex justify-content-center">
         <p>Etape 2/3</p>
         <MdLocationOn className="fs-4"/>
-        <p>Adresses de facturation et de livraison</p>
+        <p>Adresse de livraison</p>
         </span>
-        </div>
-        <div className="container">
-        <div className="row mt-5">
-        <h1 className="text-resa ">Identité : </h1>
-        <div className="col-6">
-        <input className={`form-control ${!checkName  &&"text-danger"}`} 
-        type="text" 
-        value={name} placeholder="Nom" aria-label="default input example" onChange={HandleName}>
-        </input>
-
-        </div>
-        <div className="col-6">
-        <input className={`form-control ${!checkFirstName  &&"text-danger"}`} 
-        type="text" value={firstName} placeholder="Prenom" 
-        aria-label="default input example" onChange={HandleFirstName}></input>    
-        </div>   
-        </div>
         
-        <div className="row mt-3">
-        <div className="col-6">
-        <input className={`form-control ${!checkTel  &&"text-danger"}`} 
-        type="text" value={tel} placeholder="Telephone" 
-        aria-label="default input example" onChange={HandleTel}></input>
-        </div>
-
-        <div className="col-6">
-        <input className={`form-control ${!checkMail  &&"text-danger"}`} 
-        type="text" value={mail}placeholder="Adresse Email" 
-        aria-label="default input example" onChange={HandleMail}></input>    
-        </div>   
-        </div>
 
         <h1 className="text-resa mt-3">Adresse de Facturation :</h1>
-        <div className="row mt-3">
-        <div className="col-12">
-        <input className={`form-control ${!checkAdress  &&"text-danger"}`}  type="text" 
-        value={adress} placeholder="Adresse de Facturation" 
-        aria-label="default input example" onChange={HandleAdress}></input>
-        </div>
-        </div>
-
-        <div className="row mt-3">
-        <div className="col-6">
-        <input className="form-control" type="text" placeholder="Code Postal de Facturation" 
-        aria-label="default input example" onChange={HandleChangeFact}></input>
-        </div>
-        <div className="col-6">
-        <select className="form-select" aria-label="Default select example">
-        <option selected>Ville de Facturation</option>
-        {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
-        </select>   
-        </div>
-
-        </div>
-
-
+        <span className="d-flex justify-content-start">
+                 <ImUser className=" mx-2 fs-3 orange"/>
+                 <h5>{nameAccount?.customer?.first_name},{nameAccount?.customer?.last_name}</h5>
+                 </span>
+                 
+                 <span className="d-flex justify-content-start">
+                 <ImHome3 className=" mx-2 fs-3 orange"/>
+                 <h5>{nameAccount?.customer?.adresse_facturation}</h5>
+                 </span>
+                 <span className="d-flex justify-content-start">
+                    <MdAlternateEmail className=" mx-2 fs-3 orange"/>
+                 <h5>{nameAccount?.customer?.mail}</h5>
+                 </span>
+                 <span className="d-flex justify-content-start">
+                    <BsFillTelephoneFill className=" mx-2 fs-3 orange"/>
+                 <h5>{nameAccount?.customer?.telephone}</h5>
+                 </span>
         <h1 className="text-resa mt-3">Adresse de Livraison :</h1>
         <div className="row mt-3">
         <div className="col-12">
@@ -251,10 +195,9 @@ const DistanceCalculator = ()=>{
         
         <button type="button" className="btn btn-light mt-4 w-25 mb-5" 
         
-        disabled={!(checkName && checkFirstName && checkAdress && checkAdressL && checkTel 
-            && checkMail && checkFactCity && checkCity)}
+        disabled={!( checkAdressL  && checkCity)}
             onClick={()=>{HandlePrice();setCheckFinal(false)}}>Estimation du prix de Transport</button>
-        <h4 className="mx-2 mt-4 orange  ">Frais de Livraison : {(distanceLivraison/1000).toFixed()} €</h4>
+        <h4 className="mx-2 mt-4 orange  ">Frais de Livraison : {((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed(2)} €</h4>
         <button type="button" className="btn btn-light mt-4 w-25 mb-5"
         disabled={checkFinal} 
         onClick={()=>{navigate('/reservation/final')}}>

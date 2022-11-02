@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 const ResetPassPage = () => {
 
     const token = useParams('token');
-    const navigate = useNavigate
+    const navigate = useNavigate();
     ///////////recuperation des Datas du Token//////////////////////
     const [decryptedToken,setDecryptedToken]=useState(null)
     useEffect(()=>{

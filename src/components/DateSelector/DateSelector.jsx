@@ -197,9 +197,11 @@ const HandleCookie = () =>{
                 <Swiper className="mb-5">
                     {flippers.map(flip=>{
                         return(
-                    <SwiperSlide key={flip?.flipper_Id}>
+                    <SwiperSlide key={flip?.image_list[0]?.Id_image}>
                     <div className="card">
-                    <img src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
+                    <img
+                    
+                    src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
                     <div className="card-body">
                     <h4 className="card-text title-dot">{flip?.name}</h4>
                     <button type="button" className="btn btn-secondary " value={flip?.price} 
@@ -218,7 +220,7 @@ const HandleCookie = () =>{
                 <p className={`${dateControl ===true ? "text-black fw-bold" : "text-white "}`} >Date du : {dateChoosen}</p>
                 <p className={`${timeControl ===true ? "text-black fw-bold" : "text-white "}`}>Durée de location : {timeRent}</p>
                 <p className={`${flipperControl ===true ? "text-black fw-bold" : "text-white "}`}>Flipper : {flipper}</p>
-                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "orange fw-bold d-block bg-light p-1" : "d-none "}`}>Prix TTC hors livraison : <h3>{price} €/TTC</h3></p>
+                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "orange fw-bold d-block bg-light p-1" : "d-none "}`}>Prix TTC hors livraison : {price} €/TTC</p>
                 </div>
                 <button type="button" 
             className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 const RegisterPassPage = () => {
 
     const token = useParams('token');
-    const navigate = useNavigate
+    const navigate = useNavigate();
     ///////////recuperation des Datas du Token//////////////////////
     const [decryptedToken,setDecryptedToken]=useState(null)
     useEffect(()=>{
@@ -55,9 +55,9 @@ const RegisterPassPage = () => {
         const dataToWriteInDataBase = {...decryptedToken, password:passOne};
         await fetch ('http://joe.api/auth/create',{
             method:"POST",
-            body:JSON.stringify(dataToWriteInDataBase)});
-            // .then (()=>navigate('/'));
-        /////debuger ici///
+            body:JSON.stringify(dataToWriteInDataBase)})
+            .then (()=>navigate('/'));
+        
         
     }
     const [visible,setVisible]=useState(false)
