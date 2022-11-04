@@ -14,19 +14,30 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 const DateSelector = () => {
+    ///////////recupération du timestamp/////////////
+const [dayIndex,setDayIndex]=useState(new Date().getDate())
+const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
+const monthIndex = (new Date().getMonth()); ///////on recupere le moi de la Date Actuel afin de l'utiliser pour afficher le moi en cour
+const navigate=useNavigate();
     
 
-const datePool = [{id:1,year:2022,month:9,days:"du 6 au 8"},{id:2,year:2022,month:9,days:"du 13 au 15"},
-{id:3,year:2022,month:9,days:"du 20 au 22"},{id:4,year:2022,month:9,days:"du 27 au 1er "},
-{id:5,year:2022,month:10,days:"du 17 au 19"},{id:6,year:2022,month:10,days:"du 24 au 26"},
-{id:7,year:2022,month:10,days:"du 3 au 5"},{id:8,year:2022,month:10,days:"du 10 au 12"},
-{id:9,year:2022,month:11,days:"du 17 au 19"},{id:10,year:2022,month:11,days:"du 24 au 26"},
-{id:11,year:2023,month:1,days:"du 24 au 26"}
-]    
 
-/////////////////////////////////Recuperation des Data Flipper//////////////
+
+/////////////////////////////////Recuperation des bookings date//////////////
+const [dateOfBooking, setDateOfBooking] = useState([])
+useEffect(()=>{
+    fetch('http://joe.api/booking')
+    .then(rep=>rep.json())
+    .then(json=>{
+        setDateOfBooking(json)
+    })
+    },[])
+///////////////////////Affichage des bon crénaux au chargement de la page///////////
+
+
+////////////////////////////////////////////////////////////////////////////
 const [flippers, setFlippers] = useState([]);
-  ///////recuperation api flipper//////////:
+  ///////recuperation api  des flippers//////////:
   useEffect(() => {
     fetch("http://joe.api/flipper/0",{
     method : "post" , body : JSON.stringify({with:['image']})})
@@ -52,8 +63,6 @@ const [flippers, setFlippers] = useState([]);
 const [cookies, setCookie] = useCookies(['dateEtFlipper']);
 ////////////fonction qui affiche le moi  et l'année en cour///////////
 
-const monthIndex = (new Date().getMonth()); ///////on recupere le moi de la Date Actuel afin de l'utiliser pour afficher le moi en cour
-const navigate=useNavigate();
 
 
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
@@ -70,8 +79,8 @@ const [priceByTime,setPriceByTime]=useState(1)
 const [dateChoosen,setDateChoosen]= useState(['selectionnez une date','','']); ///ce setter enregistre la date de la carddate
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location');////ce setter enregistre la durée de location
 const [pageDate, setPageDate]= useState(1); ////ce setter limite la navigation a (+7/-0) mois par rapport au moi en cour
-const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
-const [dateFilter, setDateFilter]=useState(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex)); /////ce setter filtre les seance=moi select
+const [dateFilter, setDateFilter]=useState([]); 
+console.log(dateFilter)
 const [dateControl, setDateControl]=useState(false);///controller qui verifie que le choix de date est ok
 const [timeControl, setTimeControl]=useState(false);///controller qui verifie que le choix de temp est ok
 
@@ -90,6 +99,8 @@ const HandleNext = () =>{
     setCountMonth(countMonth===11?0:countMonth+1)
     setMonth(monthName[countMonth])
     setYearIndex(countMonth===11?yearIndex+1:yearIndex)
+    console.log(dateOfBooking);
+    console.log(dateFilter);
     
     
 
@@ -109,7 +120,12 @@ const HandleCookie = () =>{
 
 
     useEffect(()=>{
-    setDateFilter(datePool.filter(seance=>seance.month===countMonth+1 && seance.year===yearIndex))
+    setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex &&seance.weekend_location>dayIndex)])
+    },[dateOfBooking])
+
+    /////codé un if moi en cour filtrer les jour>dayindex//////////////
+    useEffect(()=>{
+    setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex)])
     },[pageDate])
 
     useEffect(()=>{
@@ -138,14 +154,15 @@ const HandleCookie = () =>{
                 <div className="row">
             <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
            
-           {dateFilter.map(({id,days,year,month}) =>
-           <DateCard key={id} 
-           days={days+" "} 
+           {dateFilter.map(({Id_booking,weekend_location,year_location,is_reserved}) =>
+           <DateCard key={Id_booking} 
+           days={weekend_location+"/"+ (parseInt(weekend_location)+1)+" "} 
            month={monthName[countMonth]+" "}
-           year={year}
+           year={year_location}
            setDateChoosen={setDateChoosen}
            setDateControl={setDateControl} 
-           dateControl={dateControl}/>)}
+           dateControl={dateControl}
+           status={is_reserved=="0"?false:true}/>)}
                 </div>
             
             <span className="d-flex justify-content-between mt-4">
