@@ -27,7 +27,7 @@ const HeaderLogin = ()=>{
         .then(rep=>rep.json())
         .then(json=>{
             setNameAccount(json)
-    })},[auth,nameAccount]);
+    })},[auth]);
 
    
 

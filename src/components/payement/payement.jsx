@@ -12,10 +12,10 @@ const Payement = () =>{
 
 
 
+    const {setAuth,auth} = useContext (AuthContext);
     /////recupération des infos Cookies /////
     const [cookies, setCookie] = useCookies(['dateEtFlipper','fraislivraison']);
     ////////////importation des information Customer ///////////
-    const {setAuth,auth} = useContext (AuthContext);
     const [nameAccount,setNameAccount] = useState('');
     useEffect(()=>{
         fetch('http://joe.api/account/'+auth.id,{
@@ -27,9 +27,34 @@ const Payement = () =>{
         .then(rep=>rep.json())
         .then(json=>{
             setNameAccount(json)
-    })},[]);
+    })},[auth]);
    
     console.log(cookies.coordonees.distanceLivraison)
+
+    ////////////////OBJET DE LA COMMANDE QUI SERA INSERER EN DB////////////
+    const booking = {
+        idFLipper : "nom du Flipper + (année)",
+        idCustomer : "description de la machine",
+        IdBooking : 0,
+        year : "un argument de vente 1",
+        month : "un argument de vente 2",
+        weekend : "un argument de vente 3",
+        timeOfRent : "un argument de vente 4",
+        multiplier : 1,
+        deliveryPrice : 0,
+        tva : 0,
+        total :0,
+        adressFacture:0,
+        cpFacture:0,
+        cityFacture:0,
+        adressDelivery:0,
+        cpDelivery:0,
+        cityDelivery:0,
+        isdeleted:0,
+        isReserved:1,
+        isPayed:1
+    
+    }
 
     return (
         <>
@@ -66,15 +91,15 @@ const Payement = () =>{
                 <span className ="d-flex justify-content-start">
                     <FaTruck className="fs-4 mx-1"/>
                 <h5 className="fw-bold"> Prix TTC de la Livraison : 
-                {((cookies?.fraislivraison?.distanceLivraison)/1000)} €</h5>
+                {cookies?.fraislivraison.priceDelivery} €</h5>
                 <h5> </h5>
                 </span>
                 <h3 className="fw-bold orange">PRIX TOTAL : 
-                 {(((cookies.fraislivraison.distanceLivraison)/1000)+cookies.dateEtFlipper.price)} € TTC, SOIT € de TVA</h3>
+                 {parseInt(cookies.fraislivraison.priceDelivery)+parseInt(cookies.dateEtFlipper.price)} € TTC, SOIT € de TVA</h3>
             </div>
         </div>
         <div className="container p-5">
-        
+        <button type="button" className="btn w-100">Valider ma commande !</button>
         </div>
         </>
     )
