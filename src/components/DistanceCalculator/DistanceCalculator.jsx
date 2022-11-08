@@ -41,7 +41,7 @@ const DistanceCalculator = ()=>{
         const adressRegexL = /[0-9]+\s*([a-zA-Z]+\s*[a-zA-Z]+\s)*[0-9]*/
         setCheckAdressL(adressRegexL.test(evt.target.value))
     }
-
+    
     //////////////setter pour la requetes des API GEOGRAPHIQUE///////
     const [inputCp, setInputCp]=useState('')
     const [inputCpFact, setInputCpFact]=useState('')
@@ -52,6 +52,8 @@ const DistanceCalculator = ()=>{
     const [location, setLocation]=useState([])
     const [distanceLivraison, setDistanceLivraison]=useState('0')
     
+    const [cookies, setCookie] = useCookies(["coordonees"]);
+    const [priceDelivery,setPriceDelivery]=useState();
 
     const navigate = useNavigate();
 
@@ -95,21 +97,16 @@ const DistanceCalculator = ()=>{
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
         .then((rep)=>setDistanceLivraison(rep.routes[0].distance))
-        .then(setCookie("coordonees",{adressL,cityLivraison,
-            cityList,inputCp,inputCpFact}))
-        .then(setPriceDelivery(((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed(2)))
-        .then(setCookie("fraislivraison",{priceDelivery}))
-              
-    }
-
-   
+        .then(setCookie("coordonees",{adressL,cityLivraison,inputCp,priceDelivery}))
+        .then(_=>console.log(cookies))
+        }
+        
+    useEffect(()=>{
+        setPriceDelivery(((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed())
+    },[distanceLivraison])    
 
     const [checkFinal,setCheckFinal]=useState(false)
-    useEffect(()=>{
-        setCookie("fraislivraison",{priceDelivery})
-        console.log(distanceLivraison)
-       
-    },[distanceLivraison])
+        
 
   
 
@@ -136,13 +133,7 @@ const DistanceCalculator = ()=>{
         },[cityLivraison,inputCp])
 
     //////////////////////declaration du Cookies qui recupére les infos////////
-    const [cookies, setCookie] = useCookies(["fraislivraison","coordonees"]);
-    const [priceDelivery,setPriceDelivery]=useState();
-    const HandleCookie = () =>{
-        setPriceDelivery(((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed())
-        setCookie("fraislivraison",{priceDelivery})
-        console.log(cookies);
-    }
+    
         
     
     
@@ -204,7 +195,7 @@ const DistanceCalculator = ()=>{
         <button type="button" className="btn btn-light mt-4 w-25 mb-5" 
         
         disabled={!( checkAdressL  && checkCity)}
-            onClick={()=>{HandlePrice();setCheckFinal(false);HandleCookie()}}>Estimation du prix de Transport</button>
+            onClick={()=>{HandlePrice();setCheckFinal(false);}}>Estimation du prix de Transport</button>
         <h4 className="mx-2 mt-4 orange  ">Frais de Livraison : {((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed()} €</h4>
         <button type="button" className="btn btn-light mt-4 w-25 mb-5"
         disabled={checkFinal} 

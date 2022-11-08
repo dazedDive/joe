@@ -18,6 +18,7 @@ const HeaderLogin = ()=>{
     const {setAuth,auth} = useContext (AuthContext);
     const [nameAccount,setNameAccount] = useState('');
     useEffect(()=>{
+        (auth.id != 0) &&
         fetch('http://joe.api/account/'+auth.id,{
             method : "post" ,
             credentials: "include",

@@ -14,10 +14,11 @@ const Payement = () =>{
 
     const {setAuth,auth} = useContext (AuthContext);
     /////recupération des infos Cookies /////
-    const [cookies, setCookie] = useCookies(['dateEtFlipper','fraislivraison']);
+    const [cookies, setCookie] = useCookies(['dateEtFlipper','coordonees']);
     ////////////importation des information Customer ///////////
     const [nameAccount,setNameAccount] = useState('');
     useEffect(()=>{
+        (auth.id != 0) &&
         fetch('http://joe.api/account/'+auth.id,{
             method : "post" ,
             credentials: "include",
@@ -29,32 +30,46 @@ const Payement = () =>{
             setNameAccount(json)
     })},[auth]);
    
-    console.log(cookies.coordonees.distanceLivraison)
+    console.log(cookies)
+
 
     ////////////////OBJET DE LA COMMANDE QUI SERA INSERER EN DB////////////
     const booking = {
-        idFLipper : "nom du Flipper + (année)",
-        idCustomer : "description de la machine",
-        IdBooking : 0,
-        year : "un argument de vente 1",
-        month : "un argument de vente 2",
-        weekend : "un argument de vente 3",
-        timeOfRent : "un argument de vente 4",
+        idFLipper : cookies.dateEtFlipper.flipperId,
+        flipperPrice : cookies.dateEtFlipper.price,
+        idCustomer : nameAccount?.customer?.Id_customer,
+        customerFirstName : nameAccount?.customer?.first_name,
+        customerLastName : nameAccount?.customer?.last_name,
+        customerTel : nameAccount?.customer?.telephone,
+        customerMail : nameAccount?.customer?.mail,
+        IdBooking : cookies.dateEtFlipper.dateChoosen[3],
+        year : cookies.dateEtFlipper.dateChoosen[2],
+        month : cookies.dateEtFlipper.dateChoosen[1],
+        weekend : cookies.dateEtFlipper.dateChoosen[0],
+        timeOfRent : cookies.dateEtFlipper.timeRent,
         multiplier : 1,
-        deliveryPrice : 0,
-        tva : 0,
-        total :0,
-        adressFacture:0,
-        cpFacture:0,
-        cityFacture:0,
-        adressDelivery:0,
-        cpDelivery:0,
-        cityDelivery:0,
+        deliveryPrice : cookies.coordonees.priceDelivery,
+        tva : 20,
+        total :(parseInt(cookies.coordonees.priceDelivery)+parseInt(cookies.dateEtFlipper.price)),
+        adressFacture:nameAccount?.customer?.adresse_facturation,
+        adressDelivery:cookies.coordonees.adressL,
+        cpDelivery:cookies.coordonees.inputCp,
+        cityDelivery:cookies.coordonees.cityLivraison,
         isdeleted:0,
         isReserved:1,
         isPayed:1
     
     }
+
+    const HandleValidBooking =()=>{
+        fetch('http://joe.api/booker/'+auth.id,{
+        credentials: "include",
+        headers: {
+        Authorization : getCookie("pinball")},
+        method : "post", body : JSON.stringify(booking)})
+        
+    }
+        
 
     return (
         <>
@@ -82,7 +97,10 @@ const Payement = () =>{
                 <p className="fw-bold">adresse de livraison : 
                 {cookies.coordonees.adressL}, {cookies.coordonees.inputCp} - {cookies.coordonees.cityLivraison}</p>
                 <p className="fw-bold"> Flipper : {cookies.dateEtFlipper.flipper} </p>
-                <p className="fw-bold"> Week End du : {cookies.dateEtFlipper.dateChoosen}</p>
+                <p className="fw-bold"> Week End du : {cookies.dateEtFlipper.dateChoosen[0]}
+                {cookies.dateEtFlipper.dateChoosen[1]}
+                {cookies.dateEtFlipper.dateChoosen[2]}
+                </p>
                 <p className="fw-bold"> durée : {cookies.dateEtFlipper.timeRent} </p>
                 <span className ="d-flex justify-content-start">
                     <GiPinballFlipper className="fs-4 mx-1"/>
@@ -91,15 +109,15 @@ const Payement = () =>{
                 <span className ="d-flex justify-content-start">
                     <FaTruck className="fs-4 mx-1"/>
                 <h5 className="fw-bold"> Prix TTC de la Livraison : 
-                {cookies?.fraislivraison.priceDelivery} €</h5>
+                {cookies?.coordonees.priceDelivery} €</h5>
                 <h5> </h5>
                 </span>
                 <h3 className="fw-bold orange">PRIX TOTAL : 
-                 {parseInt(cookies.fraislivraison.priceDelivery)+parseInt(cookies.dateEtFlipper.price)} € TTC, SOIT € de TVA</h3>
+                 {(parseInt(cookies.coordonees.priceDelivery)+parseInt(cookies.dateEtFlipper.price))} € TTC</h3>
             </div>
         </div>
         <div className="container p-5">
-        <button type="button" className="btn w-100">Valider ma commande !</button>
+        <button type="button" className="btn w-100" onClick={HandleValidBooking}>Valider ma commande !</button>
         </div>
         </>
     )

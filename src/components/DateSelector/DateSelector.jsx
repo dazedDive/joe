@@ -50,7 +50,7 @@ const [flippers, setFlippers] = useState([]);
 
 ///////////////////////////////Recuperation des DataFrais ///////////////
     const [dataAdmin, setDataAdmnin]=useState(null);
-    console.log(dataAdmin) 
+    
     useEffect(()=>{
         fetch('http://joe.api/statistique/2')
         .then(rep=>rep.json())
@@ -80,7 +80,7 @@ const [dateChoosen,setDateChoosen]= useState(['selectionnez une date','','']); /
 const [timeRent, setTimeRent] = useState('selectionnez une durée de location');////ce setter enregistre la durée de location
 const [pageDate, setPageDate]= useState(1); ////ce setter limite la navigation a (+7/-0) mois par rapport au moi en cour
 const [dateFilter, setDateFilter]=useState([]); 
-console.log(dateFilter)
+
 const [dateControl, setDateControl]=useState(false);///controller qui verifie que le choix de date est ok
 const [timeControl, setTimeControl]=useState(false);///controller qui verifie que le choix de temp est ok
 
@@ -88,34 +88,31 @@ const [timeControl, setTimeControl]=useState(false);///controller qui verifie qu
 
     
     ////////////setter du flipper pour la selection
-    const [priceByFlipper,setPriceByFlipper] = useState(0)
+    const [priceByFlipper,setPriceByFlipper] = useState(0);
     const [flipper,setFlipper]=useState("selectionnez un flipper"); 
+    const [flipperId,setFlipperId]=useState(0)
     const [flipperControl, setFlipperControl]=useState(false);
-    const [price, setPrice]=useState((priceByFlipper*priceByTime))
+    const [price, setPrice]=useState((priceByFlipper*priceByTime));
 
 ////////////////////////navigation du calendrier/////////////////////
 const HandleNext = () =>{
-    setPageDate(pageDate===7?1:pageDate+1)
-    setCountMonth(countMonth===11?0:countMonth+1)
-    setMonth(monthName[countMonth])
-    setYearIndex(countMonth===11?yearIndex+1:yearIndex)
-    console.log(dateOfBooking);
-    console.log(dateFilter);
-    
-    
+    setPageDate(pageDate===7?1:pageDate+1);
+    setCountMonth(countMonth===11?0:countMonth+1);
+    setMonth(monthName[countMonth]);
+    setYearIndex(countMonth===11?yearIndex+1:yearIndex);
 
 }
 const HandlePrevious = ()=>{
-    setPageDate(pageDate===1?7:pageDate-1)
-    setCountMonth(countMonth===0?11:countMonth-1)
-    setMonth(monthName[countMonth])
-    setYearIndex(countMonth===0?yearIndex-1:yearIndex)
+    setPageDate(pageDate===1?7:pageDate-1);
+    setCountMonth(countMonth===0?11:countMonth-1);
+    setMonth(monthName[countMonth]);
+    setYearIndex(countMonth===0?yearIndex-1:yearIndex);
     
 
 }
 
 const HandleCookie = () =>{
-    setCookie("dateEtFlipper",{price,flipper,dateChoosen,timeRent})
+    setCookie("dateEtFlipper",{price,flipper,dateChoosen,timeRent,flipperId})
 }
 
 
@@ -155,7 +152,8 @@ const HandleCookie = () =>{
             <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
            
            {dateFilter.map(({Id_booking,weekend_location,year_location,is_reserved}) =>
-           <DateCard key={Id_booking} 
+           <DateCard key={Math.random()*100000} 
+           idresa={Id_booking}
            days={weekend_location+"/"+ (parseInt(weekend_location)+1)+" "} 
            month={monthName[countMonth]+" "}
            year={year_location}
@@ -219,10 +217,10 @@ const HandleCookie = () =>{
                     <img
                     
                     src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
-                    <div className="card-body">
+                    <div className="card-body" key={flip?.Id_flipper}>
                     <h4 className="card-text title-dot">{flip?.name}</h4>
                     <button type="button" className="btn btn-secondary " value={flip?.price} 
-                    onClick={()=>{setFlipperControl(true);setFlipper(flip?.name);setPriceByFlipper(flip?.price) }}>A partir de <strong>{flip?.price}€/TTC</strong>  (Journée du Samedi)</button>
+                    onClick={()=>{setFlipperControl(true);setFlipper(flip?.name);setPriceByFlipper(flip?.price);setFlipperId(flip?.Id_flipper) }}>A partir de <strong>{flip?.price}€/TTC</strong>  (Journée du Samedi)</button>
                     </div>
                     </div> 
                     </SwiperSlide>
