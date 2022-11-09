@@ -37,6 +37,7 @@ const Payement = () =>{
     const booking = {
         idFLipper : cookies.dateEtFlipper.flipperId,
         flipperPrice : cookies.dateEtFlipper.price,
+        flipperName : cookies.dateEtFlipper.flipper,
         idCustomer : nameAccount?.customer?.Id_customer,
         customerFirstName : nameAccount?.customer?.first_name,
         customerLastName : nameAccount?.customer?.last_name,
