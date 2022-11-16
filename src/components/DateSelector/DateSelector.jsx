@@ -122,7 +122,11 @@ const HandleCookie = () =>{
 
     /////codé un if moi en cour filtrer les jour>dayindex//////////////
     useEffect(()=>{
-    setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex)])
+        if(pageDate==1){
+            setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex && seance.weekend_location>dayIndex)])
+        }
+        else{
+    setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex)])}
     },[pageDate])
 
     useEffect(()=>{

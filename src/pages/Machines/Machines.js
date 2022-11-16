@@ -15,7 +15,7 @@ function Machines  (){
         <p className="fw-bold">Tout nos flippers sont révisés et nettoyés par nos mécaniciens avant de vous être livrés .</p>
         </div>
 
-        <div className="container">
+        <div className="container-fluid">
             <ProductCard />  
         </div>
                        

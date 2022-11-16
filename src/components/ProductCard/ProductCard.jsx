@@ -48,8 +48,15 @@ const HandlePrevious = () =>{
     <>
         <div className="container-fluid">
           <div className="row">
+          <button className="d-md-none btn col-3 fakeButton mt-5 mb-1 mx-4" onClick={HandlePrevious}>
+              <BiLeftArrow className="text-dark fs-1"/>
+          </button>
+          
+          <button className="d-md-none col-3 btn fakeButton mt-5 mb-1 mx-4 " onClick={HandleNext}>
+            <BiRightArrow className="text-dark fs-1"/>
+          </button>
             <div className="col-1">
-              <button className="btn fakeButton mt-5 " onClick={HandlePrevious}>
+              <button className="d-none d-md-block btn fakeButton mt-5 " onClick={HandlePrevious}>
               <BiLeftArrow className="text-dark fs-1"/>
               </button>
               
@@ -100,7 +107,7 @@ const HandlePrevious = () =>{
       
       </div>
       <div className="col-1">
-      <button className="btn fakeButton mt-5 " onClick={HandleNext}>
+      <button className="d-none d-md-block btn fakeButton mt-5 " onClick={HandleNext}>
         <BiRightArrow className="text-dark fs-1"/>
       </button>
       </div>
