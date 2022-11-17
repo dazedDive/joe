@@ -1,23 +1,91 @@
+
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { getCookie } from '../../helpers/CookieHelper';
 const DateAdmin = () => {
     
-
+    /////////////////fetch des Datas et Filtrage de celle ci //////////////////
+    
     const [dateOfBooking, setDateOfBooking] = useState([])
-useEffect(()=>{
-    fetch('http://joe.api/booking')
+    useEffect(()=>{
+    const yearIndex=(new Date().getFullYear()); 
+    const monthIndex = new Date().getMonth();
+    
+    fetch('http://joe.api/booking',
+    {
+        credentials : "include",
+        headers : {
+        Authorization : getCookie("pinball")}})
     .then(rep=>rep.json())
-    .then(json=>{
-        setDateOfBooking(json)
-    })
+    .then(json=>setDateOfBooking([...json?.filter(seance=>(seance?.month_location>(monthIndex+1)  || seance?.year_location>=yearIndex ))]))
     },[])
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
     ,"novembre","decembre"];
 
+/////////////////////////Bouton ADD////////////////
+
+
+
+////////////////////////Bouton Remove //////////////////
+// const HandleRemove =()=>{
+//     fetch('http://joe.api/booking/'+dateOfBooking?.Id_booking,
+//     {
+//     method : "PATCH",
+//     credentials : "include",
+//     headers : {
+//     Authorization : getCookie("pinball")}})
+//     .then(rep=>rep.json()) 
+    
+//     }
+
+
+
+
+
     return (
         <div>
             <h4 className="bg-dark text-white p-1">Date Administration :</h4>
+            <h5 className="bg-dark text-white p-1">Ajouter une date ici : </h5>
+            <div className="row bg-white my-2">
+            <div className="col-3">
+            <input class="form-control" type="text" 
+            placeholder="Jour" aria-label="default input example"/>
+            </div>
+            <div className="col-3">
+               
+            <select class="form-select" aria-label="Default select example">
+            <option selected>Moi</option>
+            <option value="1">JANVIER</option>
+            <option value="2">FEVRIER</option>
+            <option value="3">MARS</option>
+            <option value="4">AVRIL</option>
+            <option value="5">MAI</option>
+            <option value="6">JUIN</option>
+            <option value="7">JUILLET</option>
+            <option value="8">AOUT</option>
+            <option value="9">SEPTEMBRE</option>
+            <option value="10">OCTOBRE</option>
+            <option value="11">NOVEMBRE</option>
+            <option value="12">DECEMBRE</option>
+            </select>
+            </div>
+            <div className="col-3">
+            <select class="form-select" aria-label="Default select example">
+            <option selected>Année</option>
+            <option value="1">2022</option>
+            <option value="2">2023</option>
+            <option value="3">2024</option>
+            <option value="4">2025</option>
+            <option value="5">2026</option>
+            
+            </select> 
+            </div>
+            <div className="col-3">
+            <button type="button" className="btn text-white ">Ajouter la date </button>  
+            </div>
+            </div>
+            <h5 className="bg-dark text-white p-1">Calendrier </h5>
             <table className="table table-striped">
                     <thead>
                         <tr>
@@ -31,12 +99,14 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
                     <tbody>
                         {dateOfBooking?.map(date => {
                             return (
-                                <tr key={Math.random()*1000}>
-                                <td> {date?.weekend_location+"/"+ (parseInt(date?.weekend_location)+1)}</td>
-                                <td> {monthName[(date?.month_location-1)]}</td> 
-                                <td> {date?.year_location}</td> 
-                                <td> {date?.is_reserved=="0"?"Disponible":"Réservé"}</td> 
-                                <td> <button type="button" class="btn ">retirer du site </button></td> 
+                                <tr key={date?.Id_booking}>
+                                <td className={date?.is_reserved=="1"&&"bg-success text-white"}> {date?.weekend_location+"/"+ (parseInt(date?.weekend_location)+1)}</td>
+                                <td className={date?.is_reserved=="1"&&"bg-success text-white"}> {monthName[(date?.month_location-1)]}</td> 
+                                <td className={date?.is_reserved=="1"&&"bg-success text-white"}> {date?.year_location}</td> 
+                                <td className={date?.is_reserved=="1"&&"bg-success text-white"}>
+                                    {date?.is_reserved=="0"?"Disponible":"Réservé"}</td>
+                                    {date?.is_reserved=="0"&&
+                                <td> <button type="button" className="btn" >retirer du site </button></td> }
                                 </tr>
                             )
                         })}
