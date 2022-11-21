@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 import { BsLayoutTextSidebarReverse , BsEye} from "react-icons/bs";
 import { BiShowAlt } from "react-icons/bi";
 import DiapoImage from '../../components/DiapoImage/DiapoImage';
+import useFileUpload from '../../hooks/useFileUpload';
 
 const ImageAdmin = () => {
-
+    const [file,selectFile,clearFile] = useFileUpload(null)
     const [flippers,setFlippers]=useState([])
     useEffect(()=>{
         fetch("http://joe.api/flipper")
@@ -29,8 +30,15 @@ const ImageAdmin = () => {
         .then(json=>setImagesList(json.image_list))
         .then(setLoading(false))
         }
-    
-    
+    /////////////////////recupere lid du selecteur/////////////////////////
+    const HandleSelected =(e)=> {
+        console.log(e.target.value);
+        setIdFlipperSelected(e.target.value);
+        setSelected(false);
+        }
+
+        const [selected, setSelected] = useState (true)
+        const [idFlipperSelected, setIdFlipperSelected] = useState (1)
 
     return (
         <div>
@@ -54,7 +62,31 @@ const ImageAdmin = () => {
                             <BiShowAlt className="fs-4"/>
                             </span>)
                         })}     
+                        <span className="d-flex justify-content-start mt-4">
+                        <p className=" p-2 bg-info">Ajouter une image :</p>
                         
+                        
+                        <button type="button" class="btn btn-dark mb-4 mx-2"
+                            disabled = {selected}
+                                onClick={()=>
+                                selectFile({ accept: 'image/*'}, ({name , size ,src, file})=>
+                                {console.log('Files Selected', {name, size, src,file})
+                                })
+                                }> uploader</button>
+                        </span>
+                        <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                        onChange={HandleSelected}>
+                        <option selected >Flipper pour cette image</option>
+                        {flippers?.map(flipp=>{
+                            return(
+                                <option value={flipp?.Id_flipper}
+                                key={flipp?.Id_flipper}
+                                
+                            >{flipp?.name}</option>
+                            )
+                        })}
+                    
+                        </select>
                     </div>
                     <div className="col-9">
                     <span className="d-flex justify-content-start">
@@ -71,7 +103,8 @@ const ImageAdmin = () => {
                             
                         )}
                     
-                       {imagesList?.map(img=>     
+                       {imagesList?.map(img=>
+                            
                         <DiapoImage 
                          key={img?.Id_image}
                          source={img?.img_src}
