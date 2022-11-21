@@ -8,9 +8,9 @@ const DateAdmin = () => {
     /////////////////fetch des Datas et Filtrage de celle ci //////////////////
     
     const [dateOfBooking, setDateOfBooking] = useState([])
-    useEffect(()=>{
     const yearIndex=(new Date().getFullYear()); 
     const monthIndex = new Date().getMonth();
+    useEffect(()=>{
     
     fetch('http://joe.api/booking',
     {
@@ -27,17 +27,18 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
 
 
 
-////////////////////////Bouton Remove //////////////////
-// const HandleRemove =()=>{
-//     fetch('http://joe.api/booking/'+dateOfBooking?.Id_booking,
-//     {
-//     method : "PATCH",
-//     credentials : "include",
-//     headers : {
-//     Authorization : getCookie("pinball")}})
-//     .then(rep=>rep.json()) 
-    
-//     }
+//////////////////////Bouton Remove //////////////////
+const HandleRemove =(e)=>{
+    console.log(e.target.getAttribute('id'))
+    fetch('http://joe.api/booking/'+e.target.getAttribute('id'),
+    {
+    method : "PATCH",
+    credentials : "include",
+    headers : {
+    Authorization : getCookie("pinball")}})
+    .then(rep=>rep.json()) 
+    .then(json=>([...json?.filter(seance=>(seance?.month_location>(monthIndex+1)  || seance?.year_location>=yearIndex ))]))
+    }
 
 
 
@@ -99,6 +100,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
                     <tbody>
                         {dateOfBooking?.map(date => {
                             return (
+                                date?.is_deleted==0 && 
                                 <tr key={date?.Id_booking}>
                                 <td className={date?.is_reserved=="1"&&"bg-success text-white"}> {date?.weekend_location+"/"+ (parseInt(date?.weekend_location)+1)}</td>
                                 <td className={date?.is_reserved=="1"&&"bg-success text-white"}> {monthName[(date?.month_location-1)]}</td> 
@@ -106,7 +108,7 @@ const monthName = ["janvier","février","mars","avril","mai","juin","juillet","a
                                 <td className={date?.is_reserved=="1"&&"bg-success text-white"}>
                                     {date?.is_reserved=="0"?"Disponible":"Réservé"}</td>
                                     {date?.is_reserved=="0"&&
-                                <td> <button type="button" className="btn" >retirer du site </button></td> }
+                                <td> <button type="button" className="btn" id={date?.Id_booking} onClick={HandleRemove}>retirer du site </button></td> }
                                 </tr>
                             )
                         })}
