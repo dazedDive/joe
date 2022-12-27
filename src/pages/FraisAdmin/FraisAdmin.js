@@ -34,61 +34,52 @@ const HandleChangeCosts = () =>{
     .then(json=>setDataAdmnin(json))
     .then(setAlertChange(true))
 }
-     
-
-
-
-
-    return (
-        <div>
-            <h3>Gestion des paramètres frais / autres :</h3>
-            <div className="container bg-light">
-                <div className="row">
-                    <h5 className="bg-warning">text de la home page : 
-                    </h5>
-                        
-                    <div className="col-6">
-                        <div className="mb-3">
-                            <p className="orange">Text actuel :</p>
-                            <p className="bg-info">{dataAdmin?.homepage_text}</p>
-                            
-
-                        </div>
+return (
+    <div>
+        <h3>Gestion des paramètres frais / autres :</h3>
+        <div className="container bg-light">
+            <div className="row">
+                <h5 className="bg-warning">text de la home page : 
+                </h5>
+                <div className="col-6">
+                    <div className="mb-3">
+                        <p className="orange">Text actuel :</p>
+                        <p className="bg-info">{dataAdmin?.homepage_text}</p>
                     </div>
-                    <div className="col-6">
-                        <div className="mb-3">
-                            <label htmlFor="textHomePage" className="form-label">nouveau text</label>
-                            <textarea className="form-control" id="extHomePage" rows="5"
+                </div>
+                <div className="col-6">
+                    <div className="mb-3">
+                        <label htmlFor="textHomePage" className="form-label">nouveau text</label>
+                        <textarea className="form-control" id="extHomePage" rows="5"
                             placeholder="Ce text apparaitra en en-tête de la page d'aceuille"
                             ref={inputTextHomePage}
                             onChange={()=>{setDataAdmnin({...dataAdmin,homepage_text : inputTextHomePage.current.value})}}></textarea>
                             <button type="button" className="btn btn-warning mt-2"
                             onClick={HandleChangeCosts}>Modifier</button>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
             <div className="container mt-3">
                 <h5 className="bg-warning">Barème kilometrique : </h5>
                 <div className="row">
                     <div className="col-6">
                         <p>Prix Actuel du Kilomètre :</p>
                         <h6 className="bg-info">{dataAdmin?.price_by_kilometer}€ / par Kilomètre</h6>
-                    </div>
-                    <div className="col-6">
-                        <span className="d-flex justify-content-start">
-                            
-                            <input className="form-control mt-4" type="text" 
+                </div>
+                <div className="col-6">
+                    <span className="d-flex justify-content-start">
+                        <input className="form-control mt-4" type="text" 
                             placeholder="Prix au kilomètre en euro" aria-label="nouveau"
                             ref={inputPricePort}
                             onChange={()=>{setDataAdmnin({...dataAdmin,price_by_kilometer : inputPricePort.current.value})}}
-                            ></input>
-                            <button type="button" className="btn btn-warning ms-2 mt-4"
+                        ></input>
+                        <button type="button" className="btn btn-warning ms-2 mt-4"
                             onClick={HandleChangeCosts}>Modifier</button>
-                        </span>
-                    </div>
+                    </span>
                 </div>
             </div>
+        </div>
             <div className="container mt-3 bg-light">
                 <h5 className="bg-warning">Barème journalier : </h5>
                 <div className="row">

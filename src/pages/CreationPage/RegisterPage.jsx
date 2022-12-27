@@ -88,65 +88,56 @@ const RegisterPage = () => {
         <div className="row mt-5">
         <h1 className="text-resa ">Identité : </h1>
         <div className="col-6">
-        
         <input className={`form-control ${!checkName  &&"text-danger"}`} 
         type="text" 
         value={name} placeholder="Nom" aria-label="default input example" onChange={HandleName}>
         </input>
-
         </div>
         <div className="col-6">
-        <input className={`form-control ${!checkFirstName  &&"text-danger"}`} 
-        type="text" value={firstName} placeholder="Prenom" 
-        aria-label="default input example" onChange={HandleFirstName}></input>    
+            <input className={`form-control ${!checkFirstName  &&"text-danger"}`} 
+            type="text" value={firstName} placeholder="Prenom" 
+            aria-label="default input example" onChange={HandleFirstName}></input>    
         </div>   
         </div>
-        
         <div className="row mt-3">
+            <div className="col-6">
+                <input className={`form-control ${!checkTel  &&"text-danger"}`} 
+                type="text" value={tel} placeholder="Telephone" 
+                aria-label="default input example" onChange={HandleTel}></input>
+            </div>
         <div className="col-6">
-        <input className={`form-control ${!checkTel  &&"text-danger"}`} 
-        type="text" value={tel} placeholder="Telephone" 
-        aria-label="default input example" onChange={HandleTel}></input>
-        </div>
-
-        <div className="col-6">
-        <input className={`form-control ${!checkMail  &&"text-danger"}`} 
-        type="text" value={mail}placeholder="Adresse Email" 
-        aria-label="default input example" onChange={HandleMail}></input>    
+            <input className={`form-control ${!checkMail  &&"text-danger"}`} 
+            type="text" value={mail}placeholder="Adresse Email" 
+            aria-label="default input example" onChange={HandleMail}></input>    
         </div>   
         </div>
-
         <h1 className="text-resa mt-3">Adresse de Facturation :</h1>
         <div className="row mt-3">
-        <div className="col-12">
-        <input className={`form-control ${!checkAdress  &&"text-danger"}`}  type="text" 
-        value={adress} placeholder="Adresse de Facturation" 
-        aria-label="default input example" onChange={HandleAdress}></input>
+            <div className="col-12">
+                <input className={`form-control ${!checkAdress  &&"text-danger"}`}  type="text" 
+                value={adress} placeholder="Adresse de Facturation" 
+                aria-label="default input example" onChange={HandleAdress}></input>
+            </div>
         </div>
-        </div>
-
         <div className="row mt-3">
+            <div className="col-6">
+                <input className="form-control" type="text" placeholder="Code Postal de Facturation" 
+                aria-label="default input example" onChange={HandleChangeFact}></input>
+            </div>
         <div className="col-6">
-        <input className="form-control" type="text" placeholder="Code Postal de Facturation" 
-        aria-label="default input example" onChange={HandleChangeFact}></input>
+            <select className="form-select" aria-label="Default select example" id="cityselect"
+                onChange={()=>{setCheckCity(true);selectCity()}}>
+                <option selected>Ville de Facturation</option>
+                {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
+            </select>   
         </div>
-        <div className="col-6">
-        <select className="form-select" aria-label="Default select example" id="cityselect"
-        onChange={()=>{setCheckCity(true);selectCity()}}>
-        <option selected>Ville de Facturation</option>
-        {cityListFact.map(({nom,code}) => <option key={code} value={nom}>{nom}</option>)}
-        </select>   
         </div>
-
+            <i className="text-warning pb-3">Info : {messageInfo}</i>
+            <button type="button" className="btn  w-100 my-3"
+            disabled={!(checkCity&&checkName&&checkFirstName&&checkFactCp&&checkMail&&checkTel&&checkAdress)}
+            onClick={HandleRegister}>Je crée mon compte</button>
         </div>
-        <i className="text-warning pb-3">Info : {messageInfo}</i>
-        <button type="button" className="btn  w-100 my-3"
-        disabled={!(checkCity&&checkName&&checkFirstName&&checkFactCp&&checkMail&&checkTel&&checkAdress)}
-        onClick={HandleRegister}>Je crée mon compte</button>
-        </div>
-       
-
-       </>
+        </>
     );
 };
 

@@ -51,7 +51,6 @@ const HandlePrevious = () =>{
           <button className="d-md-none btn col-3 fakeButton mt-5 mb-1 mx-4" onClick={HandlePrevious}>
               <BiLeftArrow className="text-dark fs-1"/>
           </button>
-          
           <button className="d-md-none col-3 btn fakeButton mt-5 mb-1 mx-4 " onClick={HandleNext}>
             <BiRightArrow className="text-dark fs-1"/>
           </button>
@@ -59,7 +58,6 @@ const HandlePrevious = () =>{
               <button className="d-none d-md-block btn fakeButton mt-5 " onClick={HandlePrevious}>
               <BiLeftArrow className="text-dark fs-1"/>
               </button>
-              
             </div>
             <div className="col-10">
       
@@ -67,7 +65,7 @@ const HandlePrevious = () =>{
           >
             <div className="row g-0">
               <div className="col-md-7">
-                <Swiper pagination={true}
+              <Swiper pagination={true}
                 modules={[Pagination]}
                 className="mySwiper">
                   {flippers[page]?.image_list?.map(img=>{
@@ -77,12 +75,9 @@ const HandlePrevious = () =>{
                     src={img?.img_src}
                     className="img-fluid rounded-start h-100"
                     alt={img?.alt}
-                    
                   />
-                  </SwiperSlide>)})}
-                  
-                
-                </Swiper>
+                </SwiperSlide>)})}
+              </Swiper>
               </div>
               <div className="col-md-5">
                 <div className="card-body">
@@ -102,9 +97,6 @@ const HandlePrevious = () =>{
               </div>
             </div>
           </div>
-        
-        
-      
       </div>
       <div className="col-1">
       <button className="d-none d-md-block btn fakeButton mt-5 " onClick={HandleNext}>

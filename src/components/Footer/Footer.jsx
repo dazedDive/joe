@@ -4,9 +4,6 @@ import { SiInstagram } from "react-icons/si";
 import { SiWhatsapp } from "react-icons/si";
 
 const Footer = () =>{
-
-
-
     return(
         <>
         <div className="container-fluid footerstyle py-2">
@@ -19,7 +16,6 @@ const Footer = () =>{
             </span>
         </div>
         </>
-
     )
 }
 export default Footer

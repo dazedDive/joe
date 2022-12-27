@@ -31,8 +31,6 @@ const Home =()=>{
     })
 },[])
 
-   
-
     const HandleConnexion =(e) =>{
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -70,21 +68,19 @@ const Home =()=>{
         ;
     }
 
-
     return(
         <>
         <div className="container-fluid mt-5">
             <span className="d-flex justify-content-start cadre">
-            <img src={Bandeau} className="bandeau" height={"300px"}></img>
-            <img src={Bandeau} className="bandeau" height={"300px"}></img>
+                <img src={Bandeau} className="bandeau" height={"300px"}></img>
+                <img src={Bandeau} className="bandeau" height={"300px"}></img>
             </span>
         </div>
         <div className="container mt-5">
-        <h3 className='title-anim'>What's up?</h3>
-        <h5 className="orange">{homeText?.homepage_text}</h5>
+            <h3 className='title-anim'>What's up?</h3>
+            <h5 className="orange">{homeText?.homepage_text}</h5>
         </div>
         <div className="container-fluid mt-2 d-flex justify-content-center">
-        
         </div>
         <p></p>
         <div className="container mt-5">
@@ -92,78 +88,72 @@ const Home =()=>{
             <div className={`col-12 col-md-4 bg-white shadow p-1 mb-5 bg-body rounded ${auth?.result==true && "d-none"}`}>
                 <form onSubmit={HandleConnexion} noValidate>
                 <span className="d-flex justify-content-start">
-                <p className="orange"><strong className="me-3 ms-1">Connexion </strong> </p>
-                <p className="orange"> {alertForm} :</p>
+                    <p className="orange"><strong className="me-3 ms-1">Connexion </strong> </p>
+                    <p className="orange"> {alertForm} :</p>
                 </span>
                 <span className="d-flex justify-content-start">
-                <BsPersonFill className="fs-3 mt-1 mx-1 orange"/>
-                <input className="form-control" type="text" placeholder="email"
-                name ="login" 
-                onChange={HandleMail}></input>
+                    <BsPersonFill className="fs-3 mt-1 mx-1 orange"/>
+                    <input className="form-control" type="text" placeholder="email"
+                    name ="login" 
+                    onChange={HandleMail}></input>
                 </span>
                 <span className="d-flex justify-content-start mt-2">
-                <BsShieldFill className="fs-3 mt-1 mx-1 orange"/>
-                <input className="form-control" type="password" placeholder="mot de passe" 
-                name ="password" 
-                onChange={HandlePass}></input>
-                <button type="submit" className="btn  ms-1"
-                disabled={!(checkMail&&checkPass)}>Connexion</button>
+                    <BsShieldFill className="fs-3 mt-1 mx-1 orange"/>
+                    <input className="form-control" type="password" placeholder="mot de passe" 
+                    name ="password" 
+                    onChange={HandlePass}></input>
+                    <button type="submit" className="btn  ms-1"
+                    disabled={!(checkMail&&checkPass)}>Connexion</button>
                 </span>
                 </form>
                 <span className="bg-light ">
-                <Link to="/creation" className="text-black item">Pas de compte? cliquez ici</Link>
+                    <Link to="/creation" className="text-black item">Pas de compte? cliquez ici</Link>
                 </span>
                 <span className="bg-light ">
-                <p data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="text-black item">Mot de passe oublié..</p>
+                    <p data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="text-black item">Mot de passe oublié..</p>
                 </span>
             </div>
-                <div className="col-12 col-md-8">
-        <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
-        <h5>Louez facilement votre flipper pour un évenement ! </h5>
-        <p> Un anniverssaire? un mariage? Séminaire? ou simplement pour le plaisir, louer un de nos flippers,
-            nous nous occupons de tout ! Livraison de la machine sur le lieu de votre événement, jouez gratuitement !
-            Nos machines sont régulièrement entretenue et néttoyé.
-        </p>
-
+            <div className="col-12 col-md-8">
+                <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
+                <h5>Louez facilement votre flipper pour un évenement ! </h5>
+                <p> Un anniverssaire? un mariage? Séminaire? ou simplement pour le plaisir, louer un de nos flippers,
+                    nous nous occupons de tout ! Livraison de la machine sur le lieu de votre événement, jouez gratuitement !
+                    Nos machines sont régulièrement entretenue et néttoyé.
+                </p>
+            </div>
+            </div>
+        </div>
+        <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal-dialog">
+            <div className="modal-content">
+            <div className="modal-header">
+                <h5 className="modal-title" id="staticBackdropLabel">Nouveau mot de passe</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+                <p>Veuillez renseigner votre Email de login</p>
+                <input className="form-control" type="text" placeholder="Default input"
+                aria-label="default input example" onChange={ResetPassForm}></input>
+             </div>
+                <div className="modal-footer">
+                    <i className="orange">{resetPassInfoText}</i>
+                    <button type="button" className="btn btn" onClick={SendMailResetPass}
+                    disabled={resetPassSubmitButtonActivated}>M'envoyer un Lien</button>
                 </div>
             </div>
         </div>
-        
-        
-        <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-         <div className="modal-dialog">
-         <div className="modal-content">
-         <div className="modal-header">
-            <h5 className="modal-title" id="staticBackdropLabel">Nouveau mot de passe</h5>
-         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div className="modal-body">
-            <p>Veuillez renseigner votre Email de login</p>
-         <input className="form-control" type="text" placeholder="Default input"
-         aria-label="default input example" onChange={ResetPassForm}></input>
-        </div>
-        <div className="modal-footer">
-         <i className="orange">{resetPassInfoText}</i>
-         <button type="button" className="btn btn" onClick={SendMailResetPass}
-         disabled={resetPassSubmitButtonActivated}>M'envoyer un Lien</button>
-        </div>
-        </div>
-        </div>
-        </div>
-
-
         <div className="container">
             <div className="row">
                 <div className="col-12 col-md-8">
-                <h3 className='title-dot'>Livraison dans le Nord de la france</h3>
-                <h5> Basé sur Maretz, nous nous déplaçons dans les département du 02, 59 et 62 !</h5>
-                <p>Indiquez simplement votre adresse de livraison lors de votre reservation,
-                    nous vous communiquerons automatique un prix de transport.
-                </p>
-
+                    <h3 className='title-dot'>Livraison dans le Nord de la france</h3>
+                    <h5> Basé sur Maretz, nous nous déplaçons dans les département du 02, 59 et 62 !</h5>
+                    <p>Indiquez simplement votre adresse de livraison lors de votre reservation,
+                        nous vous communiquerons automatique un prix de transport.
+                    </p>
                 </div>
                 <div className="col-12 col-md-4">
-                <img className="img-fluid" src={Kangoo} alt="kangoo"></img>
+                     <img className="img-fluid" src={Kangoo} alt="kangoo"></img>
                 </div>
             </div>
         </div>

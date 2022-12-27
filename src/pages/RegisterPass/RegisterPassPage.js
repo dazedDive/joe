@@ -46,8 +46,6 @@ const RegisterPassPage = () => {
         }else{
             setCheckPassTwo(false)
         }
-
-        
     }
 
     const HandleSubmit = async (e) =>{
@@ -57,22 +55,21 @@ const RegisterPassPage = () => {
             method:"POST",
             body:JSON.stringify(dataToWriteInDataBase)})
             .then (()=>navigate('/'));
-        
-        
-    }
+        }
+
     const [visible,setVisible]=useState(false)
+
     const ToggleView = () => {
         setVisible(!visible)
     }
     const [visibleBis,setVisibleBis]=useState(false)
+
     const ToggleViewBis = () => {
         setVisibleBis(!visibleBis)
     }
 
-
     return (
-
-            <div>
+        <div>
             <div className="container bg-light p-5">
                 <h3 className="title-dot">{decryptedToken?.userFirstName}, definissez votre mot de passe</h3>
                 <p>{decryptedToken?.login}</p>
@@ -81,33 +78,32 @@ const RegisterPassPage = () => {
                 <div className="col-sm-6">
                 <label htmlFor="inputPassword" className="col-sm-6 col-form-label">Taper un mot de passe :</label>
                 <span className="d-flex justify-content-end">
-                <input type={visible?"text":"password"} className="form-control" id="inputPasswordOne"
-                onChange={HandlePassOne}/>
-                <ImEye className={`fs-3 mt-1 mx-3 ${visible ? "orange" : "black"}`}
-                onClick={ToggleView}/>
+                    <input type={visible?"text":"password"} className="form-control" id="inputPasswordOne"
+                    onChange={HandlePassOne}/>
+                    <ImEye className={`fs-3 mt-1 mx-3 ${visible ? "orange" : "black"}`}
+                    onClick={ToggleView}/>
                 </span>
                 <span className="d-flex justify-content-start">
-                <p className="mt-2">Niveau de sécuritée : </p>
-                    {securityPassLevel===1? <GiCheckedShield className="mt-1 text-info fs-3"/> : ""}
-                    {securityPassLevel===2? <GiEdgedShield className="mt-1 orange fs-3"/> :""}
-                    {securityPassLevel===3? <GiFireShield className="mt-1 text-danger fs-3"/> :""}
+                    <p className="mt-2">Niveau de sécuritée : </p>
+                        {securityPassLevel===1? <GiCheckedShield className="mt-1 text-info fs-3"/> : ""}
+                        {securityPassLevel===2? <GiEdgedShield className="mt-1 orange fs-3"/> :""}
+                        {securityPassLevel===3? <GiFireShield className="mt-1 text-danger fs-3"/> :""}
                 </span>
                 </div>
-                
                 <div className="row">
                 <div className="col-sm-6">
                 <label htmlFor="inputPassword" className="col-sm-6 col-form-label"> Retapez ce mot de passe, 6 charactères minimum :</label>
                 <span className="d-flex justify-content-end">
-                <input type={visibleBis?"text":"password"} className="form-control" id="inputPasswordTwo"
-                onChange={HandlePassTwo}/>
-                <ImEye className={`fs-3 mt-1 mx-3 ${visibleBis ? "orange" : "black"}`}
-                onClick={ToggleViewBis}/>
+                    <input type={visibleBis?"text":"password"} className="form-control" id="inputPasswordTwo"
+                    onChange={HandlePassTwo}/>
+                    <ImEye className={`fs-3 mt-1 mx-3 ${visibleBis ? "orange" : "black"}`}
+                    onClick={ToggleViewBis}/>
                 </span>
                 <span className="d-flex justify-content-start">
-                <p>Conformitée : </p>
-                {!checkPassTwo &&<p className="text-danger">Différent!</p>}
-                {checkPassTwo && <p className="text-success">Ok!</p>}
-                </span>
+                    <p>Conformitée : </p>
+                    {!checkPassTwo &&<p className="text-danger">Différent!</p>}
+                    {checkPassTwo && <p className="text-success">Ok!</p>}
+                    </span>
                 </div>
                 </div>
                 </div>
@@ -118,5 +114,4 @@ const RegisterPassPage = () => {
         </div>
     );
 };
-
 export default RegisterPassPage;

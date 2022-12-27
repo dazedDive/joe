@@ -24,6 +24,7 @@ const ResetPassPage = () => {
         setPassOne(e.target.value)
         
         const regexPass = /^[a-zA-Z0-9]{5,7}$/
+
         if (regexPass.test(e.target.value)){
             setSecurityPassLevel(1)
         }
@@ -46,8 +47,6 @@ const ResetPassPage = () => {
         }else{
             setCheckPassTwo(false)
         }
-
-        
     }
     
     const HandleSubmit = async (e) =>{
@@ -58,12 +57,9 @@ const ResetPassPage = () => {
             body:JSON.stringify(dataToWriteInDataBase)})
             .then (rep=>rep.json())
             .then (json=>json.result==true && navigate('/'));
-            ////a deboguer///
-            
-       
+         ////a deboguer///
+        }
 
-        
-    }
     const [visible,setVisible]=useState(false)
     const ToggleView = () => {
         setVisible(!visible)
@@ -72,11 +68,8 @@ const ResetPassPage = () => {
     const ToggleViewBis = () => {
         setVisibleBis(!visibleBis)
     }
-
-
     return (
-
-            <div>
+        <div>
             <div className="container bg-light p-5">
                 <h3 className="title-dot">{decryptedToken?.userFirstName}Nouveau mot de passe</h3>
                 <p>{decryptedToken?.login}</p>
@@ -85,37 +78,36 @@ const ResetPassPage = () => {
                 <div className="col-sm-6">
                 <label htmlFor="inputPassword" className="col-sm-6 col-form-label">Taper un mot de passe :</label>
                 <span className="d-flex justify-content-end">
-                <input type={visible?"text":"password"} className="form-control" id="inputPasswordOne"
-                onChange={HandlePassOne}/>
-                <ImEye className={`fs-3 mt-1 mx-3 ${visible ? "orange" : "black"}`}
-                onClick={ToggleView}/>
+                    <input type={visible?"text":"password"} className="form-control" id="inputPasswordOne"
+                    onChange={HandlePassOne}/>
+                    <ImEye className={`fs-3 mt-1 mx-3 ${visible ? "orange" : "black"}`}
+                    onClick={ToggleView}/>
                 </span>
                 <span className="d-flex justify-content-start">
-                <p className="mt-2">Niveau de sécuritée : </p>
-                    {securityPassLevel===1? <GiCheckedShield className="mt-1 text-info fs-3"/> : ""}
-                    {securityPassLevel===2? <GiEdgedShield className="mt-1 orange fs-3"/> :""}
-                    {securityPassLevel===3? <GiFireShield className="mt-1 text-danger fs-3"/> :""}
+                    <p className="mt-2">Niveau de sécuritée : </p>
+                        {securityPassLevel===1? <GiCheckedShield className="mt-1 text-info fs-3"/> : ""}
+                        {securityPassLevel===2? <GiEdgedShield className="mt-1 orange fs-3"/> :""}
+                        {securityPassLevel===3? <GiFireShield className="mt-1 text-danger fs-3"/> :""}
                 </span>
-                </div>
-                
-                <div className="row">
+            </div>
+            <div className="row">
                 <div className="col-sm-6">
                 <label htmlFor="inputPassword" className="col-sm-6 col-form-label"> Retapez ce mot de passe, 6 charactères minimum :</label>
-                <span className="d-flex justify-content-end">
-                <input type={visibleBis?"text":"password"} className="form-control" id="inputPasswordTwo"
-                onChange={HandlePassTwo}/>
-                <ImEye className={`fs-3 mt-1 mx-3 ${visibleBis ? "orange" : "black"}`}
-                onClick={ToggleViewBis}/>
-                </span>
+                    <span className="d-flex justify-content-end">
+                        <input type={visibleBis?"text":"password"} className="form-control" id="inputPasswordTwo"
+                        onChange={HandlePassTwo}/>
+                        <ImEye className={`fs-3 mt-1 mx-3 ${visibleBis ? "orange" : "black"}`}
+                        onClick={ToggleViewBis}/>
+                    </span>
                 <span className="d-flex justify-content-start">
-                <p>Conformitée : </p>
-                {!checkPassTwo &&<p className="text-danger">Différent!</p>}
-                {checkPassTwo && <p className="text-success">Ok!</p>}
+                    <p>Conformitée : </p>
+                    {!checkPassTwo &&<p className="text-danger">Différent!</p>}
+                    {checkPassTwo && <p className="text-success">Ok!</p>}
                 </span>
-                </div>
-                </div>
-                </div>
-                <button type="button" className="btn btn-orange w-100"
+            </div>
+            </div>
+        </div>
+            <button type="button" className="btn btn-orange w-100"
                 disabled={((securityPassLevel===0) || (!checkPassTwo))}
                 onClick={HandleSubmit}>Valider mon nouveau mot de passe</button>
             </div>

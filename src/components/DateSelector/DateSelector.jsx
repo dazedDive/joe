@@ -19,10 +19,7 @@ const [dayIndex,setDayIndex]=useState(new Date().getDate())
 const [yearIndex,setYearIndex]=useState(new Date().getFullYear()); /////ce setter mets a jour l'annee
 const monthIndex = (new Date().getMonth()); ///////on recupere le moi de la Date Actuel afin de l'utiliser pour afficher le moi en cour
 const navigate=useNavigate();
-    
-
-
-
+  
 /////////////////////////////////Recuperation des bookings date//////////////
 const [dateOfBooking, setDateOfBooking] = useState([])
 useEffect(()=>{
@@ -33,8 +30,6 @@ useEffect(()=>{
     })
     },[])
 ///////////////////////Affichage des bon crénaux au chargement de la page///////////
-
-
 ////////////////////////////////////////////////////////////////////////////
 const [flippers, setFlippers] = useState([]);
   ///////recuperation api  des flippers//////////:
@@ -62,9 +57,6 @@ const [flippers, setFlippers] = useState([]);
 
 const [cookies, setCookie] = useCookies(['dateEtFlipper']);
 ////////////fonction qui affiche le moi  et l'année en cour///////////
-
-
-
 const monthName = ["janvier","février","mars","avril","mai","juin","juillet","aout","septembre","octobre"
 ,"novembre","decembre"]; /////on utilisera le moi en valeur numérique comme indice pour afficher le moi en string
 const [month,setMonth]=useState(monthName[monthIndex]);//////ce seter sert a afficher le moi selon la navigation
@@ -85,7 +77,6 @@ const [dateControl, setDateControl]=useState(false);///controller qui verifie qu
 const [timeControl, setTimeControl]=useState(false);///controller qui verifie que le choix de temp est ok
 
 ////////////fonction pour le click de la duree de location
-
     
     ////////////setter du flipper pour la selection
     const [priceByFlipper,setPriceByFlipper] = useState(0);
@@ -107,34 +98,28 @@ const HandlePrevious = ()=>{
     setCountMonth(countMonth===0?11:countMonth-1);
     setMonth(monthName[countMonth]);
     setYearIndex(countMonth===0?yearIndex-1:yearIndex);
-    
-
 }
 
 const HandleCookie = () =>{
     setCookie("dateEtFlipper",{price,flipper,dateChoosen,timeRent,flipperId})
 }
 
-
-    useEffect(()=>{
+useEffect(()=>{
     setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex &&seance.weekend_location>dayIndex)])
-    },[dateOfBooking])
+},[dateOfBooking])
 
     /////codé un if moi en cour filtrer les jour>dayindex//////////////
-    useEffect(()=>{
-        if(pageDate==1){
+useEffect(()=>{
+
+    if(pageDate==1){
             setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex && seance.weekend_location>dayIndex)])
-        }
-        else{
+        } else {
     setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex)])}
     },[pageDate])
 
     useEffect(()=>{
         setPrice((priceByFlipper*priceByTime).toFixed(2))
     },[priceByTime,priceByFlipper])
-
-
-
 
   return (
     <div className="container mt-4">
@@ -144,7 +129,6 @@ const HandleCookie = () =>{
         <p>Selectionnez une date et un Flipper</p>
         </span>
         <div className="row">
-
             <div className="col-12 col-md-6">
                 <h1 className="resa-dot">Selectionnez une date  </h1>
                 <p>Le flipper peux être livré au plus tôt le vendredi soir pour un retour au plus 
@@ -153,98 +137,87 @@ const HandleCookie = () =>{
             </div>
             <div className="col-12 col-md-6">
                 <div className="row">
-            <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
-           
-           {dateFilter.map(({Id_booking,weekend_location,year_location,is_reserved}) =>
-           <DateCard key={Id_booking} 
-        //    idresa={Id_booking}
-           days={weekend_location+"/"+ (parseInt(weekend_location)+1)+" "} 
-           month={monthName[countMonth]+" "}
-           year={year_location}
-           setDateChoosen={setDateChoosen}
-           setDateControl={setDateControl} 
-           dateControl={dateControl}
-           status={is_reserved=="0"?false:true}/>)}
-                </div>
-            
-            <span className="d-flex justify-content-between mt-4">
-            
-            <MdOutlineKeyboardArrowLeft className={`btn fs-1 navbutton ${pageDate===1&&"disabled"  }`} onClick={HandlePrevious}/>
-            <MdOutlineKeyboardArrowRight className={`btn fs-1 navbutton ${pageDate===7&&"disabled"  }`} onClick={HandleNext}/>
-            </span>
+                    <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
+                    {dateFilter.map(({Id_booking,weekend_location,year_location,is_reserved}) =>
+                    <DateCard key={Id_booking} 
+                    days={weekend_location+"/"+ (parseInt(weekend_location)+1)+" "} 
+                    month={monthName[countMonth]+" "}
+                    year={year_location}
+                    setDateChoosen={setDateChoosen}
+                    setDateControl={setDateControl} 
+                    dateControl={dateControl}
+                     status={is_reserved=="0"?false:true}/>)}
             </div>
-        
-            
-    
-            <div className="container bg-light p-3 mt-2">
-        <div className="row mt-5">
+                <span className="d-flex justify-content-between mt-4">
+                    <MdOutlineKeyboardArrowLeft className={`btn fs-1 navbutton ${pageDate===1&&"disabled"  }`} onClick={HandlePrevious}/>
+                    <MdOutlineKeyboardArrowRight className={`btn fs-1 navbutton ${pageDate===7&&"disabled"  }`} onClick={HandleNext}/>
+                </span>
+            </div>
+        <div className="container bg-light p-3 mt-2">
+            <div className="row mt-5">
+                <div className="col-12 col-md-6">
+                    <h1 className="resa-dot ">Durée de la location  </h1>
+                    <p>Choissisez pour 24 ou 48H, ainsi que la journée.</p>
+                    <p className="orange"><strong>{timeRent}</strong></p>
+                </div>
             <div className="col-12 col-md-6">
-            <h1 className="resa-dot ">Durée de la location  </h1>
-            <p>Choissisez pour 24 ou 48H, ainsi que la journée.</p>
-            <p className="orange"><strong>{timeRent}</strong></p>
-            </div>
-            <div className="col-12 col-md-6">
-            <div className="row">
-                <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_saturday);setTimeControl(true);setTimeRent("journée du Samedi")}}>1jour : SAMEDI</button>
+                <div className="row">
+                    <div className="col-4">
+                    <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Samedi" 
+                    onClick={()=>{setPriceByTime(dataAdmin?.multiplier_saturday);setTimeControl(true);setTimeRent("journée du Samedi")}}>1jour : SAMEDI</button>
                 </div>
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_sunday);setTimeControl(true);setTimeRent("journée du Dimanche")}}>1jour : DIMANCHE </button>
+                    <button type="button" className="btn btn-secondary w-100 m-2" value="journée du Dimanche" 
+                    onClick={()=>{setPriceByTime(dataAdmin?.multiplier_sunday);setTimeControl(true);setTimeRent("journée du Dimanche")}}>1jour : DIMANCHE </button>
                 </div>
                 <div className="col-4">
-                <button type="button" className="btn btn-secondary w-100 m-2" value="2 jours : Samedi et dimanche" 
-                onClick={()=>{setPriceByTime(dataAdmin?.multiplier_both);setTimeControl(true);setTimeRent("2 jours : Samedi et dimanche")}}>2 jours :  SAMEDI et DIMANCHE</button>
+                    <button type="button" className="btn btn-secondary w-100 m-2" value="2 jours : Samedi et dimanche" 
+                    onClick={()=>{setPriceByTime(dataAdmin?.multiplier_both);setTimeControl(true);setTimeRent("2 jours : Samedi et dimanche")}}>2 jours :  SAMEDI et DIMANCHE</button>
                 </div>
             </div>
-            </div>
+        </div>
         </div>
     </div>
     </div>
-    
     <div className="container">
         <div className="row mt-5">
             <div className="col-12 col-md-6">
                 <h1 className="resa-dot">Selectionnez votre flipper :</h1>
                 <p>Chaque flipper sera révisé et nettoyé avant location</p>
                 <span className="d-flex justify-content-start">
-                <MdSwipe className="fs-2 orange"/>
-                <p className="orange fst-italic">Faites glisser pour défiler</p>
-                
+                    <MdSwipe className="fs-2 orange"/>
+                    <p className="orange fst-italic">Faites glisser pour défiler</p>
                 </span>
                 <Swiper className="mb-5">
                     {flippers.map(flip=>{
                         return(
-                    <SwiperSlide key={flip?.image_list[0]?.Id_image}>
-                    <div className="card">
-                    <img
-                    
-                    src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
-                    <div className="card-body" key={flip?.Id_flipper}>
-                    <h4 className="card-text title-dot">{flip?.name}</h4>
-                    <button type="button" className="btn btn-secondary " value={flip?.price} 
-                    onClick={()=>{setFlipperControl(true);setFlipper(flip?.name);setPriceByFlipper(flip?.price);setFlipperId(flip?.Id_flipper) }}>A partir de <strong>{flip?.price}€/TTC</strong>  (Journée du Samedi)</button>
-                    </div>
-                    </div> 
-                    </SwiperSlide>
+                        <SwiperSlide key={flip?.image_list[0]?.Id_image}>
+                            <div className="card">
+                                <img
+                                src={flip?.image_list[0]?.img_src} className="card-img-top w-100" alt="..."/>
+                            <div className="card-body" key={flip?.Id_flipper}>
+                                <h4 className="card-text title-dot">{flip?.name}</h4>
+                                <button type="button" className="btn btn-secondary " value={flip?.price} 
+                                onClick={()=>{setFlipperControl(true);setFlipper(flip?.name);setPriceByFlipper(flip?.price);setFlipperId(flip?.Id_flipper) }}>A partir de <strong>{flip?.price}€/TTC</strong>  (Journée du Samedi)</button>
+                            </div>
+                            </div> 
+                        </SwiperSlide>
                         )
                     })}
-                    
                 </Swiper>
             </div>
-            <div className="col-12 col-md-6 mt-5">
-                <div className="bgorange">
-                <h1 className="resa-dot text-white">recapitulatif: </h1>
-                <p className={`${dateControl ===true ? "text-black fw-bold" : "text-white "}`} >Date du : {dateChoosen}</p>
-                <p className={`${timeControl ===true ? "text-black fw-bold" : "text-white "}`}>Durée de location : {timeRent}</p>
-                <p className={`${flipperControl ===true ? "text-black fw-bold" : "text-white "}`}>Flipper : {flipper}</p>
-                <p className={`${flipperControl &&timeControl &&flipperControl===true ? "orange fw-bold d-block bg-light p-1" : "d-none "}`}>Prix TTC hors livraison : {price} €/TTC</p>
-                </div>
+                <div className="col-12 col-md-6 mt-5">
+                    <div className="bgorange">
+                        <h1 className="resa-dot text-white">recapitulatif: </h1>
+                        <p className={`${dateControl ===true ? "text-black fw-bold" : "text-white "}`} >Date du : {dateChoosen}</p>
+                        <p className={`${timeControl ===true ? "text-black fw-bold" : "text-white "}`}>Durée de location : {timeRent}</p>
+                        <p className={`${flipperControl ===true ? "text-black fw-bold" : "text-white "}`}>Flipper : {flipper}</p>
+                        <p className={`${flipperControl &&timeControl &&flipperControl===true ? "orange fw-bold d-block bg-light p-1" : "d-none "}`}>Prix TTC hors livraison : {price} €/TTC</p>
+                    </div>
                 <button type="button" 
-            className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
-         value={price} onClick={()=>{navigate('/reservation/second');HandleCookie()}}
-         >Etape suivante</button>
+                className={`btn btn-secondary w-50 mt-5 ${!(dateControl &&timeControl &&flipperControl) &&"disabled"  }`}
+                value={price} onClick={()=>{navigate('/reservation/second');HandleCookie()}}
+                >Etape suivante</button>
             </div>
         </div>
     </div>

@@ -6,13 +6,10 @@ import NavBarAdmin from "../../components/NavBarAdmin/NavBarAdmin"
 
 const Reserver =()=>{
 const {step}=useParams();
-
     return(
         <>
-        <DateSelector/>
-       
+            <DateSelector/>
         </>
-
     )
 }
 export default Reserver

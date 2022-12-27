@@ -18,18 +18,17 @@ const ImageAdmin = () => {
     },[])
     
 
-    const [loading,setLoading] = useState(true);
-    const [imagesList,setImagesList] = useState()
+const [loading,setLoading] = useState(true);
+const [imagesList,setImagesList] = useState()
 
-    const HandleShow = (id) =>{
-        
-        fetch('http://joe.api/flipper/'+id,{
-            method : "post" ,
-            body : JSON.stringify({with:['image']})})
+const HandleShow = (id) =>{
+    fetch('http://joe.api/flipper/'+id,{
+        method : "post" ,
+        body : JSON.stringify({with:['image']})})
         .then(rep=>rep.json())
         .then(json=>setImagesList(json.image_list))
         .then(setLoading(false))
-        }
+    }
     /////////////////////recupere lid du selecteur/////////////////////////
     const HandleSelected =(e)=> {
         console.log(e.target.value);
@@ -37,8 +36,8 @@ const ImageAdmin = () => {
         setSelected(false);
         }
 
-        const [selected, setSelected] = useState (true)
-        const [idFlipperSelected, setIdFlipperSelected] = useState (1)
+    const [selected, setSelected] = useState (true)
+    const [idFlipperSelected, setIdFlipperSelected] = useState (1)
 
     return (
         <div>
@@ -56,36 +55,33 @@ const ImageAdmin = () => {
                             <span className="d-flex justify-content-start mt-3 item"
                             key={flipper?.Id_flipper}
                             onClick={()=>{HandleShow(flipper.Id_flipper)}}>
-                            <li >
-                                {flipper?.name}
-                            </li>
-                            <BiShowAlt className="fs-4"/>
+                                <li >
+                                    {flipper?.name}
+                                </li>
+                                <BiShowAlt className="fs-4"/>
                             </span>)
                         })}     
                         <span className="d-flex justify-content-start mt-4">
-                        <p className=" p-2 bg-info">Ajouter une image :</p>
-                        
-                        
-                        <button type="button" class="btn btn-dark mb-4 mx-2"
-                            disabled = {selected}
-                                onClick={()=>
-                                selectFile({ accept: 'image/*'}, ({name , size ,src, file})=>
-                                {console.log('Files Selected', {name, size, src,file})
-                                })
-                                }> uploader</button>
+                            <p className=" p-2 bg-info">Ajouter une image :</p>
+                            <button type="button" class="btn btn-dark mb-4 mx-2"
+                                disabled = {selected}
+                                    onClick={()=>
+                                    selectFile({ accept: 'image/*'}, ({name , size ,src, file})=>
+                                    {console.log('Files Selected', {name, size, src,file})
+                                    })
+                                    }> uploader</button>
                         </span>
                         <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
                         onChange={HandleSelected}>
-                        <option selected >Flipper pour cette image</option>
-                        {flippers?.map(flipp=>{
-                            return(
-                                <option value={flipp?.Id_flipper}
-                                key={flipp?.Id_flipper}
-                                
-                            >{flipp?.name}</option>
-                            )
-                        })}
-                    
+                            <option selected >Flipper pour cette image</option>
+                            {flippers?.map(flipp=>{
+                                return(
+                                    <option value={flipp?.Id_flipper}
+                                    key={flipp?.Id_flipper}
+                                    >{flipp?.name}
+                                    </option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className="col-9">
@@ -96,25 +92,17 @@ const ImageAdmin = () => {
                     <div className="row">
                         {loading && 
                         (   <div className="d-flex justify-content-center mt-5 bg-light">
-                            <h4>Selectionnez un flipper
-                            dans le Browser
-                            pour afficher ces Images</h4>
+                            ²
                             </div>
-                            
                         )}
-                    
-                       {imagesList?.map(img=>
-                            
+                        {imagesList?.map(img=>
                         <DiapoImage 
-                         key={img?.Id_image}
-                         source={img?.img_src}
+                            key={img?.Id_image}
+                            source={img?.img_src}
                          name={img?.alt}/> 
-                                
-                         )}
-                     
+                        )}
                     </div>
-                    </div>
-                    
+                </div>
                 </div>
             </div>
         </div>
