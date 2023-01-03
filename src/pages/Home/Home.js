@@ -116,9 +116,9 @@ const Home =()=>{
             <div className="col-12 col-md-8">
                 <h3 className='title-dot'>Location de Flippers et Machines d'Arcades</h3>
                 <h5>Louez facilement votre flipper pour un évenement ! </h5>
-                <p> Un anniverssaire? un mariage? Séminaire? ou simplement pour le plaisir, louer un de nos flippers,
+                <p> Un anniversaire? un mariage? Séminaire? ou simplement pour le plaisir, louer un de nos flippers,
                     nous nous occupons de tout ! Livraison de la machine sur le lieu de votre événement, jouez gratuitement !
-                    Nos machines sont régulièrement entretenue et néttoyé.
+                    Nos machines sont régulièrement entretenues et nettoyées.
                 </p>
             </div>
             </div>

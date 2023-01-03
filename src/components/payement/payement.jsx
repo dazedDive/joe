@@ -127,8 +127,8 @@ const Payement = () =>{
                  {(parseInt(cookies.coordonees.priceDelivery)+parseInt(cookies.dateEtFlipper.price))} € TTC</h3>
             </div>
         </div>
-        <div className = "container px-5">
-            <h3 className ="resa-dot">{checkValid.message}</h3>
+        <div className = "container d-flex justify-content-center">
+            <h3 className ="resa-dot orange pt-3">{checkValid.message}</h3>
         </div>
         {checkValid.valid == false && 
         <div className="container p-5">
