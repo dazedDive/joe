@@ -2,7 +2,7 @@ import '../DistanceCalculator/DistanceCalculator.css'
 import { useState, useEffect } from "react"
 import { MdLocationOn } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { useCookies} from 'react-cookie';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { getCookie } from '../../helpers/CookieHelper';
@@ -11,8 +11,7 @@ import { ImHome3,ImUser } from "react-icons/im";
 import { BsFillTelephoneFill } from "react-icons/bs";
 
 const DistanceCalculator = ()=>{
-
-    ////////////importation des information Customer ///////////
+        ////////////importation des information Customer ///////////
 const {setAuth,auth} = useContext (AuthContext);
 const [nameAccount,setNameAccount] = useState('');
 useEffect(()=>{
@@ -42,7 +41,7 @@ const [cityLivraison, setCityLivraison]=useState([])
 const [coordinates, Setcoordinates]=useState([])
 const [location, setLocation]=useState([])
 const [distanceLivraison, setDistanceLivraison]=useState('0')
-const [cookies, setCookie] = useCookies(["coordonees"]);
+const [cookies, setCookie, removeCookie] = useCookies(["coordonees"]);
 const [priceDelivery,setPriceDelivery]=useState();
 
 const navigate = useNavigate();
@@ -81,13 +80,16 @@ const HandlePrice = ()=>{
         fetch(apiDriveDistance)
         .then((rep)=>rep.json())
         .then((rep)=>setDistanceLivraison(rep.routes[0].distance))
-        .then(setCookie("coordonees",{adressL,cityLivraison,inputCp,priceDelivery}))
         .then(_=>console.log(cookies))
     }
         
-useEffect(()=>{
-        setPriceDelivery(((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed())
+    useEffect(()=>{
+        setPriceDelivery(((distanceLivraison/1000)*dataAdmin?.price_by_kilometer).toFixed());
     },[distanceLivraison])    
+    
+    useEffect(()=>{
+        setCookie("coordonees",{adressL,cityLivraison,inputCp,priceDelivery})
+    },[priceDelivery])
 
 const [checkFinal,setCheckFinal]=useState(false)
 

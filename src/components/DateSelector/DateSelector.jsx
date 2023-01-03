@@ -107,8 +107,7 @@ const HandleCookie = () =>{
 useEffect(()=>{
     setDateFilter([...dateOfBooking.filter(seance=>seance.month_location==countMonth+1 && seance.year_location==yearIndex &&seance.weekend_location>dayIndex)])
 },[dateOfBooking])
-
-    /////codé un if moi en cour filtrer les jour>dayindex//////////////
+    
 useEffect(()=>{
 
     if(pageDate==1){
@@ -139,7 +138,8 @@ useEffect(()=>{
                 <div className="row">
                     <h1 className="resa-dot-2">{monthName[countMonth]}  {yearIndex}</h1>
                     {dateFilter.map(({Id_booking,weekend_location,year_location,is_reserved}) =>
-                    <DateCard key={Id_booking} 
+                    <DateCard key={Id_booking}
+                    idresa =  {Id_booking}
                     days={weekend_location+"/"+ (parseInt(weekend_location)+1)+" "} 
                     month={monthName[countMonth]+" "}
                     year={year_location}

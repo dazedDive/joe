@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { getCookie } from "../../helpers/CookieHelper";
+import { useNavigate } from "react-router-dom";
 
 const Payement = () =>{
 
@@ -17,6 +18,7 @@ const Payement = () =>{
     const [cookies, setCookie] = useCookies(['dateEtFlipper','coordonees']);
     ////////////importation des information Customer ///////////
     const [nameAccount,setNameAccount] = useState('');
+    const [checkValid, setCheckValid] = useState({valid: false, message: "Dernière étape avant validation"});
     useEffect(()=>{
         (auth.id != 0) &&
         fetch('http://joe.api/account/'+auth.id,{
@@ -29,9 +31,7 @@ const Payement = () =>{
         .then(json=>{
             setNameAccount(json)
     })},[auth]);
-   
     console.log(cookies)
-
 
     ////////////////OBJET DE LA COMMANDE QUI SERA INSERER EN DB////////////
     const booking = {
@@ -62,14 +62,23 @@ const Payement = () =>{
         isPayed:1
     
     }
-
+    const navigate = useNavigate();
     const HandleValidBooking =()=>{
         fetch('http://joe.api/booker/'+auth.id,{
         credentials: "include",
         headers: {
         Authorization : getCookie("pinball")},
         method : "post", body : JSON.stringify(booking)})
-        
+        .then(resp => resp.json())
+        .then(json=>{
+
+            if (json.result){
+                setCheckValid({valid: true, message: json.message})
+            } else {
+                setCheckValid({valid: false, message: json.message})
+            }
+            
+        })        
     }
         
 
@@ -118,9 +127,19 @@ const Payement = () =>{
                  {(parseInt(cookies.coordonees.priceDelivery)+parseInt(cookies.dateEtFlipper.price))} € TTC</h3>
             </div>
         </div>
-        <div className="container p-5">
-        <button type="button" className="btn w-100" onClick={HandleValidBooking}>Valider ma commande !</button>
+        <div className = "container px-5">
+            <h3 className ="resa-dot">{checkValid.message}</h3>
         </div>
+        {checkValid.valid == false && 
+        <div className="container p-5">
+        <button type="button" className="btn w-100" disabled = {checkValid.valid}onClick={HandleValidBooking}>Valider ma commande !</button>
+        </div>
+        }
+        {checkValid.valid && 
+        <div className="container p-5">
+            <button type="button" className="btn w-100 " onClick={()=>{navigate('/')}}>Retourner à l'acceuil</button>
+        </div>
+        }
         </>
     )
 }
